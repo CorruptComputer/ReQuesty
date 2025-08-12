@@ -1,5 +1,0 @@
-tests/
-jest.config.js
-eslint.config.mjs
-tsconfig.json
-coverage/

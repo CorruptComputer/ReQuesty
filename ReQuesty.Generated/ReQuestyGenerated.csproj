@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Build info -->
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <IsAnalyzerProject>true</IsAnalyzerProject>
+    <IsPackable>false</IsPackable>
+
+    <!-- Assembly/NuGet info -->
+    <Authors>Nickolas Gupton and kiota contributors up to commit 960db6b2c39ce815dcabf4d2dec8a084fd218c8c</Authors>
+    <RepositoryUrl>https://github.com/CorruptComputer/ReQuesty</RepositoryUrl>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0.0"
+      ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0"
+      ExcludeAssets="runtime" />
+  </ItemGroup>
+
+  <Target Name="DoSthAfterPublish1" AfterTargets="Publish">
+    <Copy SourceFiles="..\ReQuesty.Builder\ReQuesty.Builder.csproj" />
+  </Target>
+
+</Project>

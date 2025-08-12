@@ -446,10 +446,4 @@ reports/
 ## Java preference files
 *.prefs
 
-samples/
-it/openapi.yaml
 
-idempotency-results/
-vscode/npm-package/dist/*
-vscode/npm-package/coverage/*
-vscode/npm-package/.kiotabin/*
