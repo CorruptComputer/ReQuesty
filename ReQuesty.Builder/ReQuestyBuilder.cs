@@ -1200,17 +1200,6 @@ public partial class ReQuestyBuilder
             IndexParameter = parameter,
         }];
 
-        if (!"string".Equals(parameter.Type.Name, StringComparison.OrdinalIgnoreCase) && config.IncludeBackwardCompatible)
-        { // adding a second indexer for the string version of the parameter so we keep backward compatibility
-            //TODO remove for v2
-            CodeIndexer backCompatibleValue = (CodeIndexer)result[0].Clone();
-            backCompatibleValue.Name += "-string";
-            backCompatibleValue.IndexParameter.Type = DefaultIndexerParameterType;
-            backCompatibleValue.Deprecation = new DeprecationInformation("This indexer is deprecated and will be removed in the next major version. Use the one with the typed parameter instead.");
-            backCompatibleValue.IsLegacyIndexer = true;
-            result.Add(backCompatibleValue);
-        }
-
         return [.. result];
     }
     private static readonly StructuralPropertiesReservedNameProvider structuralPropertiesReservedNameProvider = new();

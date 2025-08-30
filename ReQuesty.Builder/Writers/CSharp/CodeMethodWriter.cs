@@ -394,7 +394,12 @@ public class CodeMethodWriter(CSharpConventionService conventionService) : BaseE
                                         .Where(static x => !x.ExistsInBaseType)
                                         .OrderBy(static x => x.Name, StringComparer.Ordinal))
         {
-            writer.WriteLine($"{{ \"{otherProp.WireName}\", n => {{ {otherProp.Name.ToFirstCharacterUpperCase()} = n.{GetDeserializationMethodName(otherProp.Type, codeElement)}; }} }},");
+            string propName = otherProp.Name.ToFirstCharacterUpperCase();
+            string throwIfNotNullable = otherProp.Type.IsNullable
+                ? string.Empty
+                : $" ?? throw new NullReferenceException(\"Unexpected null value for non-nullable property: '{propName}'\")";
+
+            writer.WriteLine($"{{ \"{otherProp.WireName}\", n => {{ {propName} = n.{GetDeserializationMethodName(otherProp.Type, codeElement)}{throwIfNotNullable}; }} }},");
         }
         writer.CloseBlock("};");
     }
@@ -646,7 +651,7 @@ public class CodeMethodWriter(CSharpConventionService conventionService) : BaseE
     protected string GetSendRequestMethodName(bool isVoid, CodeElement currentElement, CodeTypeBase returnType)
     {
         ArgumentNullException.ThrowIfNull(returnType);
-        string returnTypeName = conventions.GetTypeString(returnType, currentElement);
+        string returnTypeName = conventions.GetTypeString(returnType, currentElement, false);
         bool isStream = conventions.StreamTypeName.Equals(returnTypeName, StringComparison.OrdinalIgnoreCase);
         bool isEnum = returnType is CodeType codeType && codeType.TypeDefinition is CodeEnum;
         if (isVoid)
@@ -764,10 +769,17 @@ public class CodeMethodWriter(CSharpConventionService conventionService) : BaseE
         {
             voidCorrectedTaskReturnType = $"IEnumerable<{voidCorrectedTaskReturnType.StripArraySuffix()}>";
         }
+
+        string nullableReturnTypeSuffix = string.Empty;
+        if (code.IsOfKind(CodeMethodKind.RequestExecutor))
+        {
+            nullableReturnTypeSuffix = CSharpConventionService.NullableMarkerAsString;
+        }
+
         // TODO: Task type should be moved into the refiner
-        string completeReturnType = isConstructor ?
+            string completeReturnType = isConstructor ?
             string.Empty :
-            $"{asyncPrefix}{voidCorrectedTaskReturnType}{genericTypeSuffix} ";
+            $"{asyncPrefix}{voidCorrectedTaskReturnType}{nullableReturnTypeSuffix}{genericTypeSuffix} ";
         string baseSuffix = GetBaseSuffix(isConstructor, inherits, parentClass, code);
         string parameters = string.Join(", ", code.Parameters.OrderBy(x => x, parameterOrderComparer).Select(p => conventions.GetParameterSignature(p, code)).ToList());
         string methodName = isConstructor ? parentClass.Name.ToFirstCharacterUpperCase() : code.Name.ToFirstCharacterUpperCase();
@@ -776,11 +788,6 @@ public class CodeMethodWriter(CSharpConventionService conventionService) : BaseE
         writer.WriteLine("{");
     }
 
-    private string GetParameterSignatureWithNullableRefType(CodeParameter parameter, CodeElement targetElement)
-    {
-        string[] signatureSegments = conventions.GetParameterSignature(parameter, targetElement).Split(" ", StringSplitOptions.RemoveEmptyEntries);
-        return $"{signatureSegments[0]}? {string.Join(" ", signatureSegments[1..])}";
-    }
     private string GetSerializationMethodName(CodeTypeBase propType, CodeMethod method, bool includeNullableRef = false)
     {
         bool isCollection = propType.CollectionKind != CodeTypeBase.CodeTypeCollectionKind.None;

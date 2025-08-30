@@ -21,10 +21,20 @@ public class CodePropertyWriter(CSharpConventionService conventionService) : Bas
             propertyType += "?";
         }
 
-        conventions.WriteShortDescription(codeElement, writer);
+        bool hasDescription = conventions.WriteShortDescription(codeElement, writer);
         conventions.WriteDeprecationAttribute(codeElement, writer);
 
+        if (!hasDescription)
+        {
+            CSharpConventionService.WritePragmaDisable(writer, CSharpConventionService.CS1591);
+        }
+
         WritePropertyInternal(codeElement, writer, propertyType);
+
+        if (!hasDescription)
+        {
+            CSharpConventionService.WritePragmaRestore(writer, CSharpConventionService.CS1591);
+        }
     }
 
     private void WritePropertyInternal(CodeProperty codeElement, LanguageWriter writer, string propertyType)
@@ -37,7 +47,7 @@ public class CodePropertyWriter(CSharpConventionService conventionService) : Bas
         CodeProperty? backingStoreProperty = parentClass.GetBackingStoreProperty();
         string setterAccessModifier = codeElement.ReadOnly && codeElement.Access > AccessModifier.Private ? "private " : string.Empty;
         string simpleBody = $"get; {setterAccessModifier}set;";
-        string defaultValue = string.Empty;
+        string defaultValue = " = default!;";
         switch (codeElement.Kind)
         {
             case CodePropertyKind.RequestBuilder:

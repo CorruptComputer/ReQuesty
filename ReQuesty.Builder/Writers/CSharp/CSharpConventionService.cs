@@ -16,20 +16,36 @@ public class CSharpConventionService : CommonLanguageConventionService
     public const char NullableMarker = '?';
     public static string NullableMarkerAsString => "?";
     public override string ParseNodeInterfaceName => "IParseNode";
+    public const string NullableEnableDirective = "#nullable enable";
+    public const string NullableRestoreDirective = "#nullable restore";
 
     public const string CS0618 = "CS0618";
     public const string CS1591 = "CS1591";
 
-    public void WritePragmaDisable(LanguageWriter writer, string code)
+    public static void WriteNullableOpening(LanguageWriter writer)
+    {
+        ArgumentNullException.ThrowIfNull(writer);
+        writer.WriteLine(NullableEnableDirective, false);
+    }
+
+    public static void WriteNullableMiddle(LanguageWriter writer)
+    {
+        ArgumentNullException.ThrowIfNull(writer);
+        writer.WriteLine(NullableRestoreDirective, false);
+    }
+
+    public static void WritePragmaDisable(LanguageWriter writer, string code)
     {
         ArgumentNullException.ThrowIfNull(writer);
         writer.WriteLine($"#pragma warning disable {code}");
     }
-    public void WritePragmaRestore(LanguageWriter writer, string code)
+
+    public static void WritePragmaRestore(LanguageWriter writer, string code)
     {
         ArgumentNullException.ThrowIfNull(writer);
         writer.WriteLine($"#pragma warning restore {code}");
     }
+
     private const string ReferenceTypePrefix = "<see cref=\"";
     private const string ReferenceTypeSuffix = "\"/>";
     public override bool WriteShortDescription(IDocumentedElement element, LanguageWriter writer, string prefix = "<summary>", string suffix = "</summary>")
@@ -209,19 +225,24 @@ public class CSharpConventionService : CommonLanguageConventionService
         {
             string typeName = TranslateType(currentType);
             string nullableSuffix = ShouldTypeHaveNullableMarker(code) ? NullableMarkerAsString : string.Empty;
-            string collectionPrefix = currentType.CollectionKind == CodeTypeCollectionKind.Complex && includeCollectionInformation ? "List<" : string.Empty;
+
+            string collectionPrefix = currentType.CollectionKind == CodeTypeCollectionKind.Complex && includeCollectionInformation
+                ? "List<"
+                : string.Empty;
             string collectionSuffix = currentType.CollectionKind switch
             {
                 CodeTypeCollectionKind.Complex when includeCollectionInformation => ">",
                 CodeTypeCollectionKind.Array when includeCollectionInformation => "[]",
                 _ => string.Empty,
             };
+
             string genericParameters = currentType.GenericTypeParameterValues.Any() ?
                 $"<{string.Join(", ", currentType.GenericTypeParameterValues.Select(x => GetTypeString(x, targetElement, includeCollectionInformation)))}>" :
                 string.Empty;
+
             if (currentType.ActionOf && includeActionInformation)
             {
-                return $"Action<{collectionPrefix}{typeName}{genericParameters}{nullableSuffix}{collectionSuffix}>";
+                return $"Action<{collectionPrefix}{typeName}{genericParameters}{nullableSuffix}{collectionSuffix}>?";
             }
 
             return $"{collectionPrefix}{typeName}{genericParameters}{nullableSuffix}{collectionSuffix}";
