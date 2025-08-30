@@ -12,6 +12,9 @@ updates:
     ignore:
       - dependency-name: "Microsoft.CodeAnalysis.CSharp"
       - dependency-name: "Microsoft.CodeAnalysis.Analyzers"
+      - dependency-name: "System.CommandLine"
+      - dependency-name: "System.CommandLine.Hosting"
+      - dependency-name: "System.CommandLine.Rendering"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
