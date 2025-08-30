@@ -2,11 +2,7 @@
   "profiles": {
     "requesty": {
       "commandName": "Project",
-      "commandLineArgs": "--openapi C:\\src\\msgraph-sdk-powershell\\openApiDocs\\v1.0\\mail.yml -o C:\\Users\\darrmi\\source\\github\\darrelmiller\\OpenApiClient\\Generated -c GraphClient --loglevel Information"
-    },
-    "dart": {
-      "commandName": "Project",
-      "commandLineArgs": "generate --openapi D:\\swagger.json -o D:\\generated --log-level Debug -l Dart"
+      "commandLineArgs": "generate --openapi ../../../../../Bones/Services/Bones.Api/OpenApi/swagger.json --output ./AutoGenBonesApiClient --class-name BonesApiClient --namespace-name Bones.Api.Client.ReQuesty"
     }
   }
 }

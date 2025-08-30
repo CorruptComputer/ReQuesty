@@ -17,7 +17,7 @@ public abstract class CodeTypeBase : CodeTerminal, ICloneable
     {
         get; set;
     }
-    public bool IsNullable { get; set; } = true;
+    public bool IsNullable { get; set; }
     public CodeTypeCollectionKind CollectionKind { get; set; } = CodeTypeCollectionKind.None;
     public bool IsCollection
     {

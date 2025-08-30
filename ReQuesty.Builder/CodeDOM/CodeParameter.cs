@@ -63,12 +63,11 @@ public enum CodeParameterKind
 
 public class CodeParameter : CodeTerminalWithKind<CodeParameterKind>, ICloneable, IDocumentedElement, IDeprecableElement
 {
-#nullable disable // exposing property is required
-    private CodeTypeBase type;
-#nullable enable
+    private CodeTypeBase? type;
     public required CodeTypeBase Type
     {
-        get => type; set
+        get => type!;
+        set
         {
             ArgumentNullException.ThrowIfNull(value);
             EnsureElementsAreChildren(value);

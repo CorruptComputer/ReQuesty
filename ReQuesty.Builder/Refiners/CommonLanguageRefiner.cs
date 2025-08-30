@@ -907,19 +907,19 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
         }
         CrawlTree(currentElement, x => CorrectCoreType(x, correctMethodType, correctPropertyType, correctImplements, correctIndexer), false);
     }
-    protected static void MakeModelPropertiesNullable(CodeElement currentElement)
-    {
-        if (currentElement is CodeClass currentClass &&
-            currentClass.IsOfKind(CodeClassKind.Model))
-        {
-            currentClass.Properties
-                        .Where(static x => x.IsOfKind(CodePropertyKind.Custom))
-                        .ToList()
-                        .ForEach(static x => x.Type.IsNullable = true);
-        }
+    //protected static void MakeModelPropertiesNullable(CodeElement currentElement)
+    //{
+    //    if (currentElement is CodeClass currentClass &&
+    //        currentClass.IsOfKind(CodeClassKind.Model))
+    //    {
+    //        currentClass.Properties
+    //                    .Where(static x => x.IsOfKind(CodePropertyKind.Custom))
+    //                    .ToList()
+    //                    .ForEach(static x => x.Type.IsNullable = true);
+    //    }
 
-        CrawlTree(currentElement, MakeModelPropertiesNullable);
-    }
+    //    CrawlTree(currentElement, MakeModelPropertiesNullable);
+    //}
     protected static void RemoveMethodByKind(CodeElement currentElement, CodeMethodKind kind, params CodeMethodKind[] additionalKinds)
     {
         RemoveMethodByKindImpl(currentElement, new List<CodeMethodKind>(additionalKinds) { kind }.ToArray());

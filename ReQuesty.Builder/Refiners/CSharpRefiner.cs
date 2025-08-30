@@ -143,7 +143,7 @@ public class CSharpRefiner(GenerationConfiguration configuration) : CommonLangua
     private const string AbstractionsNamespaceName = "ReQuesty.Runtime.Abstractions";
     private const string SerializationNamespaceName = $"{AbstractionsNamespaceName}.Serialization";
     private const string StoreNamespaceName = $"{AbstractionsNamespaceName}.Store";
-    private const string ExtensionsNamespaceName = $"{AbstractionsNamespaceName}.Extensions";
+    private const string ExtensionsNamespaceName = $"ReQuesty.Runtime.Extensions";
 
     protected static readonly AdditionalUsingEvaluator[] defaultUsingEvaluators = [
         new (static x => x is CodeProperty prop && prop.IsOfKind(CodePropertyKind.RequestAdapter),
@@ -197,6 +197,7 @@ public class CSharpRefiner(GenerationConfiguration configuration) : CommonLangua
         new (static x => x is CodeMethod method && method.IsOfKind(CodeMethodKind.RequestExecutor, CodeMethodKind.RequestGenerator) && method.Parameters.Any(static y => y.IsOfKind(CodeParameterKind.RequestBody) && y.Type.Name.Equals(MultipartBodyClassName, StringComparison.OrdinalIgnoreCase)),
             AbstractionsNamespaceName, MultipartBodyClassName),
     ];
+
     private const string MultipartBodyClassName = "MultipartBody";
     protected static void CapitalizeNamespacesFirstLetters(CodeElement current)
     {

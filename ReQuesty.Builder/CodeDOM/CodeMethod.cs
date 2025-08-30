@@ -141,18 +141,19 @@ public class CodeMethod : CodeTerminalWithKind<CodeMethodKind>, ICloneable, IDoc
     public bool ShouldAddAcceptHeader => AcceptedResponseTypes.Any();
     public string AcceptHeaderValue => string.Join(", ", AcceptedResponseTypes);
     public AccessModifier Access { get; set; } = AccessModifier.Public;
-#nullable disable // exposing property is required
-    private CodeTypeBase returnType;
-#nullable enable
+
+    private CodeTypeBase? returnType;
     public required CodeTypeBase ReturnType
     {
-        get => returnType; set
+        get => returnType!;
+        set
         {
             ArgumentNullException.ThrowIfNull(value);
             EnsureElementsAreChildren(value);
             returnType = value;
         }
     }
+
     private readonly ConcurrentDictionary<string, CodeParameter> parameters = new();
     public void RemoveParametersByKind(params CodeParameterKind[] kinds)
     {

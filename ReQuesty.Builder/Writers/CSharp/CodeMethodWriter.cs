@@ -458,7 +458,7 @@ public class CodeMethodWriter(CSharpConventionService conventionService) : BaseE
             writer.StartBlock();
             foreach (KeyValuePair<string, CodeTypeBase> errorMapping in codeElement.ErrorMappings.Where(errorMapping => errorMapping.Value.AllTypes.FirstOrDefault()?.TypeDefinition is CodeClass))
             {
-                writer.WriteLine($"{{ \"{errorMapping.Key.ToUpperInvariant()}\", {conventions.GetTypeString(errorMapping.Value, codeElement, false)}.CreateFromDiscriminatorValue }},");
+                writer.WriteLine($"{{ \"{errorMapping.Key.ToUpperInvariant()}\", {conventions.GetTypeString(errorMapping.Value, codeElement)}.CreateFromDiscriminatorValue }},");
             }
             writer.CloseBlock("};");
         }
@@ -646,7 +646,7 @@ public class CodeMethodWriter(CSharpConventionService conventionService) : BaseE
     protected string GetSendRequestMethodName(bool isVoid, CodeElement currentElement, CodeTypeBase returnType)
     {
         ArgumentNullException.ThrowIfNull(returnType);
-        string returnTypeName = conventions.GetTypeString(returnType, currentElement, false);
+        string returnTypeName = conventions.GetTypeString(returnType, currentElement);
         bool isStream = conventions.StreamTypeName.Equals(returnTypeName, StringComparison.OrdinalIgnoreCase);
         bool isEnum = returnType is CodeType codeType && codeType.TypeDefinition is CodeEnum;
         if (isVoid)
@@ -771,28 +771,9 @@ public class CodeMethodWriter(CSharpConventionService conventionService) : BaseE
         string baseSuffix = GetBaseSuffix(isConstructor, inherits, parentClass, code);
         string parameters = string.Join(", ", code.Parameters.OrderBy(x => x, parameterOrderComparer).Select(p => conventions.GetParameterSignature(p, code)).ToList());
         string methodName = isConstructor ? parentClass.Name.ToFirstCharacterUpperCase() : code.Name.ToFirstCharacterUpperCase();
-        bool includeNullableReferenceType = code.IsOfKind(CodeMethodKind.RequestExecutor, CodeMethodKind.RequestGenerator);
-        if (includeNullableReferenceType)
-        {
-            string completeReturnTypeWithNullable = isConstructor || string.IsNullOrEmpty(genericTypeSuffix) ? completeReturnType : $"{completeReturnType[..^2].TrimEnd('?')}?{genericTypeSuffix} ";
-            string nullableParameters = string.Join(", ", code.Parameters.Order(parameterOrderComparer)
-                                                          .Select(p => p.IsOfKind(CodeParameterKind.RequestConfiguration) ?
-                                                                                        GetParameterSignatureWithNullableRefType(p, code) :
-                                                                                        conventions.GetParameterSignature(p, code))
-                                                          .ToList());
-            CSharpConventionService.WriteNullableOpening(writer);
-            writer.WriteLine($"{conventions.GetAccessModifier(code.Access)} {staticModifier}{hideModifier}{completeReturnTypeWithNullable}{methodName}({nullableParameters}){baseSuffix}");
-            writer.WriteLine("{");
-            CSharpConventionService.WriteNullableMiddle(writer);
-        }
 
         writer.WriteLine($"{conventions.GetAccessModifier(code.Access)} {staticModifier}{hideModifier}{completeReturnType}{methodName}({parameters}){baseSuffix}");
         writer.WriteLine("{");
-
-        if (includeNullableReferenceType)
-        {
-            CSharpConventionService.WriteNullableClosing(writer);
-        }
     }
 
     private string GetParameterSignatureWithNullableRefType(CodeParameter parameter, CodeElement targetElement)

@@ -2,6 +2,7 @@
 public class CodeUsing : CodeElement, ICloneable
 {
     private CodeType? declaration;
+
     public CodeType? Declaration
     {
         get => declaration; set
@@ -10,15 +11,19 @@ public class CodeUsing : CodeElement, ICloneable
             declaration = value;
         }
     }
+
     public bool IsExternal
     {
         get => Declaration?.IsExternal ?? true;
     }
+
     public bool IsErasable
     {
         get; set;
     }
+
     public string Alias { get; set; } = string.Empty;
+
     public object Clone()
     {
         return new CodeUsing

@@ -97,12 +97,7 @@ public record LanguageDependency : IOpenApiSerializable
 {
     public string Name { get; set; } = string.Empty;
     public string Version { get; set; } = string.Empty;
-    [JsonPropertyName("Type")]
-    public DependencyType? DependencyType
-    {
-        get; set;
-    }
-    private const string TypePropertyName = "type";
+
     public void SerializeAsV2(IOpenApiWriter writer) => SerializeAsV31(writer);
     public void SerializeAsV3(IOpenApiWriter writer) => SerializeAsV31(writer);
     public void SerializeAsV31(IOpenApiWriter writer)
@@ -111,10 +106,6 @@ public record LanguageDependency : IOpenApiSerializable
         writer.WriteStartObject();
         writer.WriteProperty(nameof(Name).ToFirstCharacterLowerCase(), Name);
         writer.WriteProperty(nameof(Version).ToFirstCharacterLowerCase(), Version);
-        if (DependencyType is not null)
-        {
-            writer.WriteProperty(TypePropertyName, DependencyType.ToString());
-        }
         writer.WriteEndObject();
     }
     public static LanguageDependency Parse(JsonNode source)
@@ -135,10 +126,6 @@ public record LanguageDependency : IOpenApiSerializable
         {
             extension.Version = versionValue;
         }
-        if (rawObject.TryGetPropertyValue(TypePropertyName, out JsonNode? typeNode) && typeNode is JsonValue typeJsonValue && typeJsonValue.TryGetValue<string>(out string? typeValue) && Enum.TryParse<DependencyType>(typeValue, true, out DependencyType parsedTypeValue))
-        {
-            extension.DependencyType = parsedTypeValue;
-        }
         return extension;
     }
 }
@@ -155,14 +142,4 @@ public enum SupportExperience
 {
     Microsoft,
     Community
-}
-
-public enum DependencyType
-{
-    Abstractions,
-    Serialization,
-    Authentication,
-    Http,
-    Bundle,
-    Additional
 }

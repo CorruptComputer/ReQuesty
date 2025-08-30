@@ -6567,7 +6567,7 @@ components:
         CodeIndexer? postsCollectionStringIndexer = postsCollectionRequestBuilder.FindChildByName<CodeIndexer>($"{postsCollectionIndexer.Name}-string");
         Assert.NotNull(postsCollectionStringIndexer);
         Assert.Equal("string", postsCollectionStringIndexer.IndexParameter.Type.Name);
-        Assert.True(postsCollectionStringIndexer.IndexParameter.Type.IsNullable);
+        Assert.False(postsCollectionStringIndexer.IndexParameter.Type.IsNullable);
         Assert.True(postsCollectionStringIndexer.Deprecation.IsDeprecated);
         CodeNamespace? postsItemRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.me.posts.item");
         Assert.NotNull(postsItemRequestBuilderNamespace);
@@ -6586,7 +6586,7 @@ components:
         CodeIndexer? authorsCollectionStringIndexer = authorsCollectionRequestBuilder.FindChildByName<CodeIndexer>($"{authorsCollectionIndexer.Name}-string");
         Assert.NotNull(authorsCollectionStringIndexer);
         Assert.Equal("string", authorsCollectionStringIndexer.IndexParameter.Type.Name);
-        Assert.True(authorsCollectionStringIndexer.IndexParameter.Type.IsNullable);
+        Assert.False(authorsCollectionStringIndexer.IndexParameter.Type.IsNullable);
         Assert.True(authorsCollectionStringIndexer.Deprecation.IsDeprecated);
         CodeNamespace? authorsItemRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.authors.item");
         Assert.NotNull(authorsItemRequestBuilderNamespace);
@@ -6605,7 +6605,7 @@ components:
         CodeIndexer? actorsCollectionStringIndexer = actorsCollectionRequestBuilder.FindChildByName<CodeIndexer>($"{actorsCollectionIndexer.Name}-string");
         Assert.NotNull(actorsCollectionStringIndexer);
         Assert.Equal("string", actorsCollectionStringIndexer.IndexParameter.Type.Name);
-        Assert.True(actorsCollectionStringIndexer.IndexParameter.Type.IsNullable);
+        Assert.False(actorsCollectionStringIndexer.IndexParameter.Type.IsNullable);
         Assert.True(actorsCollectionStringIndexer.Deprecation.IsDeprecated);
         CodeNamespace? actorsItemRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.actors.item");
         Assert.NotNull(actorsItemRequestBuilderNamespace);

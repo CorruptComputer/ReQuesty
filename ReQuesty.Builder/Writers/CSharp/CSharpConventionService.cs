@@ -12,31 +12,14 @@ public class CSharpConventionService : CommonLanguageConventionService
     public override string VoidTypeName => "void";
     public override string DocCommentPrefix => "/// ";
 
-    // TODO: ReQuesty -- This should probably be removed, any type can be nullable now. The OpenAPI spec defines this.
-    private static readonly HashSet<string> NullableTypes = new(StringComparer.OrdinalIgnoreCase) { "int", "bool", "float", "double", "decimal", "long", "Guid", "DateTimeOffset", "TimeSpan", "Date", "Time", "sbyte", "byte" };
+    private static readonly HashSet<string> PrimitiveTypes = new(StringComparer.OrdinalIgnoreCase) { "int", "bool", "float", "double", "decimal", "long", "Guid", "DateTimeOffset", "TimeSpan", "Date", "Time", "sbyte", "byte", "string" };
     public const char NullableMarker = '?';
     public static string NullableMarkerAsString => "?";
     public override string ParseNodeInterfaceName => "IParseNode";
-    public const string NullableEnableDirective = "#nullable enable";
-    public const string NullableRestoreDirective = "#nullable restore";
 
     public const string CS0618 = "CS0618";
     public const string CS1591 = "CS1591";
 
-    public static void WriteNullableOpening(LanguageWriter writer)
-    {
-        ArgumentNullException.ThrowIfNull(writer);
-        writer.WriteLine(NullableEnableDirective, false);
-    }
-    public static void WriteNullableMiddle(LanguageWriter writer)
-    {
-        ArgumentNullException.ThrowIfNull(writer);
-        writer.WriteLine(NullableRestoreDirective, false);
-    }
-    public static void WriteNullableClosing(LanguageWriter writer)
-    {
-        ArgumentNullException.ThrowIfNull(writer);
-    }
     public void WritePragmaDisable(LanguageWriter writer, string code)
     {
         ArgumentNullException.ThrowIfNull(writer);
@@ -49,9 +32,7 @@ public class CSharpConventionService : CommonLanguageConventionService
     }
     private const string ReferenceTypePrefix = "<see cref=\"";
     private const string ReferenceTypeSuffix = "\"/>";
-#pragma warning disable S1006 // Method overrides should not change parameter defaults
     public override bool WriteShortDescription(IDocumentedElement element, LanguageWriter writer, string prefix = "<summary>", string suffix = "</summary>")
-#pragma warning restore S1006 // Method overrides should not change parameter defaults
     {
         ArgumentNullException.ThrowIfNull(writer);
         ArgumentNullException.ThrowIfNull(element);
@@ -69,12 +50,14 @@ public class CSharpConventionService : CommonLanguageConventionService
         writer.WriteLine($"{DocCommentPrefix}{prefix}{description}{suffix}");
         return true;
     }
+
     public void WriteAdditionalDescriptionItem(string description, LanguageWriter writer)
     {
         ArgumentNullException.ThrowIfNull(writer);
         ArgumentNullException.ThrowIfNull(description);
         writer.WriteLine($"{DocCommentPrefix}{description}");
     }
+
     public bool WriteLongDescription(IDocumentedElement element, LanguageWriter writer)
     {
         ArgumentNullException.ThrowIfNull(writer);
@@ -164,9 +147,9 @@ public class CSharpConventionService : CommonLanguageConventionService
         }
     }
 
-    private static bool ShouldTypeHaveNullableMarker(CodeTypeBase propType, string propTypeName)
+    private static bool ShouldTypeHaveNullableMarker(CodeTypeBase propType)
     {
-        return propType.IsNullable && (NullableTypes.Contains(propTypeName) || (propType is CodeType codeType && codeType.TypeDefinition is CodeEnum));
+        return propType.IsNullable;
     }
 
     private HashSet<string> _namespaceSegmentsNames = new(StringComparer.OrdinalIgnoreCase);
@@ -202,7 +185,7 @@ public class CSharpConventionService : CommonLanguageConventionService
     }
     public string GetTypeStringForDocumentation(CodeTypeBase code, CodeElement targetElement)
     {
-        string typeString = GetTypeString(code, targetElement, true, false);// dont include nullable markers
+        string typeString = GetTypeString(code, targetElement, true);
         if (typeString.EndsWith('>'))
         {
             return typeString.CleanupXMLString(); // don't generate cref links for generic types as concrete types generate invalid links
@@ -212,9 +195,9 @@ public class CSharpConventionService : CommonLanguageConventionService
     }
     public override string GetTypeString(CodeTypeBase code, CodeElement targetElement, bool includeCollectionInformation = true, LanguageWriter? writer = null)
     {
-        return GetTypeString(code, targetElement, includeCollectionInformation, true);
+        return GetTypeString(code, targetElement, includeCollectionInformation);
     }
-    public string GetTypeString(CodeTypeBase code, CodeElement targetElement, bool includeCollectionInformation, bool includeNullableInformation, bool includeActionInformation = true)
+    public string GetTypeString(CodeTypeBase code, CodeElement targetElement, bool includeCollectionInformation, bool includeActionInformation = true)
     {
         ArgumentNullException.ThrowIfNull(targetElement);
         if (code is CodeComposedTypeBase)
@@ -225,7 +208,7 @@ public class CSharpConventionService : CommonLanguageConventionService
         if (code is CodeType currentType)
         {
             string typeName = TranslateType(currentType);
-            string nullableSuffix = ShouldTypeHaveNullableMarker(code, typeName) && includeNullableInformation ? NullableMarkerAsString : string.Empty;
+            string nullableSuffix = ShouldTypeHaveNullableMarker(code) ? NullableMarkerAsString : string.Empty;
             string collectionPrefix = currentType.CollectionKind == CodeTypeCollectionKind.Complex && includeCollectionInformation ? "List<" : string.Empty;
             string collectionSuffix = currentType.CollectionKind switch
             {
@@ -274,12 +257,7 @@ public class CSharpConventionService : CommonLanguageConventionService
         }
 
         typeName = typeName.StripArraySuffix().TrimEnd('?').ToLowerInvariant();
-        return typeName switch
-        {
-            "string" => true,
-            _ when NullableTypes.Contains(typeName) => true,
-            _ => false,
-        };
+        return PrimitiveTypes.Contains(typeName);
     }
     public override string GetParameterSignature(CodeParameter parameter, CodeElement targetElement, LanguageWriter? writer = null)
     {

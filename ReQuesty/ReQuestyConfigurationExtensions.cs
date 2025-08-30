@@ -38,7 +38,6 @@ internal static class ReQuestyConfigurationExtensions
                 {
                     Version = dependency[nameof(LanguageDependency.Version)] ?? string.Empty,
                     Name = dependency[nameof(LanguageDependency.Name)] ?? string.Empty,
-                    DependencyType = dependency["Type"] is string typeValue && !string.IsNullOrEmpty(typeValue) && Enum.TryParse<DependencyType>(typeValue, true, out DependencyType dt) ? dt : null,
                 });
             }
             configObject.Languages.Add(section.Key, lngInfo);

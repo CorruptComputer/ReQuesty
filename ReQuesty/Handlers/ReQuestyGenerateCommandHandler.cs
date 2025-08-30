@@ -8,84 +8,34 @@ using ReQuesty.Builder;
 using ReQuesty.Builder.CodeDOM;
 using ReQuesty.Builder.Extensions;
 using Microsoft.Extensions.Logging;
+using ReQuesty.Consts;
 
 namespace ReQuesty.Handlers;
 
 internal class ReQuestyGenerateCommandHandler : BaseReQuestyCommandHandler
 {
-    public required Option<string> DescriptionOption
-    {
-        get; init;
-    }
-
-    public required Option<string> OutputOption
-    {
-        get; init;
-    }
-
-    public required Option<string> ClassOption
-    {
-        get; init;
-    }
-    public required Option<AccessModifier> TypeAccessModifierOption
-    {
-        get; init;
-    }
-    public required Option<string> NamespaceOption
-    {
-        get; init;
-    }
-    public required Option<bool> BackingStoreOption
-    {
-        get; init;
-    }
-    public required Option<bool> AdditionalDataOption
-    {
-        get; init;
-    }
-    public required Option<List<string>> SerializerOption
-    {
-        get; init;
-    }
-    public required Option<List<string>> DeserializerOption
-    {
-        get; init;
-    }
-    public required Option<List<string>> DisabledValidationRulesOption
-    {
-        get; init;
-    }
-    public required Option<bool> CleanOutputOption
-    {
-        get; init;
-    }
-    public required Option<List<string>> StructuredMimeTypesOption
-    {
-        get; init;
-    }
-    public override async Task<int> InvokeAsync(InvocationContext context)
+    public override async Task<int> InvokeAsync(ParseResult context, CancellationToken cancellationToken)
     {
         // Get options
-        string? output = context.ParseResult.GetValueForOption(OutputOption);
-        string? openapi = context.ParseResult.GetValueForOption(DescriptionOption);
-        string? manifest = context.ParseResult.GetValueForOption(ManifestOption);
-        bool backingStore = context.ParseResult.GetValueForOption(BackingStoreOption);
-        bool excludeBackwardCompatible = context.ParseResult.GetValueForOption(ExcludeBackwardCompatibleOption);
-        bool clearCache = context.ParseResult.GetValueForOption(ClearCacheOption);
-        bool disableSSLValidation = context.ParseResult.GetValueForOption(DisableSSLValidationOption);
-        bool includeAdditionalData = context.ParseResult.GetValueForOption(AdditionalDataOption);
-        string? className = context.ParseResult.GetValueForOption(ClassOption);
-        AccessModifier typeAccessModifier = context.ParseResult.GetValueForOption(TypeAccessModifierOption);
-        string? namespaceName = context.ParseResult.GetValueForOption(NamespaceOption);
-        List<string> serializer = context.ParseResult.GetValueForOption(SerializerOption).OrEmpty();
-        List<string> deserializer = context.ParseResult.GetValueForOption(DeserializerOption).OrEmpty();
-        List<string>? includePatterns0 = context.ParseResult.GetValueForOption(IncludePatternsOption);
-        List<string>? excludePatterns0 = context.ParseResult.GetValueForOption(ExcludePatternsOption);
-        List<string>? disabledValidationRules0 = context.ParseResult.GetValueForOption(DisabledValidationRulesOption);
-        bool cleanOutput = context.ParseResult.GetValueForOption(CleanOutputOption);
-        List<string>? structuredMimeTypes0 = context.ParseResult.GetValueForOption(StructuredMimeTypesOption);
-        LogLevel? logLevel = context.ParseResult.FindResultFor(LogLevelOption)?.GetValueOrDefault() as LogLevel?;
-        CancellationToken cancellationToken = context.BindingContext.GetService(typeof(CancellationToken)) is CancellationToken token ? token : CancellationToken.None;
+        string? output = context.GetValue<string?>(CommandLineOptions.OutputOption);
+        string? openapi = context.GetValue<string?>(CommandLineOptions.DescriptionOption);
+        string? manifest = context.GetValue<string?>(CommandLineOptions.ManifestOption);
+        bool backingStore = context.GetValue<bool>(CommandLineOptions.BackingStoreOption);
+        bool excludeBackwardCompatible = context.GetValue<bool>(CommandLineOptions.ExcludeBackwardCompatibleOption);
+        bool clearCache = context.GetValue<bool>(CommandLineOptions.ClearCacheOption);
+        bool disableSSLValidation = context.GetValue<bool>(CommandLineOptions.DisableSSLValidationOption);
+        bool includeAdditionalData = context.GetValue<bool>(CommandLineOptions.AdditionalDataOption);
+        string? className = context.GetValue<string?>(CommandLineOptions.ClassNameOption);
+        AccessModifier typeAccessModifier = context.GetValue<AccessModifier>(CommandLineOptions.TypeAccessModifierOption);
+        string? namespaceName = context.GetValue<string?>(CommandLineOptions.NamespaceNameOption);
+        List<string> serializer = context.GetValue<List<string>>(CommandLineOptions.SerializerOption).OrEmpty();
+        List<string> deserializer = context.GetValue<List<string>>(CommandLineOptions.DeserializerOption).OrEmpty();
+        List<string>? includePatterns0 = context.GetValue<List<string>?>(CommandLineOptions.IncludePathOption);
+        List<string>? excludePatterns0 = context.GetValue<List<string>?>(CommandLineOptions.ExcludePathOption);
+        List<string>? disabledValidationRules0 = context.GetValue<List<string>?>(CommandLineOptions.DisableValidationRulesOption);
+        bool cleanOutput = context.GetValue<bool>(CommandLineOptions.CleanOutputOption);
+        List<string>? structuredMimeTypes0 = context.GetValue<List<string>?>(CommandLineOptions.StructuredMimeTypesOption);
+        LogLevel? logLevel = context.GetValue<LogLevel?>(CommandLineOptions.LogLevelOption);
 
         List<string> includePatterns = includePatterns0.OrEmpty();
         List<string> excludePatterns = excludePatterns0.OrEmpty();
@@ -176,30 +126,5 @@ internal class ReQuestyGenerateCommandHandler : BaseReQuestyCommandHandler
 #endif
             }
         }
-    }
-    public required Option<List<string>> IncludePatternsOption
-    {
-        get; init;
-    }
-    public required Option<List<string>> ExcludePatternsOption
-    {
-        get; init;
-    }
-    public required Option<bool> ClearCacheOption
-    {
-        get; init;
-    }
-    public required Option<string> ManifestOption
-    {
-        get; init;
-    }
-    public required Option<bool> ExcludeBackwardCompatibleOption
-    {
-        get;
-        set;
-    }
-    public required Option<bool> DisableSSLValidationOption
-    {
-        get; init;
     }
 }

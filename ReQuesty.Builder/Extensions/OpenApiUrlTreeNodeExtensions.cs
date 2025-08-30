@@ -41,9 +41,11 @@ public static partial class OpenApiUrlTreeNodeExtensions
     //{id}, name(idParam={id}), name(idParam='{id}'), name(idParam='{id}',idParam2='{id2}')
     [GeneratedRegex(@"(?<prefix>\w+)?(?<equals>=?)'?\{(?<paramName>\w+)\}'?,?", RegexOptions.Singleline, 500)]
     private static partial Regex PathParametersRegex();
+
     // microsoft.graph.getRoleScopeTagsByIds(ids=@ids)
     [GeneratedRegex(@"=@(\w+)", RegexOptions.Singleline, 500)]
     private static partial Regex AtSignPathParameterRegex();
+
     private const char RequestParametersChar = '{';
     private const char RequestParametersEndChar = '}';
     private const string RequestParametersSectionChar = "(";

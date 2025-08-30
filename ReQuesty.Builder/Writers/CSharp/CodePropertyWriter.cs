@@ -14,25 +14,17 @@ public class CodePropertyWriter(CSharpConventionService conventionService) : Bas
         }
 
         string propertyType = conventions.GetTypeString(codeElement.Type, codeElement);
-        bool isNullableReferenceType = !propertyType.EndsWith('?')
-                                      && codeElement.IsOfKind(
-                                            CodePropertyKind.Custom,
-                                            CodePropertyKind.QueryParameter);// Other property types are appropriately constructor initialized
+        bool isNullable = codeElement.Type.IsNullable;
+
+        if (isNullable && !propertyType.EndsWith('?'))
+        {
+            propertyType += "?";
+        }
+
         conventions.WriteShortDescription(codeElement, writer);
         conventions.WriteDeprecationAttribute(codeElement, writer);
-        if (isNullableReferenceType)
-        {
-            CSharpConventionService.WriteNullableOpening(writer);
-            WritePropertyInternal(codeElement, writer, $"{propertyType}?");
-            CSharpConventionService.WriteNullableMiddle(writer);
-        }
 
-        WritePropertyInternal(codeElement, writer, propertyType);// Always write the normal way
-
-        if (isNullableReferenceType)
-        {
-            CSharpConventionService.WriteNullableClosing(writer);
-        }
+        WritePropertyInternal(codeElement, writer, propertyType);
     }
 
     private void WritePropertyInternal(CodeProperty codeElement, LanguageWriter writer, string propertyType)

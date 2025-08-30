@@ -21,7 +21,6 @@ public class OpenApiReQuestyExtensionTests
                             new LanguageDependency {
                                 Name = "Microsoft.Graph.Core",
                                 Version = "1.0.0",
-                                DependencyType = DependencyType.Bundle,
                             }
                         ],
                         DependencyInstallCommand = "dotnet add package",
@@ -43,7 +42,7 @@ public class OpenApiReQuestyExtensionTests
 
         value.Write(writer, OpenApiSpecVersion.OpenApi3_0);
         string result = sWriter.ToString();
-        Assert.Equal("{\"languagesInformation\":{\"CSharp\":{\"maturityLevel\":\"Preview\",\"supportExperience\":\"Microsoft\",\"dependencyInstallCommand\":\"dotnet add package\",\"dependencies\":[{\"name\":\"Microsoft.Graph.Core\",\"version\":\"1.0.0\",\"type\":\"Bundle\"}],\"clientClassName\":\"GraphServiceClient\",\"clientNamespaceName\":\"Microsoft.Graph\",\"structuredMimeTypes\":[\"application/json\",\"application/xml\"]}}}", result);
+        Assert.Equal("{\"languagesInformation\":{\"CSharp\":{\"maturityLevel\":\"Preview\",\"supportExperience\":\"Microsoft\",\"dependencyInstallCommand\":\"dotnet add package\",\"dependencies\":[{\"name\":\"Microsoft.Graph.Core\",\"version\":\"1.0.0\"}],\"clientClassName\":\"GraphServiceClient\",\"clientNamespaceName\":\"Microsoft.Graph\",\"structuredMimeTypes\":[\"application/json\",\"application/xml\"]}}}", result);
     }
     [Fact]
     public void Parses()
@@ -56,8 +55,7 @@ public class OpenApiReQuestyExtensionTests
                     "dependencies": [
                         {
                             "name": "Microsoft.Graph.Core",
-                            "version": "1.0.0",
-                            "type": "bundle"
+                            "version": "1.0.0"
                         }
                     ],
                     "dependencyInstallCommand": "dotnet add package",
@@ -89,6 +87,5 @@ public class OpenApiReQuestyExtensionTests
         Assert.Contains("application/json", CSEntry.StructuredMimeTypes);
         Assert.Contains("application/xml", CSEntry.StructuredMimeTypes);
         Assert.Equal("1.0.0", CSEntry.Dependencies[0].Version);
-        Assert.Equal(DependencyType.Bundle, CSEntry.Dependencies[0].DependencyType);
     }
 }

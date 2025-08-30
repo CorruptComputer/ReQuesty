@@ -2581,6 +2581,13 @@ public partial class ReQuestyBuilder
                         logger.LogWarning("Omitted property {PropertyName} for model {ModelName} in API path {ApiPath}, the schema is invalid.", x.Key, model.Name, currentNode.Path);
                         return null;
                     }
+
+                    // If this is a collection, it'll make the individual items nullable, which likely is not what is wanted
+                    if (!definition.IsCollection)
+                    {
+                        definition.IsNullable = !schema.Required?.Contains(x.Key) ?? true;
+                    }
+
                     return CreateProperty(x.Key, definition.Name, propertySchema: propertySchema, existingType: definition);
                 })
                 .OfType<CodeProperty>()
@@ -2772,9 +2779,10 @@ public partial class ReQuestyBuilder
             // since its a query parameter default to string if there is no schema
             // it also be an object type, but we'd need to create the model in that case and there's no standard on how to serialize those as query parameters
             Name = "string",
-            IsExternal = true,
+            IsExternal = true
         };
         resultType.CollectionKind = parameter.Schema.IsArray() ? CodeTypeBase.CodeTypeCollectionKind.Array : default;
+        resultType.IsNullable = !parameter.Required;
         if (parameter.Name?.SanitizeParameterNameForCodeSymbols() is not string propName)
         {
             return;
@@ -2826,6 +2834,7 @@ public partial class ReQuestyBuilder
         {
             IsExternal = true,
             Name = "string",
+            IsNullable = true
         };
     }
     private static CodeType GetQueryParameterType(IOpenApiSchema schema)

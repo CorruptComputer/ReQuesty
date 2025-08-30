@@ -5,10 +5,11 @@ using ReQuesty.Builder.Configuration;
 using ReQuesty.Builder.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using ReQuesty.Consts;
 
 namespace ReQuesty.Handlers;
 
-internal abstract class BaseReQuestyCommandHandler : ICommandHandler, IDisposable
+internal abstract class BaseReQuestyCommandHandler : AsynchronousCommandLineAction, IDisposable
 {
     private HttpClient? _httpClient;
     protected HttpClient httpClient
@@ -19,14 +20,12 @@ internal abstract class BaseReQuestyCommandHandler : ICommandHandler, IDisposabl
             return _httpClient;
         }
     }
-    public required Option<LogLevel> LogLevelOption
-    {
-        get; init;
-    }
+
     protected ReQuestyConfiguration Configuration
     {
         get => ConfigurationFactory.Value;
     }
+
     private readonly Lazy<ReQuestyConfiguration> ConfigurationFactory = new(() =>
     {
         ConfigurationBuilder builder = new();
@@ -56,16 +55,11 @@ internal abstract class BaseReQuestyCommandHandler : ICommandHandler, IDisposabl
         return httpClient;
     }
 
-    public int Invoke(InvocationContext context)
-    {
-        throw new InvalidOperationException("This command handler is async only");
-    }
-
-    public abstract Task<int> InvokeAsync(InvocationContext context);
     private readonly List<IDisposable> disposables = [];
-    protected (ILoggerFactory, ILogger<T>) GetLoggerAndFactory<T>(InvocationContext context, string logFileRootPath = "")
+    protected (ILoggerFactory, ILogger<T>) GetLoggerAndFactory<T>(ParseResult parseResult, string logFileRootPath = "")
     {
-        LogLevel logLevel = context.ParseResult.GetValueForOption(LogLevelOption);
+        LogLevel logLevel = parseResult.GetValue<LogLevel>(CommandLineOptions.LogLevelOption);
+
         ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
         {
             string logFileAbsoluteRootPath = GetAbsolutePath(logFileRootPath);
@@ -79,6 +73,7 @@ internal abstract class BaseReQuestyCommandHandler : ICommandHandler, IDisposabl
                 .AddProvider(fileLogger)
                 .SetMinimumLevel(logLevel);
         });
+
         ILogger<T> logger = loggerFactory.CreateLogger<T>();
         return (loggerFactory, logger);
     }

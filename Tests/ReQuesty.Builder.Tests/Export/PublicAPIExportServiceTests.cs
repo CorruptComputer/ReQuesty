@@ -40,6 +40,8 @@ components:
   schemas:
     microsoft.graph.user:
       type: object
+      required:
+        - id
       properties:
         id:
           type: string
