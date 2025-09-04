@@ -30,7 +30,7 @@
     <PackageReference Include="Microsoft.OpenApi" Version="2.3.0" />
     <PackageReference Include="Microsoft.OpenApi.ApiManifest" Version="2.0.0-preview5" />
     <PackageReference Include="Microsoft.OpenApi.YamlReader" Version="2.3.0" />
-    <PackageReference Include="Microsoft.DeclarativeAgents.Manifest" Version="4.0.0-rc.6" />
+    <PackageReference Include="Microsoft.DeclarativeAgents.Manifest" Version="4.0.0-rc.7" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
