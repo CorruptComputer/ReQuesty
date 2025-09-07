@@ -25,7 +25,6 @@ public class ReQuestyLockComparer : IEqualityComparer<ReQuestyLock?>
         }
         // Manual comparison to avoid false positives on hash collisions.
         return x.DisableSSLValidation == y.DisableSSLValidation
-               && x.ExcludeBackwardCompatible == y.ExcludeBackwardCompatible
                && x.UsesBackingStore == y.UsesBackingStore
                && x.IncludeAdditionalData == y.IncludeAdditionalData
                && _stringComparer.Equals(x.ReQuestyVersion, y.ReQuestyVersion)
@@ -62,7 +61,6 @@ public class ReQuestyLockComparer : IEqualityComparer<ReQuestyLock?>
         hash.Add(obj.ClientNamespaceName, _stringComparer);
         hash.Add(obj.Language, _stringComparer);
         hash.Add(obj.TypeAccessModifier, _stringComparer);
-        hash.Add(obj.ExcludeBackwardCompatible);
         hash.Add(obj.UsesBackingStore);
         hash.Add(obj.IncludeAdditionalData);
         hash.Add(obj.Serializers, _stringIEnumerableDeepComparer);

@@ -48,13 +48,6 @@ public class ReQuestyLock
         get; set;
     }
     /// <summary>
-    /// Whether backward compatible code was excluded for this client.
-    /// </summary>
-    public bool ExcludeBackwardCompatible
-    {
-        get; set;
-    }
-    /// <summary>
     /// Whether additional data was used for this client.
     /// </summary>
     public bool IncludeAdditionalData
