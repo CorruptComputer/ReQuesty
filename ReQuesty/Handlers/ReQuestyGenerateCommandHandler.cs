@@ -21,7 +21,6 @@ internal class ReQuestyGenerateCommandHandler : BaseReQuestyCommandHandler
         string? openapi = context.GetValue<string?>(CommandLineOptions.DescriptionOption);
         string? manifest = context.GetValue<string?>(CommandLineOptions.ManifestOption);
         bool backingStore = context.GetValue<bool>(CommandLineOptions.BackingStoreOption);
-        bool excludeBackwardCompatible = context.GetValue<bool>(CommandLineOptions.ExcludeBackwardCompatibleOption);
         bool clearCache = context.GetValue<bool>(CommandLineOptions.ClearCacheOption);
         bool disableSSLValidation = context.GetValue<bool>(CommandLineOptions.DisableSSLValidationOption);
         bool includeAdditionalData = context.GetValue<bool>(CommandLineOptions.AdditionalDataOption);
@@ -48,7 +47,6 @@ internal class ReQuestyGenerateCommandHandler : BaseReQuestyCommandHandler
         AssignIfNotNullOrEmpty(namespaceName, (c, s) => c.ClientNamespaceName = s);
         Configuration.Generation.TypeAccessModifier = typeAccessModifier;
         Configuration.Generation.UsesBackingStore = backingStore;
-        Configuration.Generation.ExcludeBackwardCompatible = excludeBackwardCompatible;
         Configuration.Generation.IncludeAdditionalData = includeAdditionalData;
         Configuration.Generation.Language = GenerationLanguage.CSharp;
 

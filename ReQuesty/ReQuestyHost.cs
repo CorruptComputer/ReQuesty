@@ -45,8 +45,6 @@ public static partial class ReQuestyHost
 
         Option<bool> backingStoreOption = GetBackingStoreOption(defaultConfiguration.UsesBackingStore);
 
-        Option<bool> excludeBackwardCompatible = GetExcludeBackwardCompatibleOption(defaultConfiguration.ExcludeBackwardCompatible);
-
         Option<bool> additionalDataOption = GetAdditionalDataOption(defaultConfiguration.IncludeAdditionalData);
 
         Option<List<string>> serializerOption = new(CommandLineOptions.SerializerOption, CommandLineOptions.SerializerShortOption)
@@ -85,7 +83,6 @@ public static partial class ReQuestyHost
             namespaceOption,
             logLevelOption,
             backingStoreOption,
-            excludeBackwardCompatible,
             additionalDataOption,
             serializerOption,
             deserializerOption,
@@ -218,17 +215,6 @@ public static partial class ReQuestyHost
         };
 
         return backingStoreOption;
-    }
-
-    internal static Option<bool> GetExcludeBackwardCompatibleOption(bool defaultValue = false)
-    {
-        Option<bool> excludeBackwardCompatible = new("--exclude-backward-compatible", "--ebc")
-        {
-            Description = "Excludes backward compatible and obsolete assets from the generated result. Should be used for new clients.",
-            DefaultValueFactory = (_) => defaultValue
-        };
-
-        return excludeBackwardCompatible;
     }
 
     internal static Option<bool> GetAdditionalDataOption(bool defaultValue = true)

@@ -116,7 +116,6 @@ public class ReQuestyLock
         }
 
         config.UsesBackingStore = UsesBackingStore;
-        config.ExcludeBackwardCompatible = ExcludeBackwardCompatible;
         config.IncludeAdditionalData = IncludeAdditionalData;
         config.Serializers = Serializers.ToHashSet(StringComparer.OrdinalIgnoreCase);
         config.Deserializers = Deserializers.ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -145,7 +144,6 @@ public class ReQuestyLock
         TypeAccessModifier = config.TypeAccessModifier.ToString();
         ClientNamespaceName = config.ClientNamespaceName;
         UsesBackingStore = config.UsesBackingStore;
-        ExcludeBackwardCompatible = config.ExcludeBackwardCompatible;
         IncludeAdditionalData = config.IncludeAdditionalData;
         Serializers = config.Serializers.ToHashSet(StringComparer.OrdinalIgnoreCase);
         Deserializers = config.Deserializers.ToHashSet(StringComparer.OrdinalIgnoreCase);

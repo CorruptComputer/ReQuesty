@@ -33,9 +33,6 @@ public static class CommandLineOptions
     public const string DisableValidationRulesOption = "--disable-validation-rules";
     public const string DisableValidationRulesShortOption = "--dvr";
 
-    public const string ExcludeBackwardCompatibleOption = "--exclude-backward-compatible";
-    public const string ExcludeBackwardCompatibleShortOption = "--ebc";
-
     public const string ExcludePathOption = "--exclude-path";
     public const string ExcludePathShortOption = "-e";
 

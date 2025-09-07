@@ -61,14 +61,6 @@ public class GenerationConfiguration : ICloneable
     {
         get; set;
     }
-    public bool ExcludeBackwardCompatible
-    {
-        get; set;
-    }
-    public bool IncludeBackwardCompatible
-    {
-        get => !ExcludeBackwardCompatible;
-    }
     public bool IncludeAdditionalData { get; set; } = true;
     public HashSet<string> Serializers
     {
@@ -141,7 +133,6 @@ public class GenerationConfiguration : ICloneable
     {
         return new GenerationConfiguration
         {
-            ExcludeBackwardCompatible = ExcludeBackwardCompatible,
             OpenAPIFilePath = OpenAPIFilePath,
             OutputPath = OutputPath,
             ClientClassName = ClientClassName,

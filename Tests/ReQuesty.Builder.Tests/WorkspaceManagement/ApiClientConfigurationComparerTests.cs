@@ -24,7 +24,6 @@ public sealed class ApiClientConfigurationComparerTests
         hash.Add(string.Empty, stringComparer);
         hash.Add(string.Empty, stringComparer);
         hash.Add("public", stringComparer);
-        hash.Add(false);
         hash.Add(true);
         hash.Add(false);
         hash.Add([], iEnumComparer);

@@ -14,7 +14,6 @@ public sealed class ApiClientConfigurationTests
         {
             ClientNamespaceName = "foo",
             DescriptionLocation = "bar",
-            ExcludeBackwardCompatible = true,
             ExcludePatterns = [
                 "exclude"
             ],
@@ -33,7 +32,6 @@ public sealed class ApiClientConfigurationTests
         Assert.NotNull(cloned);
         Assert.Equal(clientConfig.ClientNamespaceName, cloned.ClientNamespaceName);
         Assert.Equal(clientConfig.DescriptionLocation, cloned.DescriptionLocation);
-        Assert.Equal(clientConfig.ExcludeBackwardCompatible, cloned.ExcludeBackwardCompatible);
         Assert.Equal(clientConfig.ExcludePatterns, cloned.ExcludePatterns);
         Assert.Equal(clientConfig.IncludeAdditionalData, cloned.IncludeAdditionalData);
         Assert.Equal(clientConfig.IncludePatterns, cloned.IncludePatterns);
@@ -51,7 +49,6 @@ public sealed class ApiClientConfigurationTests
             ApiManifestPath = "manifest",
             ClientClassName = "client",
             ClientNamespaceName = "namespace",
-            ExcludeBackwardCompatible = true,
             ExcludePatterns = ["exclude"],
             IncludeAdditionalData = true,
             IncludePatterns = ["include"],
@@ -65,7 +62,6 @@ public sealed class ApiClientConfigurationTests
         Assert.NotNull(clientConfig);
         Assert.Equal(generationConfiguration.ClientNamespaceName, clientConfig.ClientNamespaceName);
         Assert.Equal(generationConfiguration.OpenAPIFilePath, clientConfig.DescriptionLocation);
-        Assert.Equal(generationConfiguration.ExcludeBackwardCompatible, clientConfig.ExcludeBackwardCompatible);
         Assert.Equal(generationConfiguration.ExcludePatterns, clientConfig.ExcludePatterns);
         Assert.Equal(generationConfiguration.IncludeAdditionalData, clientConfig.IncludeAdditionalData);
         Assert.Equal(generationConfiguration.IncludePatterns, clientConfig.IncludePatterns);
@@ -81,7 +77,6 @@ public sealed class ApiClientConfigurationTests
         {
             ClientNamespaceName = "namespace",
             DescriptionLocation = "openapi",
-            ExcludeBackwardCompatible = true,
             ExcludePatterns = ["exclude"],
             IncludeAdditionalData = true,
             IncludePatterns = ["include"],
@@ -106,7 +101,6 @@ public sealed class ApiClientConfigurationTests
         Assert.Equal(clientConfiguration.ClientNamespaceName, generationConfiguration.ClientNamespaceName);
         Assert.Equal(GenerationLanguage.CSharp, generationConfiguration.Language);
         Assert.Equal(clientConfiguration.DescriptionLocation, generationConfiguration.OpenAPIFilePath);
-        Assert.Equal(clientConfiguration.ExcludeBackwardCompatible, generationConfiguration.ExcludeBackwardCompatible);
         Assert.Equal(clientConfiguration.ExcludePatterns, generationConfiguration.ExcludePatterns);
         Assert.Equal(clientConfiguration.IncludeAdditionalData, generationConfiguration.IncludeAdditionalData);
         Assert.Equal(clientConfiguration.IncludePatterns, generationConfiguration.IncludePatterns);

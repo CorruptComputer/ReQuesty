@@ -3723,48 +3723,7 @@ paths:
         Assert.Contains("simpleObject", typeNames);
         Assert.Contains("double", typeNames);
     }
-    [Fact]
-    public async Task AnyOfArrayWorksAsync()
-    {
-        string tempFilePath = Path.GetTempFileName();
-        await using Stream fs = await GetDocumentStreamAsync(@"openapi: 3.0.0
-info:
-  title: AnyOf Array
-  version: 1.0.0
-paths:
-  /foo:
-    get:
-      responses:
-        200:
-          description: ""OK""
-          content:
-            application/json:
-              schema:
-                anyOf:
-                - type: string
-                - type: array
-                  items:
-                    $ref: ""#/components/schemas/FooResponseObject""
-components:
-  schemas:
-    FooResponseObject:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string");
-        Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
-        ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
-        OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
-        OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
-        CodeNamespace codeModel = builder.CreateSourceModel(node);
-        CodeMethod? response = codeModel.FindChildByName<CodeMethod>("GetAsFooGetResponse");
-        CodeIntersectionType? unionType = response.ReturnType as CodeIntersectionType;
 
-        Assert.Equal(2, unionType.Types.Count());
-        Assert.Single(unionType.Types, x => x.Name == "FooResponseObject" && x.IsCollection);
-    }
     [Fact]
     public void UnionOfInlineSchemasWorks()
     {
@@ -4543,21 +4502,10 @@ components:
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? queryParameters = codeModel.FindChildByName<CodeClass>("primitiveRequestBuilderGetQueryParameters");
         Assert.NotNull(queryParameters);
-        CodeProperty? backwardCompatibleProperty = queryParameters.Properties.FirstOrDefault(static x => x.Name.Equals("query", StringComparison.OrdinalIgnoreCase));
-        Assert.NotNull(backwardCompatibleProperty);
-
-        Assert.Equal("string", backwardCompatibleProperty.Type.Name);
-        Assert.True(backwardCompatibleProperty.Type.AllTypes.First().IsExternal);
-        Assert.True(backwardCompatibleProperty.Deprecation.IsDeprecated);
-        CodeProperty? property = queryParameters.Properties.FirstOrDefault(static x => x.Name.Equals("queryAsGetQueryQueryParameterType", StringComparison.OrdinalIgnoreCase));
-        Assert.NotNull(property);
-        Assert.Equal("GetQueryQueryParameterType", property.Type.Name);
     }
 
-    [InlineData(true)]
-    [InlineData(false)]
-    [Theory]
-    public async Task AddsQueryParameterTypesAsModelsAsync(bool ecb)
+    [Fact]
+    public async Task AddsQueryParameterTypesAsModelsAsync()
     {
         string tempFilePath = Path.GetTempFileName();
         await File.WriteAllTextAsync(tempFilePath, @$"openapi: 3.0.1
@@ -4588,7 +4536,7 @@ components:
       enum: [All, Internal, External]
       type: string");
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
-        ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = "https://api.apis.guru/v2/specs/funtranslations.com/starwars/2.3/swagger.json", Language = GenerationLanguage.CSharp, ExcludeBackwardCompatible = ecb }, _httpClient);
+        ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = "https://api.apis.guru/v2/specs/funtranslations.com/starwars/2.3/swagger.json", Language = GenerationLanguage.CSharp }, _httpClient);
         await using FileStream fs = new(tempFilePath, FileMode.Open);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
@@ -4597,26 +4545,11 @@ components:
 
         CodeClass? queryParameters = codeModel.FindChildByName<CodeClass>("enumerationRequestBuilderGetQueryParameters");
         Assert.NotNull(queryParameters);
-        CodeProperty? backwardCompatibleProperty = queryParameters.Properties.FirstOrDefault(static x => x.Name.Equals("InternalExternal", StringComparison.OrdinalIgnoreCase));
-        Assert.NotNull(backwardCompatibleProperty);
         CodeNamespace? modelsNS = codeModel.FindNamespaceByName("ApiSdk.Models");
         CodeEnum? enumType = modelsNS.FindChildByName<CodeEnum>("InternalExternal", false);
         Assert.NotNull(enumType);
-        if (!ecb)
-        {
-            Assert.Equal("string", backwardCompatibleProperty.Type.Name);
-            Assert.True(backwardCompatibleProperty.Type.AllTypes.First().IsExternal);
-            Assert.True(backwardCompatibleProperty.Deprecation.IsDeprecated);
-            CodeProperty? property = queryParameters.Properties.FirstOrDefault(static x => x.Name.Equals("InternalExternalAsInternalExternal", StringComparison.OrdinalIgnoreCase));
-            Assert.NotNull(property);
-            Assert.Equal("InternalExternal", property.Type.Name);
-        }
-        else
-        {
-            Assert.Equal("InternalExternal", backwardCompatibleProperty.Type.Name);
-            Assert.False(backwardCompatibleProperty.Deprecation.IsDeprecated);
-        }
     }
+
     [InlineData(true)]
     [InlineData(false)]
     [Theory]
@@ -5221,10 +5154,9 @@ components:
         Assert.NotNull(executorMethod);
         Assert.Equal("myobject", executorMethod.ReturnType.Name);
     }
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
-    public void ModelsUseDescriptionWhenAvailable(bool excludeBackwardCompatible)
+
+    [Fact]
+    public void ModelsUseDescriptionWhenAvailable()
     {
         OpenApiDocument document = new()
         {
@@ -5269,7 +5201,7 @@ components:
             }
         };
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
-        ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "TestClient", ClientNamespaceName = "TestSdk", ApiRootUrl = "https://localhost", ExcludeBackwardCompatible = excludeBackwardCompatible }, _httpClient);
+        ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "TestClient", ClientNamespaceName = "TestSdk", ApiRootUrl = "https://localhost", }, _httpClient);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeNamespace? modelsSubNS = codeModel.FindNamespaceByName("TestSdk.answer");
@@ -5279,29 +5211,17 @@ components:
         Assert.Equal("some description", responseClass.Documentation.DescriptionTemplate);
 
         CodeClass? obsoleteResponseClass = modelsSubNS.FindChildByName<CodeClass>("AnswerResponse", false);
-        if (excludeBackwardCompatible)
-        {
-            Assert.Null(obsoleteResponseClass);
-        }
-        else
-        {
-            Assert.NotNull(obsoleteResponseClass);
-            Assert.Equal("some description", obsoleteResponseClass.Documentation.DescriptionTemplate);
-            Assert.True(obsoleteResponseClass.Deprecation.IsDeprecated);
-        }
+
+        Assert.Null(obsoleteResponseClass);
+
 
         CodeClass? requestBuilderClass = modelsSubNS.Classes.FirstOrDefault(static c => c.IsOfKind(CodeClassKind.RequestBuilder));
         Assert.NotNull(requestBuilderClass);
         Assert.Equal("some path item description", requestBuilderClass.Documentation.DescriptionTemplate);
 
-        if (excludeBackwardCompatible)
-        {
-            Assert.Single(requestBuilderClass.Methods, static x => x.Kind is CodeMethodKind.RequestExecutor);
-        }
-        else
-        {
-            Assert.Equal(2, requestBuilderClass.Methods.Where(static x => x.Kind is CodeMethodKind.RequestExecutor).Count());
-        }
+
+        Assert.Single(requestBuilderClass.Methods, static x => x.Kind is CodeMethodKind.RequestExecutor);
+
 
         CodeProperty? responseProperty = codeModel.FindNamespaceByName("TestSdk").Classes.SelectMany(c => c.Properties).FirstOrDefault(static p => p.Kind == CodePropertyKind.RequestBuilder);
         Assert.NotNull(responseProperty);
@@ -6479,7 +6399,7 @@ components:
         Assert.Equal(collectionIndexer.ReturnType.Name, itemRequestBuilder.Name);
     }
     [Fact]
-    public async Task IndexerTypeIsAccurateAndBackwardCompatibleIndexersAreAddedAsync()
+    public async Task IndexerTypeIsAccurateAsync()
     {
         string tempFilePath = Path.GetTempFileName();
         await using Stream fs = await GetDocumentStreamAsync(@"openapi: 3.0.0
@@ -6564,11 +6484,7 @@ components:
         Assert.Equal("The id of the pet to retrieve", postsCollectionIndexer.IndexParameter.Documentation.DescriptionTemplate, StringComparer.OrdinalIgnoreCase);
         Assert.False(postsCollectionIndexer.IndexParameter.Type.IsNullable);
         Assert.False(postsCollectionIndexer.Deprecation.IsDeprecated);
-        CodeIndexer? postsCollectionStringIndexer = postsCollectionRequestBuilder.FindChildByName<CodeIndexer>($"{postsCollectionIndexer.Name}-string");
-        Assert.NotNull(postsCollectionStringIndexer);
-        Assert.Equal("string", postsCollectionStringIndexer.IndexParameter.Type.Name);
-        Assert.False(postsCollectionStringIndexer.IndexParameter.Type.IsNullable);
-        Assert.True(postsCollectionStringIndexer.Deprecation.IsDeprecated);
+
         CodeNamespace? postsItemRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.me.posts.item");
         Assert.NotNull(postsItemRequestBuilderNamespace);
         CodeClass? postsItemRequestBuilder = postsItemRequestBuilderNamespace.FindChildByName<CodeClass>("postItemRequestBuilder");
@@ -6583,11 +6499,7 @@ components:
         Assert.Equal("The id of the author's posts to retrieve", authorsCollectionIndexer.IndexParameter.Documentation.DescriptionTemplate, StringComparer.OrdinalIgnoreCase);
         Assert.False(authorsCollectionIndexer.IndexParameter.Type.IsNullable);
         Assert.False(authorsCollectionIndexer.Deprecation.IsDeprecated);
-        CodeIndexer? authorsCollectionStringIndexer = authorsCollectionRequestBuilder.FindChildByName<CodeIndexer>($"{authorsCollectionIndexer.Name}-string");
-        Assert.NotNull(authorsCollectionStringIndexer);
-        Assert.Equal("string", authorsCollectionStringIndexer.IndexParameter.Type.Name);
-        Assert.False(authorsCollectionStringIndexer.IndexParameter.Type.IsNullable);
-        Assert.True(authorsCollectionStringIndexer.Deprecation.IsDeprecated);
+
         CodeNamespace? authorsItemRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.authors.item");
         Assert.NotNull(authorsItemRequestBuilderNamespace);
         CodeClass? authorsItemRequestBuilder = authorsItemRequestBuilderNamespace.FindChildByName<CodeClass>("authorItemRequestBuilder");
@@ -6595,6 +6507,7 @@ components:
 
         CodeNamespace? actorsCollectionRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.actors");
         Assert.NotNull(actorsCollectionRequestBuilderNamespace);
+
         CodeClass? actorsCollectionRequestBuilder = actorsCollectionRequestBuilderNamespace.FindChildByName<CodeClass>("actorsRequestBuilder");
         CodeIndexer? actorsCollectionIndexer = actorsCollectionRequestBuilder.Indexer;
         Assert.NotNull(actorsCollectionIndexer);
@@ -6602,16 +6515,13 @@ components:
         Assert.Equal("The id of the actor", actorsCollectionIndexer.IndexParameter.Documentation.DescriptionTemplate, StringComparer.OrdinalIgnoreCase);
         Assert.False(actorsCollectionIndexer.IndexParameter.Type.IsNullable);
         Assert.False(actorsCollectionIndexer.Deprecation.IsDeprecated);
-        CodeIndexer? actorsCollectionStringIndexer = actorsCollectionRequestBuilder.FindChildByName<CodeIndexer>($"{actorsCollectionIndexer.Name}-string");
-        Assert.NotNull(actorsCollectionStringIndexer);
-        Assert.Equal("string", actorsCollectionStringIndexer.IndexParameter.Type.Name);
-        Assert.False(actorsCollectionStringIndexer.IndexParameter.Type.IsNullable);
-        Assert.True(actorsCollectionStringIndexer.Deprecation.IsDeprecated);
+
         CodeNamespace? actorsItemRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.actors.item");
         Assert.NotNull(actorsItemRequestBuilderNamespace);
         CodeClass? actorsItemRequestBuilder = actorsItemRequestBuilderNamespace.FindChildByName<CodeClass>("actorItemRequestBuilder");
         Assert.Equal(actorsCollectionIndexer.ReturnType.Name, actorsItemRequestBuilder.Name);
     }
+
     [Fact]
     public async Task MapsBooleanEnumToBooleanTypeAsync()
     {

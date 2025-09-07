@@ -40,13 +40,6 @@ public class ApiClientConfiguration : BaseApiConsumerConfiguration, ICloneable
         get; set;
     }
     /// <summary>
-    /// Whether backward compatible code was excluded for this client.
-    /// </summary>
-    public bool ExcludeBackwardCompatible
-    {
-        get; set;
-    }
-    /// <summary>
     /// The OpenAPI validation rules to disable during the generation.
     /// </summary>
     public HashSet<string> DisabledValidationRules { get; set; } = new(StringComparer.OrdinalIgnoreCase);
@@ -68,7 +61,6 @@ public class ApiClientConfiguration : BaseApiConsumerConfiguration, ICloneable
         TypeAccessModifier = config.TypeAccessModifier.ToString();
         ClientNamespaceName = config.ClientNamespaceName;
         UsesBackingStore = config.UsesBackingStore;
-        ExcludeBackwardCompatible = config.ExcludeBackwardCompatible;
         IncludeAdditionalData = config.IncludeAdditionalData;
         StructuredMimeTypes = config.StructuredMimeTypes.ToList();
         DisabledValidationRules = config.DisabledValidationRules.ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -95,7 +87,6 @@ public class ApiClientConfiguration : BaseApiConsumerConfiguration, ICloneable
         }
 
         config.UsesBackingStore = UsesBackingStore;
-        config.ExcludeBackwardCompatible = ExcludeBackwardCompatible;
         config.IncludeAdditionalData = IncludeAdditionalData;
         config.StructuredMimeTypes = new(StructuredMimeTypes);
         config.DisabledValidationRules = DisabledValidationRules.ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -112,7 +103,6 @@ public class ApiClientConfiguration : BaseApiConsumerConfiguration, ICloneable
             ClientNamespaceName = ClientNamespaceName,
             UsesBackingStore = UsesBackingStore,
             IncludeAdditionalData = IncludeAdditionalData,
-            ExcludeBackwardCompatible = ExcludeBackwardCompatible,
             DisabledValidationRules = new(DisabledValidationRules, StringComparer.OrdinalIgnoreCase),
         };
         CloneBase(result);

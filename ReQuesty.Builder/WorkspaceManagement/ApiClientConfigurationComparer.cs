@@ -25,11 +25,6 @@ public class ApiClientConfigurationComparer : BaseApiConsumerConfigurationCompar
             return object.Equals(x, y);
         }
 
-        if (x.ExcludeBackwardCompatible != y.ExcludeBackwardCompatible)
-        {
-            return false;
-        }
-
         if (x.UsesBackingStore != y.UsesBackingStore)
         {
             return false;
@@ -73,7 +68,6 @@ public class ApiClientConfigurationComparer : BaseApiConsumerConfigurationCompar
         hash.Add(obj.ClientNamespaceName, _stringComparer);
         hash.Add(obj.Language, _stringComparer);
         hash.Add(obj.TypeAccessModifier, _stringComparer);
-        hash.Add(obj.ExcludeBackwardCompatible);
         hash.Add(obj.UsesBackingStore);
         hash.Add(obj.IncludeAdditionalData);
         hash.Add(obj.StructuredMimeTypes, _stringIEnumerableDeepComparer);

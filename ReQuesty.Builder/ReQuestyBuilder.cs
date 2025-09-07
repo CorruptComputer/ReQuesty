@@ -685,7 +685,7 @@ public partial class ReQuestyBuilder
 
     public async Task CreateLanguageSourceFilesAsync(GenerationLanguage language, CodeNamespace generatedCode, CancellationToken cancellationToken)
     {
-        LanguageWriter languageWriter = LanguageWriter.GetLanguageWriter(language, config.OutputPath, config.ClientNamespaceName, config.UsesBackingStore, config.ExcludeBackwardCompatible);
+        LanguageWriter languageWriter = LanguageWriter.GetLanguageWriter(language, config.OutputPath, config.ClientNamespaceName, config.UsesBackingStore);
         Stopwatch stopwatch = new();
         stopwatch.Start();
         CodeRenderer codeRenderer = CodeRenderer.GetCodeRender(config);
@@ -1375,52 +1375,11 @@ public partial class ReQuestyBuilder
         {
             string suffix = $"{operationType.Method.ToLowerInvariant().ToFirstCharacterUpperCase()}Response";
             CodeTypeBase? modelType = CreateModelDeclarations(currentNode, schema, operation, parentClass, suffix);
-            if (modelType is not null && config.IncludeBackwardCompatible && config.Language is GenerationLanguage.CSharp && modelType.Name.EndsWith(suffix, StringComparison.Ordinal))
-            { //TODO remove for v2
-                string obsoleteTypeName = modelType.Name[..^suffix.Length] + "Response";
-                if (modelType is CodeType codeType &&
-                    codeType.TypeDefinition is CodeClass codeClass)
-                {
-                    CodeClass obsoleteClassDefinition = new()
-                    {
-                        Kind = CodeClassKind.Model,
-                        Name = obsoleteTypeName,
-                        Deprecation = new("This class is obsolete. Use {TypeName} instead.", IsDeprecated: true, TypeReferences: new() { { "TypeName", codeType } }),
-                        Documentation = (CodeDocumentation)codeClass.Documentation.Clone()
-                    };
-                    CodeMethod originalFactoryMethod = codeClass.Methods.First(static x => x.Kind is CodeMethodKind.Factory);
-                    CodeMethod obsoleteFactoryMethod = (CodeMethod)originalFactoryMethod.Clone();
-                    obsoleteFactoryMethod.ReturnType = new CodeType { Name = obsoleteTypeName, TypeDefinition = obsoleteClassDefinition };
-                    obsoleteClassDefinition.AddMethod(obsoleteFactoryMethod);
-                    obsoleteClassDefinition.StartBlock.Inherits = (CodeType)codeType.Clone();
-                    CodeClass obsoleteClass = codeClass.Parent switch
-                    {
-                        CodeClass modelParentClass => modelParentClass.AddInnerClass(obsoleteClassDefinition).First(),
-                        CodeNamespace modelParentNamespace => modelParentNamespace.AddClass(obsoleteClassDefinition).First(),
-                        _ => throw new InvalidOperationException("Could not find a valid parent for the obsolete class")
-                    };
-                    return (modelType, new CodeType
-                    {
-                        TypeDefinition = obsoleteClass,
-                    });
-                }
-                else if (modelType is CodeComposedTypeBase codeComposedTypeBase)
-                {
-                    CodeComposedTypeBase obsoleteComposedType = codeComposedTypeBase switch
-                    {
-                        CodeUnionType u => (CodeComposedTypeBase)u.Clone(),
-                        CodeIntersectionType i => (CodeComposedTypeBase)i.Clone(),
-                        _ => throw new InvalidOperationException("Could not create an obsolete composed type"),
-                    };
-                    obsoleteComposedType.Name = obsoleteTypeName;
-                    obsoleteComposedType.Deprecation = new("This class is obsolete. Use {TypeName} instead.", IsDeprecated: true, TypeReferences: new() { { "TypeName", modelType } });
-                    return (modelType, obsoleteComposedType);
-                }
-            }
-            else if (modelType is null)
+            if (modelType is null)
             {
                 return (GetExecutorMethodDefaultReturnType(operation), null);
             }
+
             return (modelType, null);
         }
         else
@@ -1516,16 +1475,6 @@ public partial class ReQuestyBuilder
             };
             executorMethod.AddParameter(cancellationParam);// Add cancellation token parameter
 
-            if (returnTypes.Item2 is not null && config.IncludeBackwardCompatible)
-            { //TODO remove for v2
-                CodeMethod additionalExecutorMethod = (CodeMethod)executorMethod.Clone();
-                additionalExecutorMethod.ReturnType = returnTypes.Item2;
-                additionalExecutorMethod.OriginalMethod = executorMethod;
-                string newName = $"{executorMethod.Name}As{executorMethod.ReturnType.Name.ToFirstCharacterUpperCase()}";
-                additionalExecutorMethod.Deprecation = new("This method is obsolete. Use {TypeName} instead.", IsDeprecated: true, TypeReferences: new() { { "TypeName", new CodeType { TypeDefinition = executorMethod, IsExternal = false } } });
-                parentClass.RenameChildElement(executorMethod.Name, newName);
-                parentClass.AddMethod(additionalExecutorMethod);
-            }
             logger.LogTrace("Creating method {Name} of {Type}", executorMethod.Name, executorMethod.ReturnType);
 
             CodeMethod generatorMethod = new()
@@ -2736,7 +2685,6 @@ public partial class ReQuestyBuilder
     private void AddPropertyForQueryParameter(OpenApiUrlTreeNode node, NetHttpMethod operationType, IOpenApiParameter parameter, CodeClass parameterClass)
     {
         CodeType? resultType = default;
-        bool addBackwardCompatibleParameter = false;
 
         if (parameter.Schema is not null && (parameter.Schema.IsEnum() || (parameter.Schema.IsArray() && parameter.Schema.Items.IsEnum())))
         {
@@ -2760,7 +2708,6 @@ public partial class ReQuestyBuilder
                     TypeDefinition = enumDeclaration,
                     IsNullable = !parameter.Schema.IsArray()
                 };
-                addBackwardCompatibleParameter = true;
             }
         }
         resultType ??= GetPrimitiveType(parameter.Schema) ?? new CodeType()
@@ -2796,20 +2743,7 @@ public partial class ReQuestyBuilder
 
         if (!parameterClass.ContainsPropertyWithWireName(prop.WireName))
         {
-            if (addBackwardCompatibleParameter && config.IncludeBackwardCompatible && config.Language is GenerationLanguage.CSharp)
-            { //TODO remove for v2
-                CodeProperty modernProp = (CodeProperty)prop.Clone();
-                modernProp.Name = $"{prop.Name}As{modernProp.Type.Name.ToFirstCharacterUpperCase()}";
-                modernProp.SerializationName = prop.WireName;
-                prop.Deprecation = new("This property is deprecated, use {TypeName} instead", IsDeprecated: true, TypeReferences: new() { { "TypeName", new CodeType { TypeDefinition = modernProp, IsExternal = false } } });
-                prop.Type = GetDefaultQueryParameterType();
-                prop.Type.CollectionKind = modernProp.Type.CollectionKind;
-                parameterClass.AddProperty(modernProp, prop);
-            }
-            else
-            {
-                parameterClass.AddProperty(prop);
-            }
+            parameterClass.AddProperty(prop);
         }
         else
         {

@@ -109,7 +109,6 @@ components:
     Assert.Contains("ExportNamespace.Models.Microsoft.Graph.user~~>IAdditionalDataHolder; IParsable", contents);// captures implemented interfaces
     Assert.Contains("ExportNamespace.Models.Microsoft.Graph.user::|public|Id:string", contents);// captures property location,type and access
     Assert.Contains("ExportNamespace.Me.Get.getRequestBuilder::|public|constructor(rawUrl:string; requestAdapter:IRequestAdapter):void", contents); // captures constructors, their parameters(name and types), return and access
-    Assert.Contains("ExportNamespace.Me.Get.getRequestBuilder::|public|ToGetRequestInformation(requestConfiguration?:Action<RequestConfiguration<DefaultQueryParameters>>):RequestInformation", contents);// captures methods, their parameters(name and types), return and access
     Assert.Contains("ExportNamespace.Models.Microsoft.Graph.user::|static|public|CreateFromDiscriminatorValue(parseNode:IParseNode):global.ExportNamespace.Models.Microsoft.Graph.User", contents);// captures static methods too :)
     Assert.Contains("ExportNamespace.Models.Microsoft.Graph.importance::0000-low", contents);// captures enum members
     Assert.Contains("ExportNamespace.Models.Microsoft.Graph.user::|public|OtherNames:List<string>", contents);// captures collection info in language specific format

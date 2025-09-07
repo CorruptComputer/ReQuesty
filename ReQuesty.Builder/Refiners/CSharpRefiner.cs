@@ -42,9 +42,7 @@ public class CSharpRefiner(GenerationConfiguration configuration) : CommonLangua
                 {
                     Name = "DefaultQueryParameters",
                     IsExternal = true,
-                },
-                !_configuration.ExcludeBackwardCompatible,//TODO remove the condition for v2
-                !_configuration.ExcludeBackwardCompatible);
+                });
             AddDefaultImports(generatedCode, defaultUsingEvaluators);
             MoveClassesWithNamespaceNamesUnderNamespace(generatedCode);
             ConvertUnionTypesToWrapper(generatedCode,
