@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 
 using ReQuesty.Builder.CodeDOM;
@@ -119,6 +118,7 @@ components:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePathReferrer, Serializers = ["none"], Deserializers = ["none"] }, _httpClient);
         await using FileStream fs = new(tempFilePathReferrer, FileMode.Open);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         builder.SetApiRootUrl();
         CodeNamespace codeModel = builder.CreateSourceModel(node);
@@ -156,6 +156,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = descriptionUrl }, _httpClient);
         await using FileStream fs = new(tempFilePath, FileMode.Open);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         builder.SetApiRootUrl();
         CodeNamespace codeModel = builder.CreateSourceModel(node);
@@ -191,6 +192,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = "https://graph.microsoft.com/description.yaml", Serializers = ["none"], Deserializers = ["none"] }, _httpClient);
         await using FileStream fs = new(tempFilePath, FileMode.Open);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         builder.SetApiRootUrl();
         CodeNamespace codeModel = builder.CreateSourceModel(node);
@@ -228,6 +230,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = "https://api.apis.guru/v2/specs/funtranslations.com/starwars/2.3/swagger.json" }, _httpClient);
         await using FileStream fs = new(tempFilePath, FileMode.Open);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         builder.SetApiRootUrl();
         CodeNamespace codeModel = builder.CreateSourceModel(node);
@@ -266,6 +269,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = "https://api.apis.guru/v2/specs/funtranslations.com/starwars/2.3/swagger.json" }, _httpClient);
         await using FileStream fs = new(tempFilePath, FileMode.Open);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         builder.SetApiRootUrl();
         CodeNamespace codeModel = builder.CreateSourceModel(node);
@@ -308,6 +312,7 @@ components:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = "https://api.apis.guru/v2/specs/funtranslations.com/starwars/2.3/swagger.json" }, _httpClient);
         await using FileStream fs = new(tempFilePath, FileMode.Open);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         builder.SetApiRootUrl();
         CodeNamespace codeModel = builder.CreateSourceModel(node);
@@ -370,6 +375,7 @@ components:
         }, _httpClient);
         await using FileStream fs = new(tempFilePath, FileMode.Open);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         builder.SetApiRootUrl();
         CodeNamespace codeModel = builder.CreateSourceModel(node);
@@ -387,6 +393,7 @@ components:
         Assert.NotNull(navigationPropertyType);
         Assert.NotEqual(responseRequestBuilder, navigationPropertyType.TypeDefinition);// the request builder should not be the same as the class it is in.
         CodeNamespace? nestedResponseBuilderNs = codeModel.FindNamespaceByName("ApiSdk.media.response.response");
+        Assert.NotNull(nestedResponseBuilderNs);
         CodeClass? nestedResponseRequestBuilder = nestedResponseBuilderNs.FindChildByName<CodeClass>("ResponseRequestBuilder", false);
         Assert.Equal(nestedResponseRequestBuilder, navigationPropertyType.TypeDefinition);// the request builder should not be the same as the class it is in.
     }
@@ -452,6 +459,7 @@ components:
         }, _httpClient);
         await using FileStream fs = new(tempFilePath, FileMode.Open);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         builder.SetApiRootUrl();
         CodeNamespace codeModel = builder.CreateSourceModel(node);
@@ -469,6 +477,7 @@ components:
         CodeNamespace? itemBuilderNs = mediaBuilderNs.FindNamespaceByName("ApiSdk.media.item_escaped");
         Assert.NotNull(itemBuilderNs);
         CodeClass? itemRequestBuilder = itemBuilderNs.FindChildByName<CodeClass>("Item_escapedRequestBuilder", false);
+        Assert.NotNull(itemRequestBuilder);
         Assert.NotNull(itemRequestBuilder.Indexer);
         Assert.Equal("ItemItemRequestBuilder", itemRequestBuilder.Indexer.ReturnType.Name);
         CodeNamespace? nestedItemBuilderNs = itemBuilderNs.FindNamespaceByName("ApiSdk.media.item_escaped.item");
@@ -544,6 +553,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeNamespace? modelsNS = codeModel.FindNamespaceByName("ApiSdk.models");
@@ -608,6 +618,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeNamespace? modelsNS = codeModel.FindNamespaceByName("ApiSdk.models");
@@ -658,6 +669,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeNamespace? modelsNS = codeModel.FindNamespaceByName("ApiSdk.models.microsoft.graph");
@@ -734,6 +746,7 @@ components:
         GenerationConfiguration generationConfiguration = new() { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, Language = GenerationLanguage.CSharp }; // we can use any language that creates wrapper types for composed types in different ways
         ReQuestyBuilder builder = new(mockLogger.Object, generationConfiguration, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         await builder.ApplyLanguageRefinementAsync(generationConfiguration, codeModel, CancellationToken.None);
@@ -741,10 +754,13 @@ components:
         Assert.NotNull(requestBuilderNamespace);
 
         CodeClass? allRequestBuilderClass = requestBuilderNamespace.FindChildByName<CodeClass>("allRequestBuilder", false);
+        Assert.NotNull(allRequestBuilderClass);
         CodeMethod? executor = allRequestBuilderClass.Methods.FirstOrDefault(m => m.IsOfKind(CodeMethodKind.RequestExecutor));
         Assert.NotNull(executor);
         CodeType? returnType = executor.ReturnType as CodeType;
+        Assert.NotNull(returnType);
         CodeClass? returnTypeDefinition = returnType.TypeDefinition as CodeClass;
+        Assert.NotNull(returnTypeDefinition);
         Assert.Equal(2, returnTypeDefinition.Properties.Count());
     }
 
@@ -796,6 +812,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeNamespace? modelsNS = codeModel.FindNamespaceByName("ApiSdk.models.microsoft.graph");
@@ -859,6 +876,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeNamespace? modelsNS = codeModel.FindNamespaceByName("ApiSdk.models.microsoft.graph");
@@ -1016,6 +1034,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeNamespace? modelsNS = codeModel.FindNamespaceByName("ApiSdk.models.microsoft.graph");
@@ -1091,6 +1110,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeNamespace? modelsNS = codeModel.FindNamespaceByName("ApiSdk.models.microsoft.graph");
@@ -1227,6 +1247,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeNamespace? modelsNS = codeModel.FindNamespaceByName("ApiSdk.models.microsoft.graph");
@@ -1268,6 +1289,7 @@ servers:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         LanguagesInformation? extensionResult = await builder.GetLanguagesInformationAsync(new CancellationToken());
         Assert.NotNull(extensionResult);
@@ -1327,6 +1349,7 @@ servers:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         LanguagesInformation? extensionResult = await builder.GetLanguagesInformationAsync(new CancellationToken());
         Assert.Null(extensionResult);
@@ -1351,6 +1374,7 @@ paths:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, Language = GenerationLanguage.CSharp }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace model = builder.CreateSourceModel(node);
         Assert.NotNull(model);
@@ -1377,7 +1401,7 @@ paths:
                 type: string");
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
-        (OpenApiUrlTreeNode treeNode, Microsoft.OpenApi.Reader.OpenApiDiagnostic _) = await builder.GetUrlTreeNodeAsync(new CancellationToken());
+        (OpenApiUrlTreeNode? treeNode, Microsoft.OpenApi.Reader.OpenApiDiagnostic? _) = await builder.GetUrlTreeNodeAsync(new CancellationToken());
         Assert.NotNull(treeNode);
         Assert.Equal("/", treeNode.DeduplicatedSegment());
         Assert.Equal("enumeration", treeNode.Children.First().Value.DeduplicatedSegment());
@@ -1501,6 +1525,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", ApiRootUrl = "https://localhost" }, _httpClient);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeProperty? progressProp = codeModel.FindChildByName<CodeProperty>("progress");
+        Assert.NotNull(progressProp);
         Assert.Equal("double", progressProp.Type.Name);
     }
     [Fact]
@@ -1554,6 +1579,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", ApiRootUrl = "https://localhost" }, _httpClient);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeProperty? progressProp = codeModel.FindChildByName<CodeProperty>("progress");
+        Assert.NotNull(progressProp);
         Assert.Equal("double", progressProp.Type.Name);
     }
     [Fact]
@@ -1607,6 +1633,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", ApiRootUrl = "https://localhost" }, _httpClient);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeProperty? progressProp = codeModel.FindChildByName<CodeProperty>("progress");
+        Assert.NotNull(progressProp);
         Assert.Equal("double", progressProp.Type.Name);
     }
     [Fact]
@@ -1663,7 +1690,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger, new GenerationConfiguration { ClientClassName = "Graph", ApiRootUrl = "https://localhost" }, _httpClient);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
-        CodeClass? fooClass = codeModel.FindNamespaceByName("ApiSdk.models").FindChildByName<CodeClass>("foo");
+        CodeClass? fooClass = codeModel.FindNamespaceByName("ApiSdk.models")?.FindChildByName<CodeClass>("foo");
         Assert.NotNull(fooClass);
         CodeProperty? sortByProp = fooClass.FindChildByName<CodeProperty>("sortBy", false);
         Assert.NotNull(sortByProp);
@@ -1740,9 +1767,10 @@ paths:
         ReQuestyBuilder builder = new(mockLogger, new GenerationConfiguration { ClientClassName = "Graph", ApiRootUrl = "https://localhost" }, _httpClient);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
-        CodeClass? userClass = codeModel.FindNamespaceByName("ApiSdk.models").FindChildByName<CodeClass>("user");
+        CodeClass? userClass = codeModel.FindNamespaceByName("ApiSdk.models")?.FindChildByName<CodeClass>("user");
         Assert.NotNull(userClass);
-        CodeClass? userResponseClass = codeModel.FindNamespaceByName("ApiSdk.users.item").FindChildByName<CodeClass>("UsersGetResponse", false);
+        CodeClass? userResponseClass = codeModel.FindNamespaceByName("ApiSdk.users.item")?.FindChildByName<CodeClass>("UsersGetResponse", false);
+        Assert.NotNull(userResponseClass);
         Assert.Equal("UsersGetResponse", userResponseClass.Name, StringComparer.Ordinal); //checking for casing
         Assert.NotNull(userResponseClass);
         CodeProperty? valueProp = userResponseClass.FindChildByName<CodeProperty>("value", false);
@@ -1986,13 +2014,12 @@ paths:
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         builder.SetOpenApiDocument(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
-        CodeClass? resourceClass = codeModel.FindNamespaceByName("ApiSdk.models").FindChildByName<CodeClass>("resource");
+        CodeClass? resourceClass = codeModel.FindNamespaceByName("ApiSdk.models")?.FindChildByName<CodeClass>("resource");
         CodeNamespace? itemsNS = codeModel.FindNamespaceByName("ApiSdk.resource.item");
+        Assert.NotNull(itemsNS);
         CodeClass? responseClass = itemsNS.FindChildByName<CodeClass>("ResourceGetResponse");
         CodeClass? derivedResourceClass = itemsNS.FindChildByName<CodeClass>("ResourceGetResponse_derivedResource");
         CodeClass? derivedResourceInfoClass = itemsNS.FindChildByName<CodeClass>("ResourceGetResponse_derivedResource_info2");
-
-
         Assert.NotNull(resourceClass);
         Assert.NotNull(derivedResourceClass);
         Assert.NotNull(derivedResourceClass.StartBlock.Inherits);
@@ -2058,8 +2085,9 @@ paths:
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         builder.SetOpenApiDocument(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
-        CodeClass? resourceClass = codeModel.FindNamespaceByName("ApiSdk.models").FindChildByName<CodeClass>("resource");
+        CodeClass? resourceClass = codeModel.FindNamespaceByName("ApiSdk.models")?.FindChildByName<CodeClass>("resource");
         CodeNamespace? itemsNS = codeModel.FindNamespaceByName("ApiSdk.resource.item");
+        Assert.NotNull(itemsNS);
         CodeClass? responseClass = itemsNS.FindChildByName<CodeClass>("ResourceResponse");
 
 
@@ -2107,6 +2135,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", ApiRootUrl = "https://localhost" }, _httpClient);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeProperty? progressProp = codeModel.FindChildByName<CodeProperty>("progress");
+        Assert.NotNull(progressProp);
         Assert.Equal("TimeOnly", progressProp.Type.Name);
     }
     [Fact]
@@ -2150,6 +2179,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", ApiRootUrl = "https://localhost" }, _httpClient);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeProperty? progressProp = codeModel.FindChildByName<CodeProperty>("progress");
+        Assert.NotNull(progressProp);
         Assert.Equal("DateOnly", progressProp.Type.Name);
     }
     [Fact]
@@ -2193,6 +2223,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", ApiRootUrl = "https://localhost" }, _httpClient);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeProperty? progressProp = codeModel.FindChildByName<CodeProperty>("progress");
+        Assert.NotNull(progressProp);
         Assert.Equal("TimeSpan", progressProp.Type.Name);
     }
     [Fact]
@@ -3131,6 +3162,7 @@ paths:
         Assert.NotNull(factoryMethod);
         Assert.Equal("@odata.type", entityClass.DiscriminatorInformation.DiscriminatorPropertyName);
         Assert.Single(entityClass.DiscriminatorInformation.DiscriminatorMappings);
+        Assert.NotNull(directoryObjectClass);
         CodeMethod? doFactoryMethod = directoryObjectClass.GetChildElements(true).OfType<CodeMethod>().FirstOrDefault(x => x.IsOfKind(CodeMethodKind.Factory));
         Assert.NotNull(doFactoryMethod);
         Assert.Empty(directoryObjectClass.DiscriminatorInformation.DiscriminatorMappings);
@@ -3489,9 +3521,9 @@ paths:
         mockLogger.Verify(logger => logger.Log(
                 It.Is<LogLevel>(logLevel => logLevel == LogLevel.Warning),
                 It.Is<EventId>(eventId => eventId.Id == 0),
-                It.Is<It.IsAnyType>((@object, @type) => @object.ToString().Contains(" is not inherited from ", StringComparison.OrdinalIgnoreCase) && @type.Name == "FormattedLogValues"),
+                It.Is<It.IsAnyType>((@object, @type) => @object.ToString()!.Contains(" is not inherited from ", StringComparison.OrdinalIgnoreCase) && @type.Name == "FormattedLogValues"),
                 It.IsAny<Exception>(),
-                It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
             Times.Never);
         Assert.NotNull(entityClass);
         Assert.NotNull(directoryObjectClass);
@@ -4350,9 +4382,10 @@ paths:
 	}
 }
 """;
-        (OpenApiDocument document, Microsoft.OpenApi.Reader.OpenApiDiagnostic _) = OpenApiDocument.Parse(documentJSON, OpenApiConstants.Json);
+        (OpenApiDocument? document, Microsoft.OpenApi.Reader.OpenApiDiagnostic? _) = OpenApiDocument.Parse(documentJSON, OpenApiConstants.Json);
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", ApiRootUrl = "https://localhost" }, _httpClient);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? contractsRequestBuilder = codeModel.FindChildByName<CodeClass>("ContractsRequestBuilder");
@@ -4539,6 +4572,7 @@ components:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = "https://api.apis.guru/v2/specs/funtranslations.com/starwars/2.3/swagger.json", Language = GenerationLanguage.CSharp }, _httpClient);
         await using FileStream fs = new(tempFilePath, FileMode.Open);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         builder.SetApiRootUrl();
         CodeNamespace codeModel = builder.CreateSourceModel(node);
@@ -4546,6 +4580,7 @@ components:
         CodeClass? queryParameters = codeModel.FindChildByName<CodeClass>("enumerationRequestBuilderGetQueryParameters");
         Assert.NotNull(queryParameters);
         CodeNamespace? modelsNS = codeModel.FindNamespaceByName("ApiSdk.Models");
+        Assert.NotNull(modelsNS);
         CodeEnum? enumType = modelsNS.FindChildByName<CodeEnum>("InternalExternal", false);
         Assert.NotNull(enumType);
     }
@@ -5168,7 +5203,7 @@ components:
                     Summary = "some path item summary",
                     Operations = new()
                     {
-                        [NetHttpMethod.Get] = new OpenApiOperation
+                        [NetHttpMethod.Get] = new()
                         {
                             Description = "some operation description",
                             Summary = "some operation summary",
@@ -5178,7 +5213,7 @@ components:
                                 {
                                     Content = new Dictionary<string, OpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -5214,16 +5249,13 @@ components:
 
         Assert.Null(obsoleteResponseClass);
 
-
         CodeClass? requestBuilderClass = modelsSubNS.Classes.FirstOrDefault(static c => c.IsOfKind(CodeClassKind.RequestBuilder));
         Assert.NotNull(requestBuilderClass);
         Assert.Equal("some path item description", requestBuilderClass.Documentation.DescriptionTemplate);
 
-
         Assert.Single(requestBuilderClass.Methods, static x => x.Kind is CodeMethodKind.RequestExecutor);
 
-
-        CodeProperty? responseProperty = codeModel.FindNamespaceByName("TestSdk").Classes.SelectMany(c => c.Properties).FirstOrDefault(static p => p.Kind == CodePropertyKind.RequestBuilder);
+        CodeProperty? responseProperty = codeModel.FindNamespaceByName("TestSdk")?.Classes.SelectMany(c => c.Properties).FirstOrDefault(static p => p.Kind == CodePropertyKind.RequestBuilder);
         Assert.NotNull(responseProperty);
         Assert.Equal("some path item description", responseProperty.Documentation.DescriptionTemplate);
     }
@@ -6177,6 +6209,7 @@ components:
         Assert.Single(messagesRS.Methods, static x => x.IsOfKind(CodeMethodKind.RequestExecutor) && x.HttpMethod == Builder.CodeDOM.HttpMethod.Get);
         Assert.DoesNotContain(messagesRS.Methods, static x => x.IsOfKind(CodeMethodKind.RequestExecutor) && x.HttpMethod == Builder.CodeDOM.HttpMethod.Put);
         CodeNamespace? studentsNS = codeModel.FindNamespaceByName("TestSdk.students");
+        Assert.NotNull(studentsNS);
         CodeClass? studentsRS = studentsNS.FindChildByName<CodeClass>("StudentsRequestBuilder");
         Assert.NotNull(studentsRS);
     }
@@ -6292,6 +6325,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeNamespace? requestBuilderNS = codeModel.FindNamespaceByName("ApiSdk.me");
@@ -6342,6 +6376,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeNamespace? requestBuilderNS = codeModel.FindNamespaceByName("ApiSdk.me");
@@ -6388,14 +6423,15 @@ components:
         CodeNamespace? collectionRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.me.posts");
         Assert.NotNull(collectionRequestBuilderNamespace);
         CodeClass? collectionRequestBuilder = collectionRequestBuilderNamespace.FindChildByName<CodeClass>("postsRequestBuilder");
-        CodeIndexer? collectionIndexer = collectionRequestBuilder.Indexer;
+        CodeIndexer? collectionIndexer = collectionRequestBuilder?.Indexer;
         Assert.NotNull(collectionIndexer);
         Assert.Equal("string", collectionIndexer.IndexParameter.Type.Name, StringComparer.OrdinalIgnoreCase);
         Assert.Equal("Unique identifier of the item", collectionIndexer.IndexParameter.Documentation.DescriptionTemplate, StringComparer.OrdinalIgnoreCase);
-        Assert.False(collectionIndexer.Deprecation.IsDeprecated);
+        Assert.False(collectionIndexer.Deprecation?.IsDeprecated);
         CodeNamespace? itemRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.me.posts.item");
         Assert.NotNull(itemRequestBuilderNamespace);
         CodeClass? itemRequestBuilder = itemRequestBuilderNamespace.FindChildByName<CodeClass>("postItemRequestBuilder");
+        Assert.NotNull(itemRequestBuilder);
         Assert.Equal(collectionIndexer.ReturnType.Name, itemRequestBuilder.Name);
     }
     [Fact]
@@ -6478,47 +6514,50 @@ components:
         CodeNamespace? postsCollectionRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.me.posts");
         Assert.NotNull(postsCollectionRequestBuilderNamespace);
         CodeClass? postsCollectionRequestBuilder = postsCollectionRequestBuilderNamespace.FindChildByName<CodeClass>("postsRequestBuilder");
-        CodeIndexer? postsCollectionIndexer = postsCollectionRequestBuilder.Indexer;
+        CodeIndexer? postsCollectionIndexer = postsCollectionRequestBuilder?.Indexer;
         Assert.NotNull(postsCollectionIndexer);
         Assert.Equal("integer", postsCollectionIndexer.IndexParameter.Type.Name);
         Assert.Equal("The id of the pet to retrieve", postsCollectionIndexer.IndexParameter.Documentation.DescriptionTemplate, StringComparer.OrdinalIgnoreCase);
         Assert.False(postsCollectionIndexer.IndexParameter.Type.IsNullable);
-        Assert.False(postsCollectionIndexer.Deprecation.IsDeprecated);
+        Assert.False(postsCollectionIndexer.Deprecation?.IsDeprecated);
 
         CodeNamespace? postsItemRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.me.posts.item");
         Assert.NotNull(postsItemRequestBuilderNamespace);
         CodeClass? postsItemRequestBuilder = postsItemRequestBuilderNamespace.FindChildByName<CodeClass>("postItemRequestBuilder");
+        Assert.NotNull(postsItemRequestBuilder);
         Assert.Equal(postsCollectionIndexer.ReturnType.Name, postsItemRequestBuilder.Name);
 
         CodeNamespace? authorsCollectionRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.authors");
         Assert.NotNull(authorsCollectionRequestBuilderNamespace);
         CodeClass? authorsCollectionRequestBuilder = authorsCollectionRequestBuilderNamespace.FindChildByName<CodeClass>("authorsRequestBuilder");
-        CodeIndexer? authorsCollectionIndexer = authorsCollectionRequestBuilder.Indexer;
+        CodeIndexer? authorsCollectionIndexer = authorsCollectionRequestBuilder?.Indexer;
         Assert.NotNull(authorsCollectionIndexer);
         Assert.Equal("Guid", authorsCollectionIndexer.IndexParameter.Type.Name);
         Assert.Equal("The id of the author's posts to retrieve", authorsCollectionIndexer.IndexParameter.Documentation.DescriptionTemplate, StringComparer.OrdinalIgnoreCase);
         Assert.False(authorsCollectionIndexer.IndexParameter.Type.IsNullable);
-        Assert.False(authorsCollectionIndexer.Deprecation.IsDeprecated);
+        Assert.False(authorsCollectionIndexer.Deprecation?.IsDeprecated);
 
         CodeNamespace? authorsItemRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.authors.item");
         Assert.NotNull(authorsItemRequestBuilderNamespace);
         CodeClass? authorsItemRequestBuilder = authorsItemRequestBuilderNamespace.FindChildByName<CodeClass>("authorItemRequestBuilder");
+        Assert.NotNull(authorsItemRequestBuilder);
         Assert.Equal(authorsCollectionIndexer.ReturnType.Name, authorsItemRequestBuilder.Name);
 
         CodeNamespace? actorsCollectionRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.actors");
         Assert.NotNull(actorsCollectionRequestBuilderNamespace);
 
         CodeClass? actorsCollectionRequestBuilder = actorsCollectionRequestBuilderNamespace.FindChildByName<CodeClass>("actorsRequestBuilder");
-        CodeIndexer? actorsCollectionIndexer = actorsCollectionRequestBuilder.Indexer;
+        CodeIndexer? actorsCollectionIndexer = actorsCollectionRequestBuilder?.Indexer;
         Assert.NotNull(actorsCollectionIndexer);
         Assert.Equal("Guid", actorsCollectionIndexer.IndexParameter.Type.Name);
         Assert.Equal("The id of the actor", actorsCollectionIndexer.IndexParameter.Documentation.DescriptionTemplate, StringComparer.OrdinalIgnoreCase);
         Assert.False(actorsCollectionIndexer.IndexParameter.Type.IsNullable);
-        Assert.False(actorsCollectionIndexer.Deprecation.IsDeprecated);
+        Assert.False(actorsCollectionIndexer.Deprecation?.IsDeprecated);
 
         CodeNamespace? actorsItemRequestBuilderNamespace = codeModel.FindNamespaceByName("ApiSdk.actors.item");
         Assert.NotNull(actorsItemRequestBuilderNamespace);
         CodeClass? actorsItemRequestBuilder = actorsItemRequestBuilderNamespace.FindChildByName<CodeClass>("actorItemRequestBuilder");
+        Assert.NotNull(actorsItemRequestBuilder);
         Assert.Equal(actorsCollectionIndexer.ReturnType.Name, actorsItemRequestBuilder.Name);
     }
 
@@ -6625,6 +6664,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = "https://localhost:443" }, _httpClient);
         await using FileStream fs = new(tempFilePath, FileMode.Open);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         builder.SetApiRootUrl();
         CodeNamespace codeModel = builder.CreateSourceModel(node);
@@ -6701,7 +6741,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger, new GenerationConfiguration { ClientClassName = "Graph", ApiRootUrl = "https://localhost" }, _httpClient);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
-        CodeClass? managerRB = codeModel.FindNamespaceByName("ApiSdk.users.item.manager").FindChildByName<CodeClass>("ManagerRequestBuilder", false);
+        CodeClass? managerRB = codeModel.FindNamespaceByName("ApiSdk.users.item.manager")?.FindChildByName<CodeClass>("ManagerRequestBuilder", false);
         Assert.NotNull(managerRB);
         CodeProperty? managerUrlTemplate = managerRB.FindChildByName<CodeProperty>("UrlTemplate", false);
         Assert.NotNull(managerUrlTemplate);
@@ -6775,7 +6815,7 @@ paths:
         ReQuestyBuilder builder = new(mockLogger, new GenerationConfiguration { ClientClassName = "Graph", ApiRootUrl = "https://localhost" }, _httpClient);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
-        CodeClass? managerRB = codeModel.FindNamespaceByName("ApiSdk.users.item.manager").FindChildByName<CodeClass>("ManagerRequestBuilder", false);
+        CodeClass? managerRB = codeModel.FindNamespaceByName("ApiSdk.users.item.manager")?.FindChildByName<CodeClass>("ManagerRequestBuilder", false);
         Assert.NotNull(managerRB);
         CodeProperty? managerUrlTemplate = managerRB.FindChildByName<CodeProperty>("UrlTemplate", false);
         Assert.NotNull(managerUrlTemplate);
@@ -6833,6 +6873,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? resultClass = codeModel.FindChildByName<CodeClass>("DirectoryObjectGetResponse");
@@ -6873,6 +6914,7 @@ paths:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? resultClass = codeModel.FindChildByName<CodeClass>("DirectoryObjectGetResponse");
@@ -6935,6 +6977,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         Assert.NotNull(codeModel.FindChildByName<CodeClass>("ConversionsPostResponse"));
@@ -7004,12 +7047,13 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
-        Assert.Equal("base entity", codeModel.FindChildByName<CodeClass>("entity").Documentation.DescriptionTemplate);
-        Assert.Equal("directory object", codeModel.FindChildByName<CodeClass>("directoryObject").Documentation.DescriptionTemplate);
-        Assert.Equal("sub1", codeModel.FindChildByName<CodeClass>("sub1").Documentation.DescriptionTemplate);
-        Assert.Equal("sub2", codeModel.FindChildByName<CodeClass>("sub2").Documentation.DescriptionTemplate);
+        Assert.Equal("base entity", codeModel.FindChildByName<CodeClass>("entity")?.Documentation.DescriptionTemplate);
+        Assert.Equal("directory object", codeModel.FindChildByName<CodeClass>("directoryObject")?.Documentation.DescriptionTemplate);
+        Assert.Equal("sub1", codeModel.FindChildByName<CodeClass>("sub1")?.Documentation.DescriptionTemplate);
+        Assert.Equal("sub2", codeModel.FindChildByName<CodeClass>("sub2")?.Documentation.DescriptionTemplate);
     }
     [Fact]
     public async Task CleanupSymbolNameDoesNotCauseNameConflictsAsync()
@@ -7045,6 +7089,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, IncludeAdditionalData = false }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? resultClass = codeModel.FindChildByName<CodeClass>("Entity");
@@ -7096,15 +7141,18 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, IncludeAdditionalData = false }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? entityClass = codeModel.FindChildByName<CodeClass>("Entity");
         Assert.NotNull(entityClass);
         CodeProperty? atType = entityClass.FindChildByName<CodeProperty>("Type");
+        Assert.NotNull(atType);
         Assert.Equal("@type", atType.WireName);
         CodeClass? subtypeClass = codeModel.FindChildByName<CodeClass>("Subtype");
         Assert.NotNull(subtypeClass);
         CodeProperty? type = subtypeClass.FindChildByName<CodeProperty>("SubtypeType");
+        Assert.NotNull(type);
         Assert.Equal("type", type.WireName);
         Assert.Equal("subtypeType", type.Name);
     }
@@ -7141,14 +7189,17 @@ paths:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, IncludeAdditionalData = false }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? parametersClass = codeModel.FindChildByName<CodeClass>("directoryObjectRequestBuilderGetQueryParameters");
         Assert.NotNull(parametersClass);
         CodeProperty? dollarSelect = parametersClass.FindChildByName<CodeProperty>("Select");
+        Assert.NotNull(dollarSelect);
         Assert.Equal("%24select", dollarSelect.WireName);
         Assert.Equal("string", dollarSelect.Type.Name);
         CodeProperty? select = parametersClass.FindChildByName<CodeProperty>("select0");
+        Assert.NotNull(select);
         Assert.Equal("select", select.WireName);
         Assert.Equal("int64", select.Type.Name);
     }
@@ -7215,6 +7266,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, IncludeAdditionalData = false }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         Assert.NotNull(codeModel);
@@ -7274,6 +7326,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, IncludeAdditionalData = false }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         Assert.NotNull(codeModel);
@@ -7333,6 +7386,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, IncludeAdditionalData = false, StructuredMimeTypes = ["multipart/form-data;q=1"] }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         Assert.NotNull(codeModel);
@@ -7403,6 +7457,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, IncludeAdditionalData = false }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         Assert.NotNull(codeModel);
@@ -7474,6 +7529,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, IncludeAdditionalData = false, StructuredMimeTypes = ["multipart/form-data;q=1", "application/json;q=0.1"] }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         Assert.NotNull(codeModel);
@@ -7552,6 +7608,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, IncludeAdditionalData = false, StructuredMimeTypes = ["multipart/form-data;q=1", "application/json;q=0.1"] }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         Assert.NotNull(codeModel);
@@ -7658,10 +7715,12 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         Assert.NotNull(codeModel.FindChildByName<CodeClass>("Linkable"));
         CodeClass? classificationClass = codeModel.FindChildByName<CodeClass>("GroupClassification");
+        Assert.NotNull(classificationClass);
         Assert.Single(classificationClass.Properties, static x => x.Name.Equals("description", StringComparison.OrdinalIgnoreCase));
         Assert.NotNull(classificationClass);
         CodeClass? classificationPrimerClass = codeModel.FindChildByName<CodeClass>("GroupClassificationPrimer");
@@ -7717,6 +7776,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         Assert.NotNull(codeModel.FindChildByName<CodeClass>("Group"));
@@ -7784,6 +7844,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? memberClass = codeModel.FindChildByName<CodeClass>("member");
@@ -7860,9 +7921,11 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? directoryObjectClass = codeModel.FindChildByName<CodeClass>("DirectoryObject");
+        Assert.NotNull(directoryObjectClass);
         Assert.Null(directoryObjectClass.StartBlock.Inherits);
         Assert.NotNull(directoryObjectClass);
         CodeClass? groupClass = codeModel.FindChildByName<CodeClass>("Group");
@@ -7931,19 +7994,23 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
 
         // Verify that all three classes referenced by the discriminator inherit from baseDirectoryObject
         CodeClass? folder = codeModel.FindChildByName<CodeClass>("Folder");
+        Assert.NotNull(folder);
         Assert.NotNull(folder.StartBlock.Inherits);
         Assert.Equal("baseDirectoryObject", folder.StartBlock.Inherits.Name);
 
         CodeClass? file = codeModel.FindChildByName<CodeClass>("File");
+        Assert.NotNull(file);
         Assert.NotNull(file.StartBlock.Inherits);
         Assert.Equal("baseDirectoryObject", file.StartBlock.Inherits.Name);
 
         CodeClass? link = codeModel.FindChildByName<CodeClass>("Link");
+        Assert.NotNull(link);
         Assert.NotNull(link.StartBlock.Inherits);
         Assert.Equal("baseDirectoryObject", link.StartBlock.Inherits.Name);
     }
@@ -8021,6 +8088,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
 
@@ -8131,6 +8199,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
 
@@ -8260,6 +8329,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
 
@@ -8364,6 +8434,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
 
@@ -8374,7 +8445,7 @@ components:
         Assert.NotNull(oneProperty);
 
         CodeClass? withoutObjectClass = codeModel.FindChildByName<CodeClass>("Component2");
-        Assert.NotNull(withObjectClass);
+        Assert.NotNull(withoutObjectClass);
         CodeProperty? twoProperty = withoutObjectClass.FindChildByName<CodeProperty>("two", false);
         Assert.NotNull(twoProperty);
     }
@@ -8474,6 +8545,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
 
@@ -8603,6 +8675,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
 
@@ -8725,6 +8798,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? registeredModelClass = codeModel.FindChildByName<CodeClass>("RegisteredModel");
@@ -8794,6 +8868,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? directoryObjectClass = codeModel.FindChildByName<CodeClass>("DirectoryObject");
@@ -8855,6 +8930,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? resultClass = codeModel.FindChildByName<CodeClass>("Group");
@@ -8903,6 +8979,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? resultClass = codeModel.FindChildByName<CodeClass>("Group");
@@ -8959,6 +9036,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? resultClass = codeModel.FindChildByName<CodeClass>("Group");
@@ -9010,6 +9088,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         CodeClass? outerPayloadClass = codeModel.FindChildByName<CodeClass>("outerPayload");
@@ -9064,6 +9143,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, IncludeAdditionalData = false }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         Assert.NotNull(codeModel);
@@ -9127,6 +9207,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, IncludeAdditionalData = false }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         Assert.NotNull(codeModel);
@@ -9272,6 +9353,7 @@ components:
         Mock<ILogger<ReQuestyBuilder>> mockLogger = new();
         ReQuestyBuilder builder = new(mockLogger.Object, new GenerationConfiguration { ClientClassName = "Graph", OpenAPIFilePath = tempFilePath, IncludeAdditionalData = false }, _httpClient);
         OpenApiDocument? document = await builder.CreateOpenApiDocumentAsync(fs);
+        Assert.NotNull(document);
         OpenApiUrlTreeNode node = builder.CreateUriSpace(document);
         CodeNamespace codeModel = builder.CreateSourceModel(node);
         Assert.NotNull(codeModel);
@@ -9732,7 +9814,7 @@ components:
         document.AddComponent("myobject", myObjectSchema);
         document.SetReferenceHostDocument();
         ReQuestyBuilder.CleanupOperationIdForPlugins(document);
-        List<KeyValuePair<NetHttpMethod, OpenApiOperation>> operations = document.Paths.SelectMany(path => path.Value.Operations).ToList();
+        List<KeyValuePair<NetHttpMethod, OpenApiOperation>> operations = document.Paths.SelectMany(path => path.Value.Operations!).ToList();
         foreach (KeyValuePair<NetHttpMethod, OpenApiOperation> path in operations)
         {
             Assert.False(string.IsNullOrEmpty(path.Value.OperationId)); //Assert that the operationId is not empty
@@ -9857,7 +9939,7 @@ components:
         document.AddComponent("myobject", myObjectSchema);
         document.SetReferenceHostDocument();
         ReQuestyBuilder.CleanupOperationIdForPlugins(document);
-        List<KeyValuePair<NetHttpMethod, OpenApiOperation>> operations = document.Paths.SelectMany(path => path.Value.Operations).ToList();
+        List<KeyValuePair<NetHttpMethod, OpenApiOperation>> operations = document.Paths.SelectMany(path => path.Value.Operations!).ToList();
         foreach (KeyValuePair<NetHttpMethod, OpenApiOperation> path in operations)
         {
             Assert.False(string.IsNullOrEmpty(path.Value.OperationId)); //Assert that the operationId is not empty

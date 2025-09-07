@@ -5,8 +5,10 @@ using ReQuesty.Builder.Writers.CSharp;
 using HttpMethod = ReQuesty.Builder.CodeDOM.HttpMethod;
 
 using Xunit;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ReQuesty.Builder.Tests.Writers.CSharp;
+
 public sealed class CodeMethodWriterTests : IDisposable
 {
     private const string DefaultPath = "./";
@@ -28,6 +30,8 @@ public sealed class CodeMethodWriterTests : IDisposable
         writer.SetTextWriter(tw);
         root = CodeNamespace.InitRootNamespace();
     }
+
+    [MemberNotNull(nameof(method), nameof(parentClass))]
     private void setup(bool withInheritance = false)
     {
         if (parentClass != null)
@@ -1121,6 +1125,7 @@ public sealed class CodeMethodWriterTests : IDisposable
         AddRequestBodyParameters(true);
         method.AcceptedResponseTypes.Add("application/json");
         CodeParameter? bodyParameter = method.Parameters.OfKind(CodeParameterKind.RequestBody);
+        Assert.NotNull(bodyParameter);
         bodyParameter.Type = new CodeType
         {
             CollectionKind = CodeTypeBase.CodeTypeCollectionKind.Complex,
@@ -1140,7 +1145,9 @@ public sealed class CodeMethodWriterTests : IDisposable
         method.HttpMethod = HttpMethod.Post;
         AddRequestProperties();
         AddRequestBodyParameters(false);
-        method.Parameters.OfKind(CodeParameterKind.RequestBody).Type = new CodeType
+        CodeParameter? param = method.Parameters.OfKind(CodeParameterKind.RequestBody);
+        Assert.NotNull(param);
+        param.Type = new CodeType
         {
             Name = new CSharpConventionService().StreamTypeName,
             IsExternal = true,
@@ -1160,7 +1167,9 @@ public sealed class CodeMethodWriterTests : IDisposable
         method.HttpMethod = HttpMethod.Post;
         AddRequestProperties();
         AddRequestBodyParameters(false);
-        method.Parameters.OfKind(CodeParameterKind.RequestBody).Type = new CodeType
+        CodeParameter? parameter = method.Parameters.OfKind(CodeParameterKind.RequestBody);
+        Assert.NotNull(parameter);
+        parameter.Type = new CodeType
         {
             Name = new CSharpConventionService().StreamTypeName,
             IsExternal = true,
@@ -1448,8 +1457,8 @@ public sealed class CodeMethodWriterTests : IDisposable
     {
         setup();
         CodeMethodWriter codeMethodWriter = new(new CSharpConventionService());
-        Assert.Throws<ArgumentNullException>(() => codeMethodWriter.WriteCodeElement(null, writer));
-        Assert.Throws<ArgumentNullException>(() => codeMethodWriter.WriteCodeElement(method, null));
+        Assert.Throws<ArgumentNullException>(() => codeMethodWriter.WriteCodeElement(null!, writer));
+        Assert.Throws<ArgumentNullException>(() => codeMethodWriter.WriteCodeElement(method, null!));
         CodeElement? originalParent = method.Parent;
         method.Parent = CodeNamespace.InitRootNamespace();
         Assert.Throws<InvalidOperationException>(() => codeMethodWriter.WriteCodeElement(method, writer));
@@ -1776,6 +1785,7 @@ public sealed class CodeMethodWriterTests : IDisposable
         {
             Name = "array",
         };
+        Assert.NotNull(unionTypeWrapper.OriginalComposedType);
         unionTypeWrapper.OriginalComposedType.AddType(sType);
         unionTypeWrapper.OriginalComposedType.AddType(arrayType);
 
@@ -2041,6 +2051,7 @@ public sealed class CodeMethodWriterTests : IDisposable
     {
         setup();
         CodeMethod? newMethod = method.Clone() as CodeMethod;
+        Assert.NotNull(newMethod);
         newMethod.Name = "NewAwesomeMethod";// new method replacement
         method.Deprecation = new("This method is obsolete. Use {TypeName} instead.", IsDeprecated: true, TypeReferences: new() { { "TypeName", new CodeType { TypeDefinition = newMethod, IsExternal = false } } });
         writer.Write(method);
