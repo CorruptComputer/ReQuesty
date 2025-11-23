@@ -1,6 +1,6 @@
-﻿namespace ReQuesty.Builder.Exceptions;
+namespace ReQuesty.Core.Exceptions;
 
-internal class InvalidSchemaException : InvalidOperationException
+public class InvalidSchemaException : InvalidOperationException
 {
     public InvalidSchemaException(string message) : base(message)
     {
@@ -9,6 +9,7 @@ internal class InvalidSchemaException : InvalidOperationException
     public InvalidSchemaException(string message, Exception innerException) : base(message, innerException)
     {
     }
+
     public InvalidSchemaException()
     {
     }

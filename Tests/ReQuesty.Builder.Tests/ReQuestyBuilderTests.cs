@@ -1294,7 +1294,6 @@ servers:
         LanguagesInformation? extensionResult = await builder.GetLanguagesInformationAsync(new CancellationToken());
         Assert.NotNull(extensionResult);
         Assert.True(extensionResult.TryGetValue("CSharp", out LanguageInformation? csharpInfo));
-        Assert.Equal("Experimental", csharpInfo.MaturityLevel.ToString());
         Assert.Equal("dotnet add {0} {1}", csharpInfo.DependencyInstallCommand);
         Assert.Single(csharpInfo.Dependencies);
         Assert.Equal("Microsoft.Graph.Core", csharpInfo.Dependencies.First().Name);

@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 using ReQuesty.Builder.Extensions;
 using Microsoft.OpenApi;
 
@@ -8,14 +7,6 @@ namespace ReQuesty.Builder;
 
 public record LanguageInformation : IOpenApiSerializable
 {
-    public LanguageMaturityLevel MaturityLevel
-    {
-        get; set;
-    }
-    public SupportExperience SupportExperience
-    {
-        get; set;
-    }
 #pragma warning disable CA2227
 #pragma warning disable CA1002
     public List<LanguageDependency> Dependencies { get; set; } = [];
@@ -33,8 +24,6 @@ public record LanguageInformation : IOpenApiSerializable
     {
         ArgumentNullException.ThrowIfNull(writer);
         writer.WriteStartObject();
-        writer.WriteProperty(nameof(MaturityLevel).ToFirstCharacterLowerCase(), MaturityLevel.ToString());
-        writer.WriteProperty(nameof(SupportExperience).ToFirstCharacterLowerCase(), SupportExperience.ToString());
         writer.WriteProperty(nameof(DependencyInstallCommand).ToFirstCharacterLowerCase(), DependencyInstallCommand);
         writer.WriteOptionalCollection(nameof(Dependencies).ToFirstCharacterLowerCase(), Dependencies, static (w, x) => x.SerializeAsV3(w));
         writer.WriteProperty(nameof(ClientClassName).ToFirstCharacterLowerCase(), ClientClassName);
@@ -82,14 +71,6 @@ public record LanguageInformation : IOpenApiSerializable
                 extension.StructuredMimeTypes.Add(entry.GetValue<string>());
             }
         }
-        if (rawObject.TryGetPropertyValue(nameof(MaturityLevel).ToFirstCharacterLowerCase(), out JsonNode? maturityLevel) && maturityLevel is JsonValue maturityLevelValue && maturityLevelValue.GetValueKind() is JsonValueKind.String && Enum.TryParse<LanguageMaturityLevel>(maturityLevelValue.GetValue<string>(), true, out LanguageMaturityLevel parsedMaturityLevelValue))
-        {
-            extension.MaturityLevel = parsedMaturityLevelValue;
-        }
-        if (rawObject.TryGetPropertyValue(nameof(SupportExperience).ToFirstCharacterLowerCase(), out JsonNode? supportExperience) && supportExperience is JsonValue supportExperienceValue && supportExperienceValue.GetValueKind() is JsonValueKind.String && Enum.TryParse<SupportExperience>(supportExperienceValue.GetValue<string>(), true, out SupportExperience parsedSupportExperienceValue))
-        {
-            extension.SupportExperience = parsedSupportExperienceValue;
-        }
         return extension;
     }
 }
@@ -128,18 +109,4 @@ public record LanguageDependency : IOpenApiSerializable
         }
         return extension;
     }
-}
-
-public enum LanguageMaturityLevel
-{
-    Experimental,
-    Preview,
-    Stable,
-    Abandoned
-}
-
-public enum SupportExperience
-{
-    Microsoft,
-    Community
 }

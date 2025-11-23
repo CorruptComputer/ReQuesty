@@ -27,8 +27,6 @@ internal static class ReQuestyConfigurationExtensions
                 ClientClassName = section[nameof(LanguageInformation.ClientClassName)] ?? string.Empty,
                 ClientNamespaceName = section[nameof(LanguageInformation.ClientNamespaceName)] ?? string.Empty,
                 DependencyInstallCommand = section[nameof(LanguageInformation.DependencyInstallCommand)] ?? string.Empty,
-                MaturityLevel = Enum.TryParse<LanguageMaturityLevel>(section[nameof(LanguageInformation.MaturityLevel)], true, out LanguageMaturityLevel ml) ? ml : LanguageMaturityLevel.Experimental,
-                SupportExperience = Enum.TryParse<SupportExperience>(section[nameof(LanguageInformation.SupportExperience)], true, out SupportExperience se) ? se : SupportExperience.Community,
             };
             section.GetSection(nameof(lngInfo.StructuredMimeTypes)).LoadHashSet(lngInfo.StructuredMimeTypes);
             IConfigurationSection dependenciesSection = section.GetSection(nameof(lngInfo.Dependencies));

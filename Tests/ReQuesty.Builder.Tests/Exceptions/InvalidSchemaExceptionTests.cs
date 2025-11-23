@@ -1,4 +1,4 @@
-﻿using ReQuesty.Builder.Exceptions;
+﻿using ReQuesty.Core.Exceptions;
 
 using Xunit;
 

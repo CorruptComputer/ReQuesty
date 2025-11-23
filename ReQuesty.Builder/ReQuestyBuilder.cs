@@ -13,7 +13,6 @@ using ReQuesty.Builder.CodeDOM;
 using ReQuesty.Builder.CodeRenderers;
 using ReQuesty.Builder.Configuration;
 using ReQuesty.Builder.EqualityComparers;
-using ReQuesty.Builder.Exceptions;
 using ReQuesty.Builder.Export;
 using ReQuesty.Builder.Extensions;
 using ReQuesty.Builder.Logging;
@@ -31,6 +30,7 @@ using Microsoft.OpenApi.Reader;
 using DomHttpMethod = ReQuesty.Builder.CodeDOM.HttpMethod;
 using NetHttpMethod = System.Net.Http.HttpMethod;
 using ReQuesty.Core.Logging;
+using ReQuesty.Core.Exceptions;
 [assembly: InternalsVisibleTo("ReQuesty.Builder.Tests")]
 
 namespace ReQuesty.Builder;

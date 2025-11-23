@@ -24,8 +24,6 @@ public class OpenApiReQuestyExtensionTests
                             }
                         ],
                         DependencyInstallCommand = "dotnet add package",
-                        MaturityLevel = LanguageMaturityLevel.Preview,
-                        SupportExperience = SupportExperience.Microsoft,
                         ClientClassName = "GraphServiceClient",
                         ClientNamespaceName = "Microsoft.Graph",
                         StructuredMimeTypes = [
@@ -77,8 +75,6 @@ public class OpenApiReQuestyExtensionTests
         Assert.NotNull(value);
         Assert.True(value.LanguagesInformation.TryGetValue("CSharp", out LanguageInformation? CSEntry));
         Assert.Equal("dotnet add package", CSEntry.DependencyInstallCommand);
-        Assert.Equal(LanguageMaturityLevel.Preview, CSEntry.MaturityLevel);
-        Assert.Equal(SupportExperience.Microsoft, CSEntry.SupportExperience);
         Assert.Equal("GraphServiceClient", CSEntry.ClientClassName);
         Assert.Equal("Microsoft.Graph", CSEntry.ClientNamespaceName);
         Assert.Single(CSEntry.Dependencies);
