@@ -9,6 +9,7 @@ using ReQuesty.Builder.CodeDOM;
 using ReQuesty.Builder.Extensions;
 using Microsoft.Extensions.Logging;
 using ReQuesty.Consts;
+using ReQuesty.Core.Logging;
 
 namespace ReQuesty.Handlers;
 
@@ -115,11 +116,10 @@ internal class ReQuestyGenerateCommandHandler : BaseReQuestyCommandHandler
             }
             catch (Exception ex)
             {
+                logger.FailedToGenerateClient(ex);
 #if DEBUG
-                logger.LogCritical(ex, "error generating the client: {exceptionMessage}", ex.Message);
                 throw; // so debug tools go straight to the source of the exception when attached
 #else
-                logger.LogCritical("error generating the client: {exceptionMessage}", ex.Message);
                 return 1;
 #endif
             }

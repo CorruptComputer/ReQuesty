@@ -9,6 +9,7 @@ using ReQuesty.Builder.WorkspaceManagement;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Reader;
+using ReQuesty.Core.Logging;
 
 namespace ReQuesty.Builder;
 
@@ -159,7 +160,7 @@ internal class OpenApiDocumentDownloadService
             Logger.LogTrace("{Timestamp}ms: Parsed OpenAPI with errors. {Count} paths found.", stopwatch.ElapsedMilliseconds, readResult.Document?.Paths?.Count ?? 0);
             foreach (OpenApiError parsingError in readResult.Diagnostic.Errors)
             {
-                Logger.LogError("OpenAPI error: {Pointer} - {Message}", parsingError.Pointer, parsingError.Message);
+                Logger.OpenApiParsingError(parsingError.Pointer, parsingError.Message);
             }
         }
         else

@@ -30,6 +30,7 @@ using Microsoft.OpenApi.MicrosoftExtensions;
 using Microsoft.OpenApi.Reader;
 using DomHttpMethod = ReQuesty.Builder.CodeDOM.HttpMethod;
 using NetHttpMethod = System.Net.Http.HttpMethod;
+using ReQuesty.Core.Logging;
 [assembly: InternalsVisibleTo("ReQuesty.Builder.Tests")]
 
 namespace ReQuesty.Builder;
@@ -151,7 +152,7 @@ public partial class ReQuestyBuilder
         {
             if (!skipErrorLog)
             {
-                logger.LogCritical("error getting the API manifest: {ExceptionMessage}", ex.Message);
+                logger.FailedToLoadOpenApiDocument(ex);
             }
 
             return null;

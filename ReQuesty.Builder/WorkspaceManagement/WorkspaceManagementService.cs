@@ -9,6 +9,7 @@ using ReQuesty.Builder.Manifest;
 using Microsoft.Extensions.Logging;
 using ReQuesty.Runtime.Extensions;
 using Microsoft.OpenApi.ApiManifest;
+using ReQuesty.Core.Logging;
 
 namespace ReQuesty.Builder.WorkspaceManagement;
 
@@ -338,7 +339,7 @@ public class WorkspaceManagementService
 
             if (wsConfig.Clients.ContainsKey(generationConfiguration.ClientClassName))
             {
-                Logger.LogError("The client {ClientName} is already present in the configuration", generationConfiguration.ClientClassName);
+                Logger.DuplicateClientNameError(generationConfiguration.ClientClassName);
                 clientsGenerationConfigurations.Remove(generationConfiguration);
                 continue;
             }
@@ -356,7 +357,7 @@ public class WorkspaceManagementService
             Microsoft.OpenApi.OpenApiDocument? document = await openApiDocumentDownloadService.GetDocumentFromStreamAsync(msForParsing, generationConfiguration, false, cancellationToken).ConfigureAwait(false);
             if (document is null)
             {
-                Logger.LogError("The client {ClientName} could not be migrated because the OpenAPI document could not be loaded", generationConfiguration.ClientClassName);
+                Logger.ClientFailedToMigrateDueToMissingOpenApiDoc(generationConfiguration.ClientClassName);
                 clientsGenerationConfigurations.Remove(generationConfiguration);
                 continue;
             }
