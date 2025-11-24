@@ -40,7 +40,7 @@ public class OpenApiReQuestyExtensionTests
 
         value.Write(writer, OpenApiSpecVersion.OpenApi3_0);
         string result = sWriter.ToString();
-        Assert.Equal("{\"languagesInformation\":{\"CSharp\":{\"maturityLevel\":\"Preview\",\"supportExperience\":\"Microsoft\",\"dependencyInstallCommand\":\"dotnet add package\",\"dependencies\":[{\"name\":\"Microsoft.Graph.Core\",\"version\":\"1.0.0\"}],\"clientClassName\":\"GraphServiceClient\",\"clientNamespaceName\":\"Microsoft.Graph\",\"structuredMimeTypes\":[\"application/json\",\"application/xml\"]}}}", result);
+        Assert.Equal("{\"languagesInformation\":{\"CSharp\":{\"dependencyInstallCommand\":\"dotnet add package\",\"dependencies\":[{\"name\":\"Microsoft.Graph.Core\",\"version\":\"1.0.0\"}],\"clientClassName\":\"GraphServiceClient\",\"clientNamespaceName\":\"Microsoft.Graph\",\"structuredMimeTypes\":[\"application/json\",\"application/xml\"]}}}", result);
     }
     [Fact]
     public void Parses()
@@ -57,8 +57,6 @@ public class OpenApiReQuestyExtensionTests
                         }
                     ],
                     "dependencyInstallCommand": "dotnet add package",
-                    "maturityLevel": "Preview",
-                    "supportExperience": "Microsoft",
                     "clientClassName": "GraphServiceClient",
                     "clientNamespaceName": "Microsoft.Graph",
                     "structuredMimeTypes": [

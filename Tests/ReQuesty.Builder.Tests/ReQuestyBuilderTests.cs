@@ -1279,7 +1279,6 @@ info:
 x-requesty-info:
   languagesInformation:
     CSharp:
-      maturityLevel: Experimental
       dependencyInstallCommand: dotnet add {0} {1}
       dependencies:
         - name: Microsoft.Graph.Core
@@ -1311,7 +1310,6 @@ info:
 x-requesty-info:
   languagesInformation:
     CSharp:
-      maturityLevel: Experimental
       dependencyInstallCommand: dotnet add {0} {1}
       clientClassName: GraphClient
       clientNamespaceName: Microsoft.Graph
@@ -1441,9 +1439,9 @@ paths:
                     {
                         ["200"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -1487,9 +1485,9 @@ paths:
                     {
                         ["200"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -1541,9 +1539,9 @@ paths:
                     {
                         ["200"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -1595,9 +1593,9 @@ paths:
                     {
                         ["200"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -1669,9 +1667,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("bar.foo")
                                         }
@@ -1728,9 +1726,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -1795,9 +1793,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["text/plain"] = new OpenApiMediaType
+                                        ["text/plain"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -1892,9 +1890,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -1965,9 +1963,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -2057,9 +2055,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -2107,9 +2105,9 @@ paths:
                     {
                         ["200"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -2151,9 +2149,9 @@ paths:
                     {
                         ["200"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -2195,9 +2193,9 @@ paths:
                     {
                         ["200"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -2239,9 +2237,9 @@ paths:
                     {
                         ["200"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -2259,9 +2257,9 @@ paths:
                         },
                         ["4XX"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -2287,9 +2285,9 @@ paths:
                         },
                         ["5XX"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -2315,9 +2313,9 @@ paths:
                         },
                         ["402"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -2328,9 +2326,9 @@ paths:
                         },
                         ["401"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -2410,9 +2408,9 @@ paths:
                     {
                         ["200"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
-                                ["application/json"] = new OpenApiMediaType
+                                ["application/json"] = new OpenApiMediaType()
                                 {
                                     Schema = new OpenApiSchema
                                     {
@@ -2430,21 +2428,21 @@ paths:
                         },
                         ["4XX"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
                                 ["application/json"] = new OpenApiMediaType()
                             }
                         },
                         ["5XX"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
                                 ["application/json"] = new OpenApiMediaType()
                             }
                         },
                         ["401"] = new OpenApiResponse
                         {
-                            Content = new Dictionary<string, OpenApiMediaType>()
+                            Content = new Dictionary<string, IOpenApiMediaType>()
                             {
                                 ["application/json"] = new OpenApiMediaType()
                             }
@@ -2476,9 +2474,9 @@ paths:
         };
         OpenApiResponse errorResponse = new()
         {
-            Content = new Dictionary<string, OpenApiMediaType>()
+            Content = new Dictionary<string, IOpenApiMediaType>()
             {
-                ["application/json"] = new OpenApiMediaType
+                ["application/json"] = new OpenApiMediaType()
                 {
                     Schema = new OpenApiSchemaReference("microsoft.graph.error")
                 }
@@ -2498,9 +2496,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -2565,9 +2563,9 @@ paths:
         };
         OpenApiResponse errorResponse = new()
         {
-            Content = new Dictionary<string, OpenApiMediaType>()
+            Content = new Dictionary<string, IOpenApiMediaType>()
             {
-                ["application/json"] = new OpenApiMediaType
+                ["application/json"] = new OpenApiMediaType()
                 {
                     Schema = new OpenApiSchemaReference("microsoft.graph.error")
                 }
@@ -2587,9 +2585,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -2661,9 +2659,9 @@ paths:
         };
         OpenApiResponse weatherForecastResponse = new()
         {
-            Content = new Dictionary<string, OpenApiMediaType>()
+            Content = new Dictionary<string, IOpenApiMediaType>()
             {
-                ["application/json"] = new OpenApiMediaType
+                ["application/json"] = new OpenApiMediaType()
                 {
                     Schema = new OpenApiSchemaReference("weatherForecast")
                 }
@@ -2729,9 +2727,9 @@ paths:
         };
         OpenApiResponse weatherForecastResponse = new()
         {
-            Content = new Dictionary<string, OpenApiMediaType>()
+            Content = new Dictionary<string, IOpenApiMediaType>()
             {
-                ["application/json"] = new OpenApiMediaType
+                ["application/json"] = new OpenApiMediaType()
                 {
                     Schema = new OpenApiSchemaReference("weatherForecast")
                 }
@@ -2805,9 +2803,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>
+                                    Content = new Dictionary<string, IOpenApiMediaType>
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -2878,9 +2876,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>
+                                    Content = new Dictionary<string, IOpenApiMediaType>
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -2956,9 +2954,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>
+                                    Content = new Dictionary<string, IOpenApiMediaType>
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("anyOfNullable")
                                         }
@@ -3029,9 +3027,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>
+                                    Content = new Dictionary<string, IOpenApiMediaType>
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("anyOfNullable")
                                         }
@@ -3119,9 +3117,9 @@ paths:
         };
         OpenApiResponse directoryObjects = new()
         {
-            Content = new Dictionary<string, OpenApiMediaType>()
+            Content = new Dictionary<string, IOpenApiMediaType>()
             {
-                ["application/json"] = new OpenApiMediaType
+                ["application/json"] = new OpenApiMediaType()
                 {
                     Schema = new OpenApiSchemaReference("microsoft.graph.entity")
                 }
@@ -3248,7 +3246,7 @@ paths:
         };
         OpenApiResponse directoryObjects = new()
         {
-            Content = new Dictionary<string, OpenApiMediaType>()
+            Content = new Dictionary<string, IOpenApiMediaType>()
             {
                 ["application/json"] = new OpenApiMediaType()
                 {
@@ -3348,9 +3346,9 @@ paths:
         };
         OpenApiResponse directoryObjects = new()
         {
-            Content = new Dictionary<string, OpenApiMediaType>()
+            Content = new Dictionary<string, IOpenApiMediaType>()
             {
-                ["application/json"] = new OpenApiMediaType
+                ["application/json"] = new OpenApiMediaType()
                 {
                     Schema = new OpenApiSchemaReference("microsoft.graph.directoryObjects")
                 }
@@ -3494,9 +3492,9 @@ paths:
         };
         OpenApiResponse directoryObjects = new()
         {
-            Content = new Dictionary<string, OpenApiMediaType>()
+            Content = new Dictionary<string, IOpenApiMediaType>()
             {
-                ["application/json"] = new OpenApiMediaType
+                ["application/json"] = new OpenApiMediaType()
                 {
                     Schema = new OpenApiSchemaReference("microsoft.graph.directoryObject", document)
                 }
@@ -3648,9 +3646,9 @@ paths:
         };
         OpenApiResponse directoryObjects = new()
         {
-            Content = new Dictionary<string, OpenApiMediaType>()
+            Content = new Dictionary<string, IOpenApiMediaType>()
             {
-                ["application/json"] = new OpenApiMediaType
+                ["application/json"] = new OpenApiMediaType()
                 {
                     Schema = new OpenApiSchemaReference("microsoft.graph.directoryObject", document)
                 }
@@ -3713,9 +3711,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -3783,9 +3781,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -3859,9 +3857,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -3928,9 +3926,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -3993,9 +3991,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("subNS.derivedObject")
                                         }
@@ -4176,9 +4174,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -4415,9 +4413,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -4704,9 +4702,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -4759,9 +4757,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("subns.myobject")
                                         }
@@ -4814,9 +4812,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -4899,9 +4897,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -4977,9 +4975,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5041,9 +5039,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5101,9 +5099,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5160,9 +5158,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        [contentType] = new OpenApiMediaType
+                                        [contentType] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5210,9 +5208,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new()
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchema
                                             {
@@ -5298,9 +5296,9 @@ components:
                             {
                                 ["2XX"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myotherobject")
                                         }
@@ -5308,9 +5306,9 @@ components:
                                 },
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5373,9 +5371,9 @@ components:
                             {
                                 ["2XX"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5487,9 +5485,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5551,9 +5549,9 @@ components:
                             {
                                 [statusCode.ToString()] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5610,9 +5608,9 @@ components:
                         {
                             ["200"] = new OpenApiResponse
                             {
-                                Content = new Dictionary<string, OpenApiMediaType>()
+                                Content = new Dictionary<string, IOpenApiMediaType>()
                                 {
-                                    ["application/json"] = new OpenApiMediaType
+                                    ["application/json"] = new OpenApiMediaType()
                                     {
                                         Schema = new OpenApiSchemaReference(componentName)
                                     }
@@ -5657,7 +5655,7 @@ components:
                                 new OpenApiParameter {
                                     Name = "ids",
                                     In = ParameterLocation.Path,
-                                    Content = new Dictionary<string, OpenApiMediaType>
+                                    Content = new Dictionary<string, IOpenApiMediaType>
                                     {
                                         { "application/json",
                                         new OpenApiMediaType {
@@ -5676,9 +5674,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5739,9 +5737,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5798,9 +5796,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5853,9 +5851,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5910,9 +5908,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5932,9 +5930,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -5991,9 +5989,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -6013,9 +6011,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -6072,9 +6070,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -6086,9 +6084,9 @@ components:
                         {
                             RequestBody = new OpenApiRequestBody
                             {
-                                Content = new Dictionary<string, OpenApiMediaType>()
+                                Content = new Dictionary<string, IOpenApiMediaType>()
                                 {
-                                    ["application/json"] = new OpenApiMediaType
+                                    ["application/json"] = new OpenApiMediaType()
                                     {
                                         Schema = new OpenApiSchemaReference("myobject")
                                     }
@@ -6098,9 +6096,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -6112,9 +6110,9 @@ components:
                         {
                             RequestBody = new OpenApiRequestBody
                             {
-                                Content = new Dictionary<string, OpenApiMediaType>()
+                                Content = new Dictionary<string, IOpenApiMediaType>()
                                 {
-                                    ["application/json"] = new OpenApiMediaType
+                                    ["application/json"] = new OpenApiMediaType()
                                     {
                                         Schema = new OpenApiSchemaReference("myobject")
                                     }
@@ -6124,9 +6122,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -6146,9 +6144,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -6168,9 +6166,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -6250,9 +6248,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -6720,9 +6718,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("microsoft.graph.user")
                                         }
@@ -6794,9 +6792,9 @@ paths:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("microsoft.graph.user")
                                         }
@@ -9470,9 +9468,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -9484,9 +9482,9 @@ components:
                         {
                             RequestBody = new OpenApiRequestBody
                             {
-                                Content = new Dictionary<string, OpenApiMediaType>()
+                                Content = new Dictionary<string, IOpenApiMediaType>()
                                 {
-                                    ["application/json"] = new OpenApiMediaType
+                                    ["application/json"] = new OpenApiMediaType()
                                     {
                                         Schema = new OpenApiSchemaReference("myobject")
                                     }
@@ -9496,9 +9494,9 @@ components:
                             {
                                 ["201"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -9518,9 +9516,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -9532,9 +9530,9 @@ components:
                         {
                             RequestBody = new OpenApiRequestBody
                             {
-                                Content = new Dictionary<string, OpenApiMediaType>()
+                                Content = new Dictionary<string, IOpenApiMediaType>()
                                 {
-                                    ["application/json"] = new OpenApiMediaType
+                                    ["application/json"] = new OpenApiMediaType()
                                     {
                                         Schema = new OpenApiSchemaReference("myobject")
                                     }
@@ -9620,9 +9618,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -9634,9 +9632,9 @@ components:
                         {
                             RequestBody = new OpenApiRequestBody
                             {
-                                Content = new Dictionary<string, OpenApiMediaType>()
+                                Content = new Dictionary<string, IOpenApiMediaType>()
                                 {
-                                    ["application/json"] = new OpenApiMediaType
+                                    ["application/json"] = new OpenApiMediaType()
                                     {
                                         Schema = new OpenApiSchemaReference("myobject")
                                     }
@@ -9646,9 +9644,9 @@ components:
                             {
                                 ["201"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -9668,9 +9666,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -9682,9 +9680,9 @@ components:
                         {
                             RequestBody = new OpenApiRequestBody
                             {
-                                Content = new Dictionary<string, OpenApiMediaType>()
+                                Content = new Dictionary<string, IOpenApiMediaType>()
                                 {
-                                    ["application/json"] = new OpenApiMediaType
+                                    ["application/json"] = new OpenApiMediaType()
                                     {
                                         Schema = new OpenApiSchemaReference("myobject")
                                     }
@@ -9770,9 +9768,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -9784,9 +9782,9 @@ components:
                         {
                             RequestBody = new OpenApiRequestBody
                             {
-                                Content = new Dictionary<string, OpenApiMediaType>()
+                                Content = new Dictionary<string, IOpenApiMediaType>()
                                 {
-                                    ["application/json"] = new OpenApiMediaType
+                                    ["application/json"] = new OpenApiMediaType()
                                     {
                                         Schema = new OpenApiSchemaReference("myobject")
                                     }
@@ -9796,9 +9794,9 @@ components:
                             {
                                 ["201"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -9870,9 +9868,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -9885,9 +9883,9 @@ components:
                         {
                             RequestBody = new OpenApiRequestBody
                             {
-                                Content = new Dictionary<string, OpenApiMediaType>()
+                                Content = new Dictionary<string, IOpenApiMediaType>()
                                 {
-                                    ["application/json"] = new OpenApiMediaType
+                                    ["application/json"] = new OpenApiMediaType()
                                     {
                                         Schema = new OpenApiSchemaReference("myobject")
                                     }
@@ -9897,9 +9895,9 @@ components:
                             {
                                 ["201"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }
@@ -9920,9 +9918,9 @@ components:
                             {
                                 ["200"] = new OpenApiResponse
                                 {
-                                    Content = new Dictionary<string, OpenApiMediaType>()
+                                    Content = new Dictionary<string, IOpenApiMediaType>()
                                     {
-                                        ["application/json"] = new OpenApiMediaType
+                                        ["application/json"] = new OpenApiMediaType()
                                         {
                                             Schema = new OpenApiSchemaReference("myobject")
                                         }

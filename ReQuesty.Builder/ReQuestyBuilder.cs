@@ -1599,7 +1599,7 @@ public partial class ReQuestyBuilder
                     && operation.RequestBody.Content.IsMultipartTopMimeType(config.StructuredMimeTypes)
                     && requestBodySchema.Properties is not null)
                 {
-                    OpenApiMediaType mediaType = operation.RequestBody.Content.First(x => x.Value.Schema == requestBodySchema).Value;
+                    IOpenApiMediaType mediaType = operation.RequestBody.Content.First(x => x.Value.Schema == requestBodySchema).Value;
                     if (mediaType.Encoding is not null && mediaType.Encoding.Count != 0)
                     {
                         requestBodyType = new CodeType { Name = "MultipartBody", IsExternal = true, };
