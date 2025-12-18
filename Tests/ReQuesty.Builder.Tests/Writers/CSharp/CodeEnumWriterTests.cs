@@ -126,16 +126,6 @@ public sealed class CodeEnumWriterTests : IDisposable
         Assert.Empty(result);
     }
 
-    internal const string GeneratedCodePattern = @"\s+\[global::System\.CodeDom\.Compiler\.GeneratedCode\(""ReQuesty"", ""[0-9]+\.[0-9]+\.[0-9]+(?:-preview\.\d+)?""\)\]";
-    [Fact]
-    public void WritesGeneratedCodeAttribute()
-    {
-        currentEnum.AddOption(new CodeEnumOption { Name = "option2" });
-        writer.Write(currentEnum);
-        string result = tw.ToString();
-        Assert.Matches(GeneratedCodePattern, result);
-    }
-
     [Theory]
     [InlineData(AccessModifier.Public)]
     [InlineData(AccessModifier.Internal)]

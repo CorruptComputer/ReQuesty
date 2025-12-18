@@ -3,11 +3,10 @@ using ReQuesty.Builder.CodeDOM;
 using ReQuesty.Builder.Extensions;
 using ReQuesty.Builder.Lock;
 using Microsoft.OpenApi.ApiManifest;
+using ReQuesty.Core;
 
 namespace ReQuesty.Builder.Configuration;
 
-#pragma warning disable CA2227
-#pragma warning disable CA1056
 public class GenerationConfiguration : ICloneable
 {
     public static GenerationConfiguration DefaultConfiguration
@@ -208,7 +207,7 @@ public class GenerationConfiguration : ICloneable
         {
             dependency.Extensions.Add(ReQuestyHashManifestExtensionKey, JsonValue.Create(configurationHash));// only include non empty value.
         }
-        dependency.Extensions.Add(ReQuestyVersionManifestExtensionKey, ReQuesty.Generated.ReQuestyVersion.Current());
+        dependency.Extensions.Add(ReQuestyVersionManifestExtensionKey, ReQuestyVersion.Current());
         return dependency;
     }
     private string NormalizeDescriptionLocation(string targetDirectory)
@@ -231,5 +230,3 @@ public class GenerationConfiguration : ICloneable
         get; set;
     }
 }
-#pragma warning restore CA1056
-#pragma warning restore CA2227

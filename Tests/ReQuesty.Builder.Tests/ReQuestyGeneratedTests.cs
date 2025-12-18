@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using ReQuesty.Core;
+using Xunit;
 
 namespace ReQuesty.Builder.Tests;
 public class ReQuestyGeneratedTests
@@ -22,11 +23,11 @@ public class ReQuestyGeneratedTests
             ?.Parent                     // [...]/ReQuesty/Tests/
             ?.FullName;                  // [...]/ReQuesty/
 
-        string csprojFile = Path.Join(topLevelFolder, "ReQuesty", "ReQuesty.csproj");
+        string csprojFile = Path.Join(topLevelFolder, "Directory.Build.props");
 
         string version = GetLineValue(csprojFile, "Version");
 
-        Assert.Equal(version, ReQuesty.Generated.ReQuestyVersion.Current());
+        Assert.Equal(version, ReQuestyVersion.Current());
     }
 
     private static string GetLineValue(string csprojFile, string key)

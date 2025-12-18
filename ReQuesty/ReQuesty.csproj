@@ -12,7 +12,6 @@
     <Deterministic>true</Deterministic>
 
     <!-- Assembly/NuGet info -->
-    <Version>0.0.1</Version>
     <Authors>Nickolas Gupton and kiota contributors up to commit 960db6b2c39ce815dcabf4d2dec8a084fd218c8c</Authors>
     <RepositoryUrl>https://github.com/CorruptComputer/ReQuesty</RepositoryUrl>
     <!--GenerateDocumentationFile>true</GenerateDocumentationFile-->
@@ -51,10 +50,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="StreamJsonRpc" Version="2.22.23" />
-    <PackageReference Include="System.CommandLine" Version="2.0.0-beta5.25306.1" />
-    <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.25306.1" />
-    <PackageReference Include="System.CommandLine.Rendering" Version="0.4.0-alpha.25306.1" />
-    <ProjectReference Include="..\ReQuesty.Generated\ReQuestyGenerated.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <PackageReference Include="System.CommandLine" Version="2.0.1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="../README.md" Pack="true" PackagePath="" />

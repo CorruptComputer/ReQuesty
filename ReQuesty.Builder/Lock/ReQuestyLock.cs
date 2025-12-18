@@ -23,7 +23,7 @@ public class ReQuestyLock
     /// <summary>
     /// The version of the ReQuesty generator that generated this client.
     /// </summary>
-    public string ReQuestyVersion { get; set; } = ReQuesty.Generated.ReQuestyVersion.Current();
+    public string ReQuestyVersion { get; set; } = Core.ReQuestyVersion.Current();
     /// <summary>
     /// The main class name for this client.
     /// </summary>

@@ -29,9 +29,8 @@ internal abstract class BaseReQuestyCommandHandler : AsynchronousCommandLineActi
     private readonly Lazy<ReQuestyConfiguration> ConfigurationFactory = new(() =>
     {
         ConfigurationBuilder builder = new();
-        using MemoryStream defaultStream = new(ReQuesty.Generated.ReQuestyAppSettings.Default());
-        IConfigurationRoot configuration = builder.AddJsonStream(defaultStream)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+
+        IConfigurationRoot configuration = builder.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
                 .AddEnvironmentVariables(prefix: "REQUSTY_")
                 .Build();
         ReQuestyConfiguration configObject = new();

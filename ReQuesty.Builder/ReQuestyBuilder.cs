@@ -31,6 +31,7 @@ using DomHttpMethod = ReQuesty.Builder.CodeDOM.HttpMethod;
 using NetHttpMethod = System.Net.Http.HttpMethod;
 using ReQuesty.Core.Logging;
 using ReQuesty.Core.Exceptions;
+using ReQuesty.Core;
 [assembly: InternalsVisibleTo("ReQuesty.Builder.Tests")]
 
 namespace ReQuesty.Builder;
@@ -160,7 +161,7 @@ public partial class ReQuestyBuilder
     }
     private async Task<(int, OpenApiUrlTreeNode?, bool, OpenApiDiagnostic?)> GetTreeNodeInternalAsync(string inputPath, bool generating, Stopwatch sw, CancellationToken cancellationToken)
     {
-        logger.LogDebug("ReQuesty version {Version}", ReQuesty.Generated.ReQuestyVersion.Current());
+        logger.LogDebug("ReQuesty version {Version}", ReQuestyVersion.Current());
         int stepId = 0;
         if (config.ShouldGetApiManifest)
         {

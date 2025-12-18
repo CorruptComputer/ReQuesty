@@ -6,7 +6,6 @@ using ReQuesty.Builder.CodeDOM;
 using ReQuesty.Builder.Configuration;
 using ReQuesty.Builder.Validation;
 using Microsoft.Extensions.Logging;
-using System.CommandLine.Hosting;
 using ReQuesty.Consts;
 
 namespace ReQuesty;
@@ -95,7 +94,7 @@ public static partial class ReQuestyHost
             disableSSLValidationOption,
         };
 
-        command.UseCommandHandler<ReQuestyGenerateCommandHandler>();
+        command.Action = new ReQuestyGenerateCommandHandler();
 
         return command;
     }

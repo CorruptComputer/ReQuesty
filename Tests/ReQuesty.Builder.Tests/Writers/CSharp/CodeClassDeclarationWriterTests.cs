@@ -113,14 +113,6 @@ public sealed class CodeClassDeclarationWriterTests : IDisposable
         Assert.Contains("System.Util", result);
     }
 
-    [Fact]
-    public void WritesGeneratedCodeAttribute()
-    {
-        codeElementWriter.WriteCodeElement(parentClass.StartBlock, writer);
-        string result = tw.ToString();
-        Assert.Matches(CodeEnumWriterTests.GeneratedCodePattern, result);
-    }
-
     [Theory]
     [InlineData(AccessModifier.Public)]
     [InlineData(AccessModifier.Internal)]

@@ -37,7 +37,6 @@
     </PackageReference>
     <PackageReference Include="YamlDotNet" Version="16.3.0" />
     <ProjectReference Include="..\ReQuesty.Core\ReQuesty.Core.csproj" />
-    <ProjectReference Include="..\ReQuesty.Generated\ReQuestyGenerated.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="10.0.1" />
