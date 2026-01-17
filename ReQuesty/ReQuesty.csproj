@@ -10,6 +10,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
     <Deterministic>true</Deterministic>
+    <PackAsTool>true</PackAsTool>
     <AssemblyName>requesty</AssemblyName>
     <ToolCommandName>requesty</ToolCommandName>
 
