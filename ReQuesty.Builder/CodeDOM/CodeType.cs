@@ -38,6 +38,7 @@ public class CodeType : CodeTypeBase, ICloneable
             // e.g. var y = x.Clone(); var z = y.Clone(); y.GenericTypeParameterValues.Add(value);
             // shouldn't modify x.GenericTypeParameterValues or z.GenericTypeParameterValues
             genericTypeParameterValues = [.. genericTypeParameterValues],
+            IsNullable = IsNullable
         }.BaseClone<CodeType>(this, TypeDefinition is null || IsExternal);
     }
     public IEnumerable<CodeType> GenericTypeParameterValues

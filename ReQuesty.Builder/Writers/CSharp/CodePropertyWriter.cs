@@ -14,8 +14,8 @@ public class CodePropertyWriter(CSharpConventionService conventionService) : Bas
         }
 
         string propertyType = conventions.GetTypeString(codeElement.Type, codeElement);
-        bool isNullable = codeElement.Type.IsNullable;
 
+        bool isNullable = codeElement.Type.IsNullable;
         if (isNullable && !propertyType.EndsWith('?'))
         {
             propertyType += "?";

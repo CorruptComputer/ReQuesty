@@ -1,4 +1,0 @@
-- Make required actually required
-- Make nullable nullable, even when required (you can have for example, 'public required Guid? Test { get; set; }')
-  - Its kinda goofy sounding, but it can help prevent errors if you want to always make sure something is set, even if its being set to nullable
-- Simplify where possible, remove features that will go unused

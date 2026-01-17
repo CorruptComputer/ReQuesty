@@ -1,4 +1,5 @@
 ﻿namespace ReQuesty.Builder.CodeDOM;
+
 public abstract class CodeTypeBase : CodeTerminal, ICloneable
 {
     public enum CodeTypeCollectionKind
@@ -9,16 +10,16 @@ public abstract class CodeTypeBase : CodeTerminal, ICloneable
     }
 
     /// <summary>
-    /// Indicates that the type is a callback
-    /// Example: ActionOf:true parameterA: (y: typeA) => void
-    /// Example: ActionOf:false parameterA: typeA
+    ///   Indicates that the type is a callback
+    ///   Example: ActionOf:true parameterA: (y: typeA) => void
+    ///   Example: ActionOf:false parameterA: typeA
     /// </summary>
-    public bool ActionOf
-    {
-        get; set;
-    }
+    public bool ActionOf { get; set; }
+
     public bool IsNullable { get; set; }
+
     public CodeTypeCollectionKind CollectionKind { get; set; } = CodeTypeCollectionKind.None;
+
     public bool IsCollection
     {
         get
@@ -26,6 +27,7 @@ public abstract class CodeTypeBase : CodeTerminal, ICloneable
             return CollectionKind != CodeTypeCollectionKind.None;
         }
     }
+
     public bool IsArray
     {
         get
@@ -33,6 +35,7 @@ public abstract class CodeTypeBase : CodeTerminal, ICloneable
             return CollectionKind == CodeTypeCollectionKind.Array;
         }
     }
+
     protected virtual TChildType BaseClone<TChildType>(CodeTypeBase source, bool cloneName = true) where TChildType : CodeTypeBase
     {
         ArgumentNullException.ThrowIfNull(source);
