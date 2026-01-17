@@ -95,9 +95,7 @@ public class DocumentCachingProvider
             }
             else
             {
-#pragma warning disable CA2007
                 await using FileStream fileStream = File.Create(target);
-#pragma warning restore CA2007
                 content.Position = 0;
                 await content.CopyToAsync(fileStream, token).ConfigureAwait(false);
                 await fileStream.FlushAsync(token).ConfigureAwait(false);

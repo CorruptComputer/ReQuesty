@@ -29,9 +29,7 @@ public class LockManagementService : ILockManagementService
         string lockFilePath = Path.Combine(directoryPath, LockFileName);
         if (File.Exists(lockFilePath))
         {
-#pragma warning disable CA2007
             await using FileStream fileStream = File.OpenRead(lockFilePath);
-#pragma warning restore CA2007
             ReQuestyLock? result = await GetLockFromStreamInternalAsync(fileStream, cancellationToken).ConfigureAwait(false);
             if (result is not null && IsDescriptionLocal(result.DescriptionLocation) && !Path.IsPathRooted(result.DescriptionLocation))
             {
@@ -67,9 +65,7 @@ public class LockManagementService : ILockManagementService
     private static async Task WriteLockFileInternalAsync(string directoryPath, ReQuestyLock lockInfo, CancellationToken cancellationToken)
     {
         string lockFilePath = Path.Combine(directoryPath, LockFileName);
-#pragma warning disable CA2007
         await using FileStream fileStream = File.Open(lockFilePath, FileMode.Create);
-#pragma warning restore CA2007
         lockInfo.DescriptionLocation = GetRelativeDescriptionPath(lockInfo.DescriptionLocation, lockFilePath);
         await JsonSerializer.SerializeAsync(fileStream, lockInfo, context.ReQuestyLock, cancellationToken).ConfigureAwait(false);
     }

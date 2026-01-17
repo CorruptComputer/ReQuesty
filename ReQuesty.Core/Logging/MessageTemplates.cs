@@ -14,6 +14,11 @@ public static class MessageTemplates
         new EventId(LogEvents.ClientGenerationError.AsInt(), nameof(FailedToGenerateClient)),
         "Error generating the client");
 
+    /// <summary>
+    ///   Logs a critical error when the client generation fails.
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="exception"></param>
     public static void FailedToGenerateClient(this ILogger logger, Exception exception)
         => failedToGenerateClient(logger, exception);
 
@@ -22,6 +27,11 @@ public static class MessageTemplates
         new EventId(LogEvents.OpenApiDocumentLoadError.AsInt(), nameof(FailedToLoadOpenApiDocument)),
         "Failed to load OpenAPI document");
 
+    /// <summary>
+    ///   Logs a critical error when the OpenAPI document fails to load.
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="exception"></param>
     public static void FailedToLoadOpenApiDocument(this ILogger logger, Exception exception)
         => failedToLoadOpenApiDocument(logger, exception);
     #endregion
@@ -32,6 +42,12 @@ public static class MessageTemplates
         new EventId(LogEvents.OpenApiParsingError.AsInt(), nameof(OpenApiParsingError)),
         "Error while parsing OpenAPI document: {Pointer} - {Message}");
 
+    /// <summary>
+    ///   Logs an error when there is a problem parsing the OpenAPI document.
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="pointer"></param>
+    /// <param name="message"></param>
     public static void OpenApiParsingError(this ILogger logger, string? pointer, string message)
         => openApiParsingError(logger, pointer ?? "(null)", message, null);
 
@@ -40,6 +56,11 @@ public static class MessageTemplates
         new EventId(LogEvents.DuplicateClientNameError.AsInt(), nameof(DuplicateClientNameError)),
         "The client {ClientName} is already present in the configuration");
 
+    /// <summary>
+    ///   Logs an error when a duplicate client name is detected in the configuration.
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="name"></param>
     public static void DuplicateClientNameError(this ILogger logger, string name)
         => duplicateClientNameError(logger, name, null);
 
@@ -48,6 +69,11 @@ public static class MessageTemplates
         new EventId(LogEvents.ClientFailedToMigrateDueToMissingOpenApiDoc.AsInt(), nameof(DuplicateClientNameError)),
         "The client {ClientName} could not be migrated because the OpenAPI document could not be loaded");
 
+    /// <summary>
+    ///   Logs an error when a client fails to migrate due to a missing OpenAPI document.
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="name"></param>
     public static void ClientFailedToMigrateDueToMissingOpenApiDoc(this ILogger logger, string name)
         => clientFailedToMigrateDueToMissingOpenApiDoc(logger, name, null);
     #endregion

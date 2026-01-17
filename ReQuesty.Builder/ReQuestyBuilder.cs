@@ -121,13 +121,11 @@ public partial class ReQuestyBuilder
             string apiIdentifier = pathParts.Length > 1 ? pathParts[1] : string.Empty;
             ManifestManagementService manifestManagementService = new();
             DocumentCachingProvider documentCachingProvider = new(httpClient, logger);
-#pragma warning disable CA2000
             using Stream manifestFileContent = manifestPath.StartsWith("http", StringComparison.OrdinalIgnoreCase) switch
             {
                 false => File.OpenRead(manifestPath),
                 true => await documentCachingProvider.GetDocumentAsync(new Uri(manifestPath), "manifests", "manifest.json", cancellationToken: cancellationToken).ConfigureAwait(false)
             };
-#pragma warning restore CA2000
             ApiManifestDocument manifest = await manifestManagementService.DeserializeManifestDocumentAsync(manifestFileContent).ConfigureAwait(false)
                             ?? throw new InvalidOperationException("The manifest could not be decoded");
 
@@ -147,9 +145,7 @@ public partial class ReQuestyBuilder
             return new Tuple<string, IEnumerable<string>>(apiDependency.ApiDescriptionUrl,
                                 apiDependency.Requests.Select(x => NormalizeApiManifestPath(x, apiDependency.ApiDeploymentBaseUrl)).ToArray());
         }
-#pragma warning disable CA1031
         catch (Exception ex)
-#pragma warning restore CA1031
         {
             if (!skipErrorLog)
             {
@@ -178,9 +174,7 @@ public partial class ReQuestyBuilder
             StopLogAndReset(sw, $"step {++stepId} - getting the manifest - took");
         }
         sw.Start();
-#pragma warning disable CA2007
         await using Stream input = await LoadStreamAsync(inputPath, cancellationToken).ConfigureAwait(false);
-#pragma warning restore CA2007
         if (input.Length == 0)
         {
             return (0, null, false, null);

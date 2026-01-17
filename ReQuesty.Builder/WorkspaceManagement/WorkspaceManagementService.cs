@@ -344,10 +344,8 @@ public class WorkspaceManagementService
                 continue;
             }
             (Stream stream, bool _) = await openApiDocumentDownloadService.LoadStreamAsync(generationConfiguration.OpenAPIFilePath, generationConfiguration, null, false, cancellationToken).ConfigureAwait(false);
-#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
             await using MemoryStream ms = new();
             await using MemoryStream msForParsing = new();
-#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
             await stream.CopyToAsync(ms, cancellationToken).ConfigureAwait(false);
             ms.Seek(0, SeekOrigin.Begin);
             await ms.CopyToAsync(msForParsing, cancellationToken).ConfigureAwait(false);

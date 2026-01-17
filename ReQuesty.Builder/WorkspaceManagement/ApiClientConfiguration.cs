@@ -4,54 +4,53 @@ using Microsoft.OpenApi.ApiManifest;
 
 namespace ReQuesty.Builder.WorkspaceManagement;
 
-#pragma warning disable CA2227 // Collection properties should be read only
 public class ApiClientConfiguration : BaseApiConsumerConfiguration, ICloneable
 {
     /// <summary>
-    /// The language for this client.
+    ///   The language for this client.
     /// </summary>
     public string Language { get; set; } = string.Empty;
+
     /// <summary>
-    /// The type access modifier to use for the client types.
+    ///   The type access modifier to use for the client types.
     /// </summary>
     public string TypeAccessModifier { get; set; } = "Public";
+
     /// <summary>
-    /// The structured mime types used for this client.
+    ///   The structured mime types used for this client.
     /// </summary>
-#pragma warning disable CA1002
     public List<string> StructuredMimeTypes { get; set; } = [];
-#pragma warning restore CA1002
+
     /// <summary>
-    /// The main namespace for this client.
+    ///   The main namespace for this client.
     /// </summary>
     public string ClientNamespaceName { get; set; } = string.Empty;
+
     /// <summary>
-    /// Whether the backing store was used for this client.
+    ///   Whether the backing store was used for this client.
     /// </summary>
-    public bool UsesBackingStore
-    {
-        get; set;
-    }
+    public bool UsesBackingStore { get; set; }
+
     /// <summary>
-    /// Whether additional data was used for this client.
+    ///   Whether additional data was used for this client.
     /// </summary>
-    public bool IncludeAdditionalData
-    {
-        get; set;
-    }
+    public bool IncludeAdditionalData { get; set; }
+
     /// <summary>
-    /// The OpenAPI validation rules to disable during the generation.
+    ///   The OpenAPI validation rules to disable during the generation.
     /// </summary>
     public HashSet<string> DisabledValidationRules { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="ApiClientConfiguration"/> class.
+    ///   Initializes a new instance of the <see cref="ApiClientConfiguration"/> class.
     /// </summary>
     public ApiClientConfiguration() : base()
     {
 
     }
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="ApiClientConfiguration"/> class from an existing <see cref="GenerationConfiguration"/>.
+    ///   Initializes a new instance of the <see cref="ApiClientConfiguration"/> class from an existing <see cref="GenerationConfiguration"/>.
     /// </summary>
     /// <param name="config">The configuration to use to initialize the client configuration</param>
     public ApiClientConfiguration(GenerationConfiguration config) : base(config)
@@ -65,8 +64,9 @@ public class ApiClientConfiguration : BaseApiConsumerConfiguration, ICloneable
         StructuredMimeTypes = config.StructuredMimeTypes.ToList();
         DisabledValidationRules = config.DisabledValidationRules.ToHashSet(StringComparer.OrdinalIgnoreCase);
     }
+
     /// <summary>
-    /// Updates the passed configuration with the values from the config file.
+    ///   Updates the passed configuration with the values from the config file.
     /// </summary>
     /// <param name="config">Generation configuration to update.</param>
     /// <param name="clientName">Client name serving as class name.</param>
@@ -109,4 +109,3 @@ public class ApiClientConfiguration : BaseApiConsumerConfiguration, ICloneable
         return result;
     }
 }
-#pragma warning restore CA2227 // Collection properties should be read only

@@ -12,9 +12,7 @@ public class OpenApiReQuestyExtension : IOpenApiExtension
     /// </summary>
     public static string Name => "x-requesty-info";
 
-#pragma warning disable CA2227
     public LanguagesInformation LanguagesInformation { get; set; } = [];
-#pragma warning restore CA2227
 
     public void Write(IOpenApiWriter writer, OpenApiSpecVersion specVersion)
     {
@@ -27,6 +25,7 @@ public class OpenApiReQuestyExtension : IOpenApiExtension
             writer.WriteEndObject();
         }
     }
+
     public static OpenApiReQuestyExtension Parse(JsonNode source)
     {
         if (source is not JsonObject jsonNode)

@@ -3,18 +3,15 @@ using Microsoft.OpenApi.ApiManifest;
 
 namespace ReQuesty.Builder.WorkspaceManagement;
 
-#pragma warning disable CA2227 // Collection properties should be read only
 public class ApiPluginConfiguration : BaseApiConsumerConfiguration, ICloneable
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ApiPluginConfiguration"/> class.
+    ///   Initializes a new instance of the <see cref="ApiPluginConfiguration"/> class.
     /// </summary>
-    public ApiPluginConfiguration() : base()
-    {
+    public ApiPluginConfiguration() : base() { }
 
-    }
     /// <summary>
-    /// Initializes a new instance of the <see cref="ApiPluginConfiguration"/> class from an existing <see cref="GenerationConfiguration"/>.
+    ///   Initializes a new instance of the <see cref="ApiPluginConfiguration"/> class from an existing <see cref="GenerationConfiguration"/>.
     /// </summary>
     /// <param name="config">The configuration to use to initialize the client configuration</param>
     public ApiPluginConfiguration(GenerationConfiguration config) : base(config)
@@ -24,19 +21,12 @@ public class ApiPluginConfiguration : BaseApiConsumerConfiguration, ICloneable
         AuthType = null;
         AuthReferenceId = null;
     }
+
     public HashSet<string> Types { get; set; } = new(StringComparer.OrdinalIgnoreCase);
 
-    public string? AuthType
-    {
-        get;
-        set;
-    }
+    public string? AuthType { get; set; }
 
-    public string? AuthReferenceId
-    {
-        get;
-        set;
-    }
+    public string? AuthReferenceId { get; set; }
 
     public object Clone()
     {
@@ -49,8 +39,9 @@ public class ApiPluginConfiguration : BaseApiConsumerConfiguration, ICloneable
         CloneBase(result);
         return result;
     }
+
     /// <summary>
-    /// Updates the passed configuration with the values from the config file.
+    ///   Updates the passed configuration with the values from the config file.
     /// </summary>
     /// <param name="config">Generation configuration to update.</param>
     /// <param name="pluginName">Plugin name.</param>
@@ -63,4 +54,3 @@ public class ApiPluginConfiguration : BaseApiConsumerConfiguration, ICloneable
         UpdateGenerationConfigurationFromBase(config, pluginName, requests);
     }
 }
-#pragma warning restore CA2227 // Collection properties should be read only

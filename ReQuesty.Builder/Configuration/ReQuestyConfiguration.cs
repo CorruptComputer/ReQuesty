@@ -1,7 +1,5 @@
 ﻿namespace ReQuesty.Builder.Configuration;
 
-#pragma warning disable CA2227
-#pragma warning disable CA1002
 public class ReQuestyConfiguration : ICloneable
 {
     public GenerationConfiguration Generation { get; set; } = new();
@@ -16,5 +14,3 @@ public class ReQuestyConfiguration : ICloneable
         };
     }
 }
-#pragma warning restore CA1002
-#pragma warning restore CA2227

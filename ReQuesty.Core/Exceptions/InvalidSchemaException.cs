@@ -1,16 +1,24 @@
 namespace ReQuesty.Core.Exceptions;
 
+/// <summary>
+///   An exception that is thrown when the schema is invalid.
+/// </summary>
 public class InvalidSchemaException : InvalidOperationException
 {
-    public InvalidSchemaException(string message) : base(message)
-    {
-    }
+    /// <summary>
+    ///   ctor, with a reason given
+    /// </summary>
+    public InvalidSchemaException(string message)
+        : base(message) { }
 
-    public InvalidSchemaException(string message, Exception innerException) : base(message, innerException)
-    {
-    }
+    /// <summary>
+    ///   ctor, with a reason and another exception given
+    /// </summary>
+    public InvalidSchemaException(string message, Exception innerException)
+        : base(message, innerException) { }
 
-    public InvalidSchemaException()
-    {
-    }
+    /// <summary>
+    ///   ctor
+    /// </summary>
+    public InvalidSchemaException() { }
 }

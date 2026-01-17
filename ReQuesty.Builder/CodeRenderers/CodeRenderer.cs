@@ -16,14 +16,13 @@ public class CodeRenderer
         Configuration = configuration;
         _rendererElementComparer = elementComparer ?? new CodeElementOrderComparer();
     }
+
     public async Task RenderCodeNamespaceToSingleFileAsync(LanguageWriter writer, CodeElement codeElement, string outputFile, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(writer);
         ArgumentNullException.ThrowIfNull(codeElement);
         ArgumentException.ThrowIfNullOrEmpty(outputFile);
-#pragma warning disable CA2007
         await using FileStream stream = new(outputFile, FileMode.Create);
-#pragma warning restore CA2007
 
         StreamWriter sw = new(stream);
         writer.SetTextWriter(sw);

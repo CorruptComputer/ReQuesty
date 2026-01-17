@@ -77,9 +77,7 @@ public static partial class StringExtensions
     /// <param name="name">The file name to shorten</param>
     /// <param name="length">The maximum length of the file name. Default 251 = 255 - .ext</param>
     public static string ShortenFileName(this string name, int length = 251) =>
-#pragma warning disable CA1308
         (!string.IsNullOrEmpty(name) && name.Length > length) ? HashString(name).ToLowerInvariant() : name;
-#pragma warning restore CA1308
 
     public static string EscapeSuffix(this string? name, HashSet<string> specialFileNameSuffixes, char separator = '_')
     {
@@ -165,9 +163,7 @@ public static partial class StringExtensions
         {
             return string.Empty;
         }
-#pragma warning disable CA1308
         return prefix + HashString(importName).ToLowerInvariant();
-#pragma warning restore CA1308
     }
     private static string HashString(string? input)
     {

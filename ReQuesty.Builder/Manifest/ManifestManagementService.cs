@@ -27,9 +27,7 @@ public class ManifestManagementService
     public async Task SerializeManifestDocumentAsync(ApiManifestDocument manifestDocument, Stream stream)
     {
         ArgumentNullException.ThrowIfNull(manifestDocument);
-#pragma warning disable CA2007
         await using Utf8JsonWriter writer = new(stream, new JsonWriterOptions { Indented = true });
-#pragma warning restore CA2007
         manifestDocument.Write(writer);
         await writer.FlushAsync().ConfigureAwait(false);
     }

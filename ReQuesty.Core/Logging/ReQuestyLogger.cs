@@ -1,6 +1,6 @@
-namespace ReQuesty.Core.Logging;
+//namespace ReQuesty.Core.Logging;
 
-public static class ReQuestyLogger
-{
-
-}
+//public static class ReQuestyLogger
+//{
+//
+//}

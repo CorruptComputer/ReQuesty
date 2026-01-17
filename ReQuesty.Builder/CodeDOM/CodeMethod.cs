@@ -172,33 +172,23 @@ public class CodeMethod : CodeTerminalWithKind<CodeMethodKind>, ICloneable, IDoc
     {
         get => parameters.Values.OrderBy(static x => x, parameterOrderComparer);
     }
-    public bool IsStatic
-    {
-        get; set;
-    }
+    public bool IsStatic { get; set; }
     public bool IsAsync { get; set; } = true;
     public CodeDocumentation Documentation { get; set; } = new();
 
-    public PagingInformation? PagingInformation
-    {
-        get; set;
-    }
+    public PagingInformation? PagingInformation { get; set; }
 
     /// <summary>
     /// The property this method accesses to when it's a getter or setter.
     /// </summary>
-    public CodeProperty? AccessedProperty
-    {
-        get; set;
-    }
+    public CodeProperty? AccessedProperty { get; set; }
     public bool IsAccessor
     {
         get => IsOfKind(CodeMethodKind.Getter, CodeMethodKind.Setter);
     }
-#pragma warning disable CA2227
     public HashSet<string> SerializerModules { get; set; } = new(StringComparer.OrdinalIgnoreCase);
     public HashSet<string> DeserializerModules { get; set; } = new(StringComparer.OrdinalIgnoreCase);
-#pragma warning restore CA2227
+
     /// <summary>
     /// Indicates whether this method is an overload for another method.
     /// </summary>
@@ -212,30 +202,25 @@ public class CodeMethod : CodeTerminalWithKind<CodeMethodKind>, ICloneable, IDoc
     /// <summary>
     /// Provides a reference to the original method that this method is an overload of.
     /// </summary>
-    public CodeMethod? OriginalMethod
-    {
-        get; set;
-    }
+    public CodeMethod? OriginalMethod { get; set; }
+
     /// <summary>
     /// The original indexer codedom element this method replaces when it is of kind IndexerBackwardCompatibility.
     /// </summary>
-    public CodeIndexer? OriginalIndexer
-    {
-        get; set;
-    }
+    public CodeIndexer? OriginalIndexer { get; set; }
+
     /// <summary>
     /// The base url for every request read from the servers property on the description.
     /// Only provided for constructor on Api client
     /// </summary>
-#pragma warning disable CA1056 // Uri properties should not be strings
     public string BaseUrl { get; set; } = string.Empty;
-#pragma warning restore CA1056 // Uri properties should not be strings
 
     /// <summary>
     /// This is currently used for CommandBuilder methods to get the original name without the Build prefix and Command suffix.
     /// Avoids regex operations
     /// </summary>
     public string SimpleName { get; set; } = string.Empty;
+
     /// <summary>
     /// Deduplicates 4XX and 5XX error mappings into a single XXX mapping if they are the same.
     /// </summary>
@@ -253,15 +238,15 @@ public class CodeMethod : CodeTerminalWithKind<CodeMethodKind>, ICloneable, IDoc
             errorMappings.TryRemove(ErrorMappingClientRange, out CodeTypeBase? _);
         }
     }
+
     internal const string ErrorMappingClientRange = "4XX";
     internal const string ErrorMappingServerRange = "5XX";
     internal const string ErrorMappingAllRange = "XXX";
-#pragma warning disable CA1056 // URI-like properties should not be strings
+
     /// <summary>
     /// The URL template override for the method when it's different for the operation
     /// </summary>
     public string UrlTemplateOverride { get; set; } = string.Empty;
-#pragma warning restore CA1056 // URI-like properties should not be strings
     public bool HasUrlTemplateOverride => !string.IsNullOrEmpty(UrlTemplateOverride);
 
     private ConcurrentDictionary<string, CodeTypeBase> errorMappings = new(StringComparer.OrdinalIgnoreCase);
@@ -276,16 +261,14 @@ public class CodeMethod : CodeTerminalWithKind<CodeMethodKind>, ICloneable, IDoc
             return errorMappings.OrderBy(static x => x.Key);
         }
     }
+
     public bool HasErrorMappingCode(string code)
     {
         ArgumentException.ThrowIfNullOrEmpty(code);
         return errorMappings.ContainsKey(code);
     }
 
-    public DeprecationInformation? Deprecation
-    {
-        get; set;
-    }
+    public DeprecationInformation? Deprecation { get; set; }
 
     public void ReplaceErrorMapping(CodeTypeBase oldType, CodeTypeBase newType)
     {
@@ -295,6 +278,7 @@ public class CodeMethod : CodeTerminalWithKind<CodeMethodKind>, ICloneable, IDoc
             errorMappings[code] = newType;
         }
     }
+
     public object Clone()
     {
         CodeMethod method = new()
@@ -321,6 +305,7 @@ public class CodeMethod : CodeTerminalWithKind<CodeMethodKind>, ICloneable, IDoc
             Deprecation = Deprecation,
             UrlTemplateOverride = UrlTemplateOverride,
         };
+
         if (Parameters?.Any() ?? false)
         {
             method.AddParameter(Parameters.Select(x => (CodeParameter)x.Clone()).ToArray());
@@ -344,6 +329,7 @@ public class CodeMethod : CodeTerminalWithKind<CodeMethodKind>, ICloneable, IDoc
         EnsureElementsAreChildren(methodParameters);
         methodParameters.ToList().ForEach(x => parameters.TryAdd(x.Name, x));
     }
+
     public void AddErrorMapping(string errorCode, CodeTypeBase type)
     {
         ArgumentNullException.ThrowIfNull(type);

@@ -355,41 +355,22 @@ public class ExtensionResponseSemantics
 
 public class ExtensionResponseSemanticsProperties
 {
-    public string? Title
-    {
-        get; set;
-    }
-    public string? Subtitle
-    {
-        get; set;
-    }
-#pragma warning disable CA1056 // URI-like properties should not be strings
-    public string? Url
-    {
-        get; set;
-    }
-    public string? ThumbnailUrl
-    {
-        get; set;
-    }
-#pragma warning restore CA1056 // URI-like properties should not be strings
-    public string? InformationProtectionLabel
-    {
-        get; set;
-    }
-    public string? TemplateSelector
-    {
-        get; set;
-    }
+    public string? Title { get; set; }
+
+    public string? Subtitle { get; set; }
+
+    public string? Url { get; set; }
+
+    public string? ThumbnailUrl { get; set; }
+
+    public string? InformationProtectionLabel { get; set; }
+
+    public string? TemplateSelector { get; set; }
 }
 
 public class ExtensionSecurityInfo
 {
-#pragma warning disable CA1002 // Do not expose generic lists
-#pragma warning disable CA2227 // Collection properties should be read only
     public List<string> DataHandling { get; set; } = [];
-#pragma warning restore CA2227 // Collection properties should be read only
-#pragma warning restore CA1002 // Do not expose generic lists
 }
 
 

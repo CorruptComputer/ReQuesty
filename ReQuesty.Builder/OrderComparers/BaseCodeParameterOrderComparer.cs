@@ -11,11 +11,9 @@ public class BaseCodeParameterOrderComparer : BaseStringComparisonComparer<CodeP
             (null, null) => 0,
             (null, _) => -1,
             (_, null) => 1,
-#pragma warning disable CA1062
             _ => x.Optional.CompareTo(y.Optional) * OptionalWeight +
                  GetKindOrderHint(x.Kind).CompareTo(GetKindOrderHint(y.Kind)) * KindWeight +
                  CompareStrings(x.Name, y.Name, StringComparer.OrdinalIgnoreCase) * NameWeight,
-#pragma warning restore CA1062
         };
     }
     protected virtual int GetKindOrderHint(CodeParameterKind kind)

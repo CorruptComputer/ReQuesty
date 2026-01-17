@@ -813,9 +813,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
 
     private static readonly CodeUsingComparer usingComparerWithDeclarations = new(true);
     private static readonly CodeUsingComparer usingComparerWithoutDeclarations = new(false);
-#pragma warning disable CA1051 // Do not declare visible instance fields
     protected readonly GenerationConfiguration _configuration;
-#pragma warning restore CA1051 // Do not declare visible instance fields
 
     protected static void AddPropertiesAndMethodTypesImports(CodeElement current, bool includeParentNamespaces, bool includeCurrentNamespace, bool compareOnDeclaration, Func<IEnumerable<CodeTypeBase>, IEnumerable<CodeTypeBase>>? codeTypeFilter = default)
     {

@@ -41,7 +41,6 @@ public static class VsCodeSettingsManager
             }
         }
 
-#pragma warning disable CA2007
         await using FileStream fileStream = File.Open(fileUpdatePath, FileMode.Create);
         await JsonSerializer.SerializeAsync(fileStream, settings, context.DictionaryStringObject, cancellationToken).ConfigureAwait(false);
     }

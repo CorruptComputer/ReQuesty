@@ -8,28 +8,15 @@ namespace ReQuesty.Builder.OpenApiExtensions;
 public class OpenApiAiAdaptiveCardExtension : IOpenApiExtension
 {
     public static string Name => "x-ai-adaptive-card";
-    public string? DataPath
-    {
-        get; set;
-    }
-    public string? File
-    {
-        get; set;
-    }
 
-    public string? Title
-    {
-        get; set;
-    }
+    public string? DataPath { get; set; }
 
-#pragma warning disable CA1056 // URI-like properties should not be strings
+    public string? File { get; set; }
 
-    public string? Url
-#pragma warning restore CA1056 // URI-like properties should not be strings
+    public string? Title { get; set; }
 
-    {
-        get; set;
-    }
+    public string? Url { get; set; }
+
     public static OpenApiAiAdaptiveCardExtension Parse(JsonNode source)
     {
         // We are supporting empty extension to avoid creating the template when emitting from typespec scenario

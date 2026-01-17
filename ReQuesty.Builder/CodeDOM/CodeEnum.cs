@@ -1,15 +1,11 @@
 ﻿using System.Collections.Concurrent;
 
 namespace ReQuesty.Builder.CodeDOM;
-#pragma warning disable CA1711
+
 public class CodeEnum : CodeBlock<BlockDeclaration, BlockEnd>, IDocumentedElement, ITypeDefinition, IDeprecableElement, IAccessibleElement
 {
-#pragma warning restore CA2227
     public AccessModifier Access { get; set; } = AccessModifier.Public;
-    public bool Flags
-    {
-        get; set;
-    }
+    public bool Flags { get; set; }
 
     public CodeDocumentation Documentation { get; set; } = new();
     private readonly ConcurrentQueue<CodeEnumOption> OptionsInternal = new(); // this structure is used to maintain the order of the options
@@ -27,6 +23,7 @@ public class CodeEnum : CodeBlock<BlockDeclaration, BlockEnd>, IDocumentedElemen
             OptionsInternal.Enqueue(option);
         }
     }
+
     public IEnumerable<CodeEnumOption> Options
     {
         get
@@ -35,12 +32,7 @@ public class CodeEnum : CodeBlock<BlockDeclaration, BlockEnd>, IDocumentedElemen
             // maintaining order of the options is important for enums as they are often used with comparisons
         }
     }
-    public DeprecationInformation? Deprecation
-    {
-        get; set;
-    }
-    public CodeConstant? CodeEnumObject
-    {
-        get; set;
-    }
+
+    public DeprecationInformation? Deprecation { get; set; }
+    public CodeConstant? CodeEnumObject { get; set; }
 }

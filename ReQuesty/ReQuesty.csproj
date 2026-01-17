@@ -27,18 +27,16 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PublishSingleFile Condition="'$(Configuration)' != 'Debug'">true</PublishSingleFile>
   </PropertyGroup>
-  <PropertyGroup>
-    <!-- the source generators emit warnings -->
-    <NoWarn>$(NoWarn);CS8785;NU5048;NU5104</NoWarn>
-  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\ReQuesty.Builder\ReQuesty.Builder.csproj" />
   </ItemGroup>
+
   <PropertyGroup>
     <EnableConfigurationBindingGenerator>true</EnableConfigurationBindingGenerator>
   </PropertyGroup>
-  <ItemGroup>
 
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.2" />
@@ -55,6 +53,7 @@
     <PackageReference Include="StreamJsonRpc" Version="2.22.23" />
     <PackageReference Include="System.CommandLine" Version="2.0.2" />
   </ItemGroup>
+
   <ItemGroup>
     <None Include="../README.md" Pack="true" PackagePath="" />
     <Content Include="appsettings.json">

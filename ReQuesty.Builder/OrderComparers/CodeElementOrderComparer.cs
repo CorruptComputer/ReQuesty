@@ -12,9 +12,7 @@ public class CodeElementOrderComparer : BaseStringComparisonComparer<CodeElement
             (_, null) => 1,
             _ => GetTypeFactor(x).CompareTo(GetTypeFactor(y)) * TypeWeight +
                 GetConstantKindFactor(x).CompareTo(GetConstantKindFactor(y)) * constantKindWeight +
-#pragma warning disable CA1062
                 CompareStrings(x.Name, y.Name, StringComparer.InvariantCultureIgnoreCase) * NameWeight +
-#pragma warning restore CA1062
                 GetMethodKindFactor(x).CompareTo(GetMethodKindFactor(y)) * methodKindWeight +
                 GetParametersFactor(x).CompareTo(GetParametersFactor(y)) * ParametersWeight,
         };

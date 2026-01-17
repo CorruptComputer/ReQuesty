@@ -7,9 +7,9 @@ namespace ReQuesty.Builder.OpenApiExtensions;
 public class OpenApiAiRespondingInstructionsExtension : IOpenApiExtension
 {
     public static string Name => "x-ai-responding-instructions";
-#pragma warning disable CA1002 // Do not expose generic lists
+
     public List<string> RespondingInstructions { get; init; } = [];
-#pragma warning restore CA1002 // Do not expose generic lists
+
     public void Write(IOpenApiWriter writer, OpenApiSpecVersion specVersion)
     {
         ArgumentNullException.ThrowIfNull(writer);
@@ -24,6 +24,7 @@ public class OpenApiAiRespondingInstructionsExtension : IOpenApiExtension
             writer.WriteEndArray();
         }
     }
+
     public static OpenApiAiRespondingInstructionsExtension Parse(JsonNode source)
     {
         if (source is not JsonArray rawArray)

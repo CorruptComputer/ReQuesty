@@ -8,12 +8,9 @@ namespace ReQuesty.Builder.OpenApiExtensions;
 public class OpenApiLogoExtension : IOpenApiExtension
 {
     public static string Name => "x-logo";
-#pragma warning disable CA1056
-    public string? Url
-#pragma warning restore CA1056
-    {
-        get; set;
-    }
+
+    public string? Url { get; set; }
+
     public static OpenApiLogoExtension Parse(JsonNode source)
     {
         if (source is not JsonObject rawObject)

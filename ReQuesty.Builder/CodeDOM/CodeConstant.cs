@@ -6,22 +6,13 @@ public class CodeConstant : CodeTerminalWithKind<CodeConstantKind>, IDocumentedE
 {
     public BlockDeclaration StartBlock { get; set; } = new();
     public void AddUsing(params CodeUsing[] codeUsings) => StartBlock.AddUsings(codeUsings);
-    public CodeElement? OriginalCodeElement
-    {
-        get;
-        set;
-    }
-#pragma warning disable CA1056 // URI-like properties should not be strings
-    public string? UriTemplate
-    {
-        get; init;
-    }
+    public CodeElement? OriginalCodeElement { get; set; }
+
+    public string? UriTemplate { get; init; }
+
     /// <inheritdoc/>
-    public CodeDocumentation Documentation
-    {
-        get; set;
-    } = new();
-#pragma warning restore CA1056 // URI-like properties should not be strings
+    public CodeDocumentation Documentation { get; set; } = new();
+
     public static CodeConstant? FromQueryParametersMapping(CodeInterface source)
     {
         ArgumentNullException.ThrowIfNull(source);
@@ -44,6 +35,7 @@ public class CodeConstant : CodeTerminalWithKind<CodeConstantKind>, IDocumentedE
         result.Documentation.DescriptionTemplate = "Mapper for query parameters from symbol name to serialization name represented as a constant.";
         return result;
     }
+
     public static CodeConstant? FromCodeEnum(CodeEnum source)
     {
         ArgumentNullException.ThrowIfNull(source);

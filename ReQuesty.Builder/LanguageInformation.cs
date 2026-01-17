@@ -7,17 +7,11 @@ namespace ReQuesty.Builder;
 
 public record LanguageInformation : IOpenApiSerializable
 {
-#pragma warning disable CA2227
-#pragma warning disable CA1002
     public List<LanguageDependency> Dependencies { get; set; } = [];
-#pragma warning restore CA1002
-#pragma warning restore CA2227
     public string DependencyInstallCommand { get; set; } = string.Empty;
     public string ClientClassName { get; set; } = string.Empty;
     public string ClientNamespaceName { get; set; } = string.Empty;
-#pragma warning disable CA2227
     public HashSet<string> StructuredMimeTypes { get; set; } = new(StringComparer.OrdinalIgnoreCase);
-#pragma warning restore CA2227
     public void SerializeAsV2(IOpenApiWriter writer)
         => SerializeInternal(writer, static (w, x) => x.SerializeAsV2(w));
     public void SerializeAsV3(IOpenApiWriter writer)

@@ -139,9 +139,7 @@ internal class OpenApiDocumentDownloadService
             Uri documentUri = new(rawUri[..lastSlashIndex]);
             settings.BaseUrl = documentUri;
         }
-#pragma warning disable CA1031
         catch
-#pragma warning restore CA1031
         {
             // couldn't parse the URL, it's probably a local file
         }

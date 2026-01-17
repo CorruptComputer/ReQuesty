@@ -49,17 +49,13 @@ public class WorkspaceConfigurationStorageService
             {
                 Directory.CreateDirectory(TargetDirectory);
             }
-#pragma warning disable CA2007
             await using FileStream configStream = File.Open(targetConfigurationFilePath, FileMode.Create);
-#pragma warning restore CA2007
             await JsonSerializer.SerializeAsync(configStream, configuration, context.WorkspaceConfiguration, cancellationToken).ConfigureAwait(false);
             if (manifestDocument != null)
             {
                 using (await localFilesLock.LockAsync(targetManifestFilePath, cancellationToken).ConfigureAwait(false))
                 {
-#pragma warning disable CA2007
                     await using FileStream manifestStream = File.Open(targetManifestFilePath, FileMode.Create);
-#pragma warning restore CA2007
                     await manifestManagementService.SerializeManifestDocumentAsync(manifestDocument, manifestStream).ConfigureAwait(false);
                 }
             }
@@ -81,17 +77,13 @@ public class WorkspaceConfigurationStorageService
         {
             using (await localFilesLock.LockAsync(targetConfigurationFilePath, cancellationToken).ConfigureAwait(false))
             {
-#pragma warning disable CA2007
                 await using FileStream configStream = File.OpenRead(targetConfigurationFilePath);
-#pragma warning restore CA2007
                 WorkspaceConfiguration? config = await JsonSerializer.DeserializeAsync(configStream, context.WorkspaceConfiguration, cancellationToken).ConfigureAwait(false);
                 if (File.Exists(targetManifestFilePath))
                 {
                     using (await localFilesLock.LockAsync(targetManifestFilePath, cancellationToken).ConfigureAwait(false))
                     {
-#pragma warning disable CA2007
                         await using FileStream manifestStream = File.OpenRead(targetManifestFilePath);
-#pragma warning restore CA2007
                         ApiManifestDocument? manifest = await manifestManagementService.DeserializeManifestDocumentAsync(manifestStream).ConfigureAwait(false);
                         if (manifest is not null)
                         {
