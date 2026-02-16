@@ -8,7 +8,6 @@
   <ItemGroup>
     <PackageReference Include="AsyncKeyedLock" Version="8.0.1" />
     <PackageReference Include="DotNet.Glob" Version="3.1.3" />
-    <PackageReference Include="Microsoft.DeclarativeAgents.Manifest" Version="5.0.0-rc.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
     <PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="10.0.2" />
     <PackageReference Include="Microsoft.OpenApi" Version="3.3.1" />
@@ -19,7 +18,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="ReQuesty.Runtime" Version="0.0.7" />
-    <PackageReference Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
 
   <ItemGroup>
