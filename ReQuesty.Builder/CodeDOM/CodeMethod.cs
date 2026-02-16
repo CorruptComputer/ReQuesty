@@ -102,6 +102,7 @@ public class CodeMethod : CodeTerminalWithKind<CodeMethodKind>, ICloneable, IDoc
             OriginalIndexer = originalIndexer,
             Deprecation = originalIndexer.Deprecation,
         };
+
         if (method.ReturnType is not null)
         {
             method.ReturnType.IsNullable = false;
@@ -128,7 +129,7 @@ public class CodeMethod : CodeTerminalWithKind<CodeMethodKind>, ICloneable, IDoc
     public IList<string> AcceptedResponseTypes { get; private set; } = [];
     public void AddAcceptedResponsesTypes(IEnumerable<string> types)
     {
-        if (types == null)
+        if (types is null)
         {
             return;
         }
@@ -196,7 +197,7 @@ public class CodeMethod : CodeTerminalWithKind<CodeMethodKind>, ICloneable, IDoc
     {
         get
         {
-            return OriginalMethod != null;
+            return OriginalMethod is not null;
         }
     }
     /// <summary>
@@ -316,7 +317,7 @@ public class CodeMethod : CodeTerminalWithKind<CodeMethodKind>, ICloneable, IDoc
 
     public void AddParameter(params CodeParameter[] methodParameters)
     {
-        if (methodParameters == null || methodParameters.Any(static x => x == null))
+        if (methodParameters is null || methodParameters.Any(static x => x is null))
         {
             throw new ArgumentNullException(nameof(methodParameters));
         }

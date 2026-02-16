@@ -57,8 +57,8 @@ public class CodePropertyWriter(CSharpConventionService conventionService) : Bas
                 conventions.AddRequestBuilderBody(parentClass, propertyType, writer, includeIndent: false);
                 writer.CloseBlock();
                 break;
-            case CodePropertyKind.AdditionalData when backingStoreProperty != null:
-            case CodePropertyKind.Custom when backingStoreProperty != null:
+            case CodePropertyKind.AdditionalData when backingStoreProperty is not null:
+            case CodePropertyKind.Custom when backingStoreProperty is not null:
                 string backingStoreKey = codeElement.WireName;
                 string nullableOp = !codeElement.IsOfKind(CodePropertyKind.AdditionalData) ? "?" : string.Empty;
                 string defaultPropertyValue = codeElement.IsOfKind(CodePropertyKind.AdditionalData) ? " ?? new Dictionary<string, object>()" : string.Empty;

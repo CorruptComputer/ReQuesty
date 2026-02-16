@@ -1,0 +1,320 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "ReQuesty.Demo.Api | main",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/PrimativeReturn/string": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a string based on the specified return type.",
+        "operationId": "GetString",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/nullable-string": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a nullable string based on the specified return type.",
+        "operationId": "GetNullableString",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/int": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets an int based on the specified return type.",
+        "operationId": "GetInt",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)$",
+                  "type": [
+                    "integer",
+                    "string"
+                  ],
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/nullable-int": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a nullable int based on the specified return type.",
+        "operationId": "GetNullableInt",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)$",
+                  "type": [
+                    "null",
+                    "integer",
+                    "string"
+                  ],
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/guid": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets an Guid based on the specified return type.",
+        "operationId": "GetGuid",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/nullable-guid": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a nullable guid based on the specified return type.",
+        "operationId": "GetNullableGuid",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "instance": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ReturnType": {
+        "enum": [
+          "Null",
+          "Random",
+          "Invalid"
+        ],
+        "description": "The type of data to return"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "PrimativeReturn"
+    }
+  ]
+}

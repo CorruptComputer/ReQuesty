@@ -77,7 +77,7 @@ public static partial class OpenApiUrlTreeNodeExtensions
     }
     public static IEnumerable<IOpenApiParameter> GetPathParametersForCurrentSegment(this OpenApiUrlTreeNode node)
     {
-        if (node != null &&
+        if (node is not null &&
             node.IsComplexPathMultipleParameters())
         {
             if (node.PathItems.TryGetValue(Constants.DefaultOpenApiLabel, out IOpenApiPathItem? pathItem))
@@ -177,7 +177,7 @@ public static partial class OpenApiUrlTreeNodeExtensions
     public static string CleanupDescription(this string? description) => string.IsNullOrEmpty(description) ? string.Empty : descriptionCleanupRegex().Replace(description, string.Empty);
     public static string GetPathItemDescription(this OpenApiUrlTreeNode currentNode, string label, string? defaultValue = default)
     {
-        if (currentNode != null && !string.IsNullOrEmpty(label) && currentNode.PathItems.TryGetValue(label, out IOpenApiPathItem? pathItem))
+        if (currentNode is not null && !string.IsNullOrEmpty(label) && currentNode.PathItems.TryGetValue(label, out IOpenApiPathItem? pathItem))
         {
             return ((string.IsNullOrEmpty(pathItem.Description), string.IsNullOrEmpty(pathItem.Summary)) switch
             {

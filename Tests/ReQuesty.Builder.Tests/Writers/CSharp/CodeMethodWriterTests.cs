@@ -34,7 +34,7 @@ public sealed class CodeMethodWriterTests : IDisposable
     [MemberNotNull(nameof(method), nameof(parentClass))]
     private void setup(bool withInheritance = false)
     {
-        if (parentClass != null)
+        if (parentClass is not null)
         {
             throw new InvalidOperationException("setup() must only be called once");
         }
@@ -1222,7 +1222,7 @@ public sealed class CodeMethodWriterTests : IDisposable
         writer.Write(deserializationMethod);
         string result = tw.ToString();
         Assert.DoesNotContain("base.", result);
-        Assert.Contains("ComplexType1Value != null", result);
+        Assert.Contains("ComplexType1Value is not null", result);
         Assert.Contains("return ComplexType1Value.GetFieldDeserializers()", result);
         Assert.Contains("new", result);
         Assert.Contains("return new Dictionary<string, Action<IParseNode>>()", result);
@@ -1247,7 +1247,7 @@ public sealed class CodeMethodWriterTests : IDisposable
         writer.Write(deserializationMethod);
         string result = tw.ToString();
         Assert.DoesNotContain("base.", result);
-        Assert.Contains("ComplexType1Value != null || ComplexType3Value != null", result);
+        Assert.Contains("ComplexType1Value is not null || ComplexType3Value is not null", result);
         Assert.Contains("return ParseNodeHelper.MergeDeserializersForIntersectionWrapper(ComplexType1Value, ComplexType3Value)", result);
         Assert.Contains("return new Dictionary<string, Action<IParseNode>>()", result);
         AssertExtensions.Before("return ParseNodeHelper.MergeDeserializersForIntersectionWrapper(ComplexType1Value, ComplexType3Value)", "return new Dictionary<string, Action<IParseNode>>()", result);
@@ -1309,11 +1309,11 @@ public sealed class CodeMethodWriterTests : IDisposable
         writer.Write(serializationMethod);
         string result = tw.ToString();
         Assert.DoesNotContain("base.Serialize(writer)", result);
-        Assert.Contains("ComplexType1Value != null", result);
+        Assert.Contains("ComplexType1Value is not null", result);
         Assert.Contains("writer.WriteObjectValue<ComplexType1>(null, ComplexType1Value)", result);
-        Assert.Contains("StringValue != null", result);
+        Assert.Contains("StringValue is not null", result);
         Assert.Contains("writer.WriteStringValue(null, StringValue)", result);
-        Assert.Contains("ComplexType2Value != null", result);
+        Assert.Contains("ComplexType2Value is not null", result);
         Assert.Contains("writer.WriteCollectionOfObjectValues<ComplexType2>(null, ComplexType2Value)", result);
         AssertExtensions.CurlyBracesAreClosed(result);
     }
@@ -1344,11 +1344,11 @@ public sealed class CodeMethodWriterTests : IDisposable
         writer.Write(serializationMethod);
         string result = tw.ToString();
         Assert.DoesNotContain("base.Serialize(writer)", result);
-        Assert.DoesNotContain("ComplexType1Value != null", result);
+        Assert.DoesNotContain("ComplexType1Value is not null", result);
         Assert.Contains("writer.WriteObjectValue<ComplexType1>(null, ComplexType1Value, ComplexType3Value)", result);
-        Assert.Contains("StringValue != null", result);
+        Assert.Contains("StringValue is not null", result);
         Assert.Contains("writer.WriteStringValue(null, StringValue)", result);
-        Assert.Contains("ComplexType2Value != null", result);
+        Assert.Contains("ComplexType2Value is not null", result);
         Assert.Contains("writer.WriteCollectionOfObjectValues<ComplexType2>(null, ComplexType2Value)", result);
         AssertExtensions.Before("writer.WriteStringValue(null, StringValue)", "writer.WriteObjectValue<ComplexType1>(null, ComplexType1Value, ComplexType3Value)", result);
         AssertExtensions.Before("writer.WriteCollectionOfObjectValues<ComplexType2>(null, ComplexType2Value)", "writer.WriteObjectValue<ComplexType1>(null, ComplexType1Value, ComplexType3Value)", result);
@@ -1952,7 +1952,7 @@ public sealed class CodeMethodWriterTests : IDisposable
         Assert.Contains("int? sampleParam", result);
         Assert.DoesNotContain("#nullable enable", result);
         Assert.DoesNotContain("#nullable restore", result);
-        Assert.Contains("_ = ra ?? throw new ArgumentNullException(nameof(ra));", result);
+        Assert.Contains("ArgumentNullException.ThrowIfNull(ra);", result);
     }
 
     [Fact]
@@ -2030,8 +2030,9 @@ public sealed class CodeMethodWriterTests : IDisposable
         Assert.DoesNotContain("string? sampleParam = \"\"", result);
         Assert.DoesNotContain("#nullable enable", result);
         Assert.DoesNotContain("#nullable restore", result);
-        Assert.Contains("_ = ra ?? throw new ArgumentNullException(nameof(ra));", result);
+        Assert.Contains("ArgumentNullException.ThrowIfNull(ra);", result);
     }
+
     [Fact]
     public void WritesDeprecationInformation()
     {

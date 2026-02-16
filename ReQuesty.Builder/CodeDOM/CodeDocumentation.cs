@@ -46,7 +46,7 @@ public class CodeDocumentation : ICloneable
         return new CodeDocumentation
         {
             DescriptionTemplate = DescriptionTemplate,
-            DocumentationLink = DocumentationLink == null ? null : new(DocumentationLink.ToString()),
+            DocumentationLink = DocumentationLink is null ? null : new(DocumentationLink.ToString()),
             DocumentationLabel = DocumentationLabel,
             TypeReferences = new(TypeReferences, StringComparer.OrdinalIgnoreCase)
         };
@@ -94,6 +94,6 @@ public class CodeDocumentation : ICloneable
     }
     public bool ExternalDocumentationAvailable
     {
-        get => DocumentationLink != null && !string.IsNullOrEmpty(DocumentationLabel);
+        get => DocumentationLink is not null && !string.IsNullOrEmpty(DocumentationLabel);
     }
 }

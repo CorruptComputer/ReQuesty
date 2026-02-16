@@ -9,7 +9,7 @@ public class CodeFile : CodeBlock<CodeFileDeclaration, CodeFileBlockEnd>
 
     public IEnumerable<T> AddElements<T>(params T[] elements) where T : CodeElement
     {
-        if (elements == null || elements.Any(static x => x == null))
+        if (elements is null || elements.Any(static x => x is null))
         {
             throw new ArgumentNullException(nameof(elements));
         }

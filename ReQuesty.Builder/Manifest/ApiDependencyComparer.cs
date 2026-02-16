@@ -60,7 +60,7 @@ public class ApiDependencyComparer : IEqualityComparer<ApiDependency>
     public int GetHashCode([DisallowNull] ApiDependency obj)
     {
         HashCode hash = new();
-        if (obj == null)
+        if (obj is null)
         {
             return hash.ToHashCode();
         }

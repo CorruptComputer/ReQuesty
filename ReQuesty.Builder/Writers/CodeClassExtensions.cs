@@ -6,12 +6,12 @@ public static class CodeClassExtensions
 {
     public static IEnumerable<CodeProperty> GetPropertiesOfKind(this CodeClass parentClass, params CodePropertyKind[] kinds)
     {
-        if (parentClass == null)
+        if (parentClass is null)
         {
             return [];
         }
 
-        if (kinds == null || kinds.Length == 0)
+        if (kinds is null || kinds.Length == 0)
         {
             throw new ArgumentOutOfRangeException(nameof(kinds));
         }
@@ -26,12 +26,12 @@ public static class CodeClassExtensions
     }
     public static IEnumerable<CodeMethod> GetMethodsOffKind(this CodeClass parentClass, params CodeMethodKind[] kinds)
     {
-        if (parentClass == null)
+        if (parentClass is null)
         {
             return [];
         }
 
-        if (kinds == null || kinds.Length == 0)
+        if (kinds is null || kinds.Length == 0)
         {
             throw new ArgumentOutOfRangeException(nameof(kinds));
         }
@@ -43,7 +43,7 @@ public static class CodeClassExtensions
     }
     public static CodeProperty? GetBackingStoreProperty(this CodeClass parentClass)
     {
-        if (parentClass == null)
+        if (parentClass is null)
         {
             return null;
         }

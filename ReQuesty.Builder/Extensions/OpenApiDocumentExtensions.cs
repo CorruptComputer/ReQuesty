@@ -10,12 +10,12 @@ internal static class OpenApiDocumentExtensions
     {
         ArgumentNullException.ThrowIfNull(inheritanceIndex);
         ArgumentNullException.ThrowIfNull(openApiDocument);
-        if (inheritanceIndex.IsEmpty && openApiDocument.Components?.Schemas != null)
+        if (inheritanceIndex.IsEmpty && openApiDocument.Components?.Schemas is not null)
         {
             Parallel.ForEach(openApiDocument.Components.Schemas, entry =>
             {
                 inheritanceIndex.TryAdd(entry.Key, new(StringComparer.OrdinalIgnoreCase));
-                if (entry.Value.AllOf != null)
+                if (entry.Value.AllOf is not null)
                 {
                     foreach (OpenApiSchemaReference? allOfEntry in entry.Value.AllOf.OfType<OpenApiSchemaReference>().Where(static x => !string.IsNullOrEmpty(x.Reference.Id)))
                     {

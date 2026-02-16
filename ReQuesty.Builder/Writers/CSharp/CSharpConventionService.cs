@@ -12,7 +12,7 @@ public class CSharpConventionService : CommonLanguageConventionService
     public override string VoidTypeName => "void";
     public override string DocCommentPrefix => "/// ";
 
-    private static readonly HashSet<string> PrimitiveTypes = new(StringComparer.OrdinalIgnoreCase) { "int", "bool", "float", "double", "decimal", "long", "Guid", "DateTimeOffset", "TimeSpan", "Date", "Time", "sbyte", "byte", "string" };
+    private static readonly HashSet<string> PrimitiveTypes = new(StringComparer.OrdinalIgnoreCase) { "int", "integer", "bool", "boolean", "float", "double", "decimal", "long", "Guid", "DateTimeOffset", "TimeSpan", "Date", "Time", "sbyte", "byte", "string" };
     public const char NullableMarker = '?';
     public static string NullableMarkerAsString => "?";
     public override string ParseNodeInterfaceName => "IParseNode";
@@ -131,7 +131,7 @@ public class CSharpConventionService : CommonLanguageConventionService
     public override string TempDictionaryVarName => "urlTplParams";
     internal void AddParametersAssignment(LanguageWriter writer, CodeTypeBase pathParametersType, string pathParametersReference, string varName = "", params (CodeTypeBase, string, string)[] parameters)
     {
-        if (pathParametersType == null)
+        if (pathParametersType is null)
         {
             return;
         }
@@ -155,7 +155,7 @@ public class CSharpConventionService : CommonLanguageConventionService
                     }
                     else
                     {
-                        nullCheck = $"if ({identName} != null) ";
+                        nullCheck = $"if ({identName} is not null) ";
                     }
                 }
                 return $"{nullCheck}{varName}.Add(\"{name}\", {identName});";
@@ -171,23 +171,6 @@ public class CSharpConventionService : CommonLanguageConventionService
     private HashSet<string> _namespaceSegmentsNames = new(StringComparer.OrdinalIgnoreCase);
     private readonly object _namespaceSegmentsNamesLock = new();
 
-    private HashSet<string> GetNamesInUseByNamespaceSegments(CodeElement currentElement)
-    {
-        if (_namespaceSegmentsNames.Count == 0)
-        {
-            lock (_namespaceSegmentsNamesLock)
-            {
-                CodeNamespace rootNamespace = currentElement.GetImmediateParentOfType<CodeNamespace>().GetRootNamespace();
-                _namespaceSegmentsNames = GetAllNamespaces(rootNamespace)
-                                            .Where(static x => !string.IsNullOrEmpty(x.Name))
-                                            .SelectMany(static ns => ns.Name.Split('.', StringSplitOptions.RemoveEmptyEntries))
-                                            .Distinct(StringComparer.OrdinalIgnoreCase)
-                                            .ToHashSet(StringComparer.OrdinalIgnoreCase);
-                _namespaceSegmentsNames.Add("keyvaluepair"); //workaround as System.Collections.Generic imports keyvalue pair
-            }
-        }
-        return _namespaceSegmentsNames;
-    }
     private static IEnumerable<CodeNamespace> GetAllNamespaces(CodeNamespace ns)
     {
         foreach (CodeNamespace childNs in ns.Namespaces)

@@ -30,7 +30,7 @@ public abstract class ProprietableBlock<TBlockKind, TBlockDeclaration> : CodeBlo
     public CodeDocumentation Documentation { get; set; } = new();
     public virtual IEnumerable<CodeProperty> AddProperty(params CodeProperty[] properties)
     {
-        if (properties == null || properties.Any(static x => x == null))
+        if (properties is null || properties.Any(static x => x is null))
         {
             throw new ArgumentNullException(nameof(properties));
         }
@@ -44,7 +44,7 @@ public abstract class ProprietableBlock<TBlockKind, TBlockDeclaration> : CodeBlo
     }
     public void RemovePropertiesOfKind(params CodePropertyKind[] kind)
     {
-        if (kind == null || kind.Length == 0)
+        if (kind is null || kind.Length == 0)
         {
             throw new ArgumentNullException(nameof(kind));
         }
@@ -85,7 +85,7 @@ public abstract class ProprietableBlock<TBlockKind, TBlockDeclaration> : CodeBlo
     }
     public IEnumerable<CodeMethod> AddMethod(params CodeMethod[] methods)
     {
-        if (methods == null || methods.Any(static x => x == null))
+        if (methods is null || methods.Any(static x => x is null))
         {
             throw new ArgumentNullException(nameof(methods));
         }
@@ -105,7 +105,7 @@ public class ProprietableBlockDeclaration : BlockDeclaration
     private readonly ConcurrentDictionary<string, CodeType> implements = new(StringComparer.OrdinalIgnoreCase);
     public void AddImplements(params CodeType[] types)
     {
-        if (types == null || types.Any(x => x == null))
+        if (types is null || types.Any(x => x is null))
         {
             throw new ArgumentNullException(nameof(types));
         }
@@ -125,7 +125,7 @@ public class ProprietableBlockDeclaration : BlockDeclaration
     {
         ArgumentException.ThrowIfNullOrEmpty(newName);
         CodeType? impl = FindImplementByName(oldName);
-        if (impl != null)
+        if (impl is not null)
         {
             RemoveImplements(impl);
             impl.Name = newName;
@@ -134,7 +134,7 @@ public class ProprietableBlockDeclaration : BlockDeclaration
     }
     public void RemoveImplements(params CodeType[] types)
     {
-        if (types == null || types.Any(x => x == null))
+        if (types is null || types.Any(x => x is null))
         {
             throw new ArgumentNullException(nameof(types));
         }

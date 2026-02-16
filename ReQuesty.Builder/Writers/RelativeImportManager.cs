@@ -44,14 +44,14 @@ public class RelativeImportManager
             _ => (td.Name.ToFirstCharacterUpperCase(), td),
         } : (codeUsing.Name, null);
 
-        if (typeDef == null)
+        if (typeDef is null)
         {
             return (importSymbol, codeUsing.Alias, "./"); // it's relative to the folder, with no declaration (default failsafe)
         }
 
         string importPath = GetImportRelativePathFromNamespaces(currentNamespace,
             typeDef.GetImmediateParentOfType<CodeNamespace>());
-        importPath += NormalizeFileNameCallback == null ?
+        importPath += NormalizeFileNameCallback is null ?
                         (string.IsNullOrEmpty(importPath) ? codeUsing.Name : codeUsing.Declaration!.Name.ToFirstCharacterLowerCase()) :
                         NormalizeFileNameCallback(codeUsing.Declaration!.TypeDefinition!.GetImmediateParentOfType<CodeNamespace>(), codeUsing.Declaration);
         return (importSymbol, codeUsing.Alias, importPath);

@@ -1,0 +1,13 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.1.0">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>3705525f-9057-4d8d-a775-26a5ae31231a</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../ReQuesty.Demo.Api/ReQuesty.Demo.Api.csproj" />
+  </ItemGroup>
+
+</Project>

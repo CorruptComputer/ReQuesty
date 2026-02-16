@@ -46,7 +46,7 @@ public class ReQuestyLockComparer : IEqualityComparer<ReQuestyLock?>
     public int GetHashCode([DisallowNull] ReQuestyLock obj)
     {
         HashCode hash = new();
-        if (obj == null)
+        if (obj is null)
         {
             return hash.ToHashCode();
         }

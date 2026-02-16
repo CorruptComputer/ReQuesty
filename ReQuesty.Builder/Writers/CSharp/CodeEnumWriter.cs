@@ -20,7 +20,7 @@ public class CodeEnumWriter(CSharpConventionService conventionService) : BaseEle
         }
 
         CodeNamespace? codeNamespace = codeElement.Parent as CodeNamespace;
-        if (codeNamespace != null)
+        if (codeNamespace is not null)
         {
             writer.WriteLine(AutoGenerationHeader);
             foreach (string? x in codeElement.Usings
@@ -77,7 +77,7 @@ public class CodeEnumWriter(CSharpConventionService conventionService) : BaseEle
 
             idx++;
         }
-        if (codeNamespace != null)
+        if (codeNamespace is not null)
         {
             writer.CloseBlock();
         }

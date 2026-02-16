@@ -56,7 +56,7 @@ public class CodeNamespace : CodeBlock<BlockDeclaration, BlockEnd>
     }
     public IEnumerable<CodeClass> AddClass(params CodeClass[] codeClasses)
     {
-        if (codeClasses == null || Array.Exists(codeClasses, static x => x == null))
+        if (codeClasses is null || Array.Exists(codeClasses, static x => x is null))
         {
             throw new ArgumentNullException(nameof(codeClasses));
         }
@@ -94,12 +94,12 @@ public class CodeNamespace : CodeBlock<BlockDeclaration, BlockEnd>
         }
 
         CodeNamespace? result = FindChildByName<CodeNamespace>(nsName, findInChildElements);
-        if (result == null)
+        if (result is null)
         {
             foreach (CodeNamespace childNS in InnerChildElements.Values.OfType<CodeNamespace>())
             {
                 result = childNS.FindNamespaceByName(nsName);
-                if (result != null)
+                if (result is not null)
                 {
                     break;
                 }
@@ -161,7 +161,7 @@ public class CodeNamespace : CodeBlock<BlockDeclaration, BlockEnd>
         }
 
         CodeNamespace? childNamespace = InnerChildElements.Values.OfType<CodeNamespace>().FirstOrDefault(x => x.IsItemNamespace);
-        if (childNamespace == null)
+        if (childNamespace is null)
         {
             childNamespace = AddNamespace($"{Name}.{ItemNamespaceName}");
             childNamespace.IsItemNamespace = true;
@@ -170,7 +170,7 @@ public class CodeNamespace : CodeBlock<BlockDeclaration, BlockEnd>
     }
     public IEnumerable<CodeEnum> AddEnum(params CodeEnum[] enumDeclarations)
     {
-        if (enumDeclarations == null || Array.Exists(enumDeclarations, static x => x == null))
+        if (enumDeclarations is null || Array.Exists(enumDeclarations, static x => x is null))
         {
             throw new ArgumentNullException(nameof(enumDeclarations));
         }
@@ -197,7 +197,7 @@ public class CodeNamespace : CodeBlock<BlockDeclaration, BlockEnd>
 
     public IEnumerable<CodeFunction> AddFunction(params CodeFunction[] globalFunctions)
     {
-        if (globalFunctions == null || Array.Exists(globalFunctions, static x => x == null))
+        if (globalFunctions is null || Array.Exists(globalFunctions, static x => x is null))
         {
             throw new ArgumentNullException(nameof(globalFunctions));
         }
@@ -211,7 +211,7 @@ public class CodeNamespace : CodeBlock<BlockDeclaration, BlockEnd>
     }
     public IEnumerable<CodeInterface> AddInterface(params CodeInterface[] interfaces)
     {
-        if (interfaces == null || Array.Exists(interfaces, static x => x == null))
+        if (interfaces is null || Array.Exists(interfaces, static x => x is null))
         {
             throw new ArgumentNullException(nameof(interfaces));
         }
@@ -261,7 +261,7 @@ public class CodeNamespace : CodeBlock<BlockDeclaration, BlockEnd>
     }
     internal IEnumerable<CodeConstant> AddConstant(params CodeConstant[] codeConstants)
     {
-        if (codeConstants == null || Array.Exists(codeConstants, static x => x == null))
+        if (codeConstants is null || Array.Exists(codeConstants, static x => x is null))
         {
             throw new ArgumentNullException(nameof(codeConstants));
         }

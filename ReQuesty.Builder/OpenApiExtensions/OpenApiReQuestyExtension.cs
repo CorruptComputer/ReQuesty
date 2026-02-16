@@ -17,7 +17,7 @@ public class OpenApiReQuestyExtension : IOpenApiExtension
     public void Write(IOpenApiWriter writer, OpenApiSpecVersion specVersion)
     {
         ArgumentNullException.ThrowIfNull(writer);
-        if (LanguagesInformation != null &&
+        if (LanguagesInformation is not null &&
             LanguagesInformation.Any())
         {
             writer.WriteStartObject();

@@ -59,7 +59,7 @@ public class ApiClientConfigurationComparer : BaseApiConsumerConfigurationCompar
     public override int GetHashCode([DisallowNull] ApiClientConfiguration obj)
     {
         HashCode hash = new();
-        if (obj == null)
+        if (obj is null)
         {
             return hash.ToHashCode();
         }

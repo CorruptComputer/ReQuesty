@@ -9,7 +9,7 @@ public static class IEnumerableExtensions
     /// <returns>The sum of the values.</returns>
     internal static int SumUnchecked(this IEnumerable<int> values)
     {
-        if (values == null)
+        if (values is null)
         {
             return 0;
         }

@@ -2,6 +2,24 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/ReQuesty/bin/Debug/net10.0/requesty.dll",
+            "args": [
+                "generate",
+                "--openapi", "${workspaceFolder}/Demo/ReQuesty.Demo.Api/ReQuesty.Demo.Api_main.json",
+                "--output", "${workspaceFolder}/Demo/ReQuesty.Demo.IntegrationTest/ApiClient",
+                "--class-name", "DemoApiClient",
+                "--namespace-name", "ReQuesty.Demo.IntegrationTests.ApiClient",
+                "--clean-output"
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
             "name": "Debug ReQuesty",
             "type": "dotnet",
             "request": "launch",

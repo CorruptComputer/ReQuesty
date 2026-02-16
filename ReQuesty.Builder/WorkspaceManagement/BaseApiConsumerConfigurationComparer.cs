@@ -30,7 +30,7 @@ public abstract class BaseApiConsumerConfigurationComparer<T> : IEqualityCompare
     public virtual int GetHashCode([DisallowNull] T obj)
     {
         HashCode hash = new();
-        if (obj == null)
+        if (obj is null)
         {
             return hash.ToHashCode();
         }

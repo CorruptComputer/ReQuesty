@@ -44,7 +44,7 @@ public class CodeBlock<TBlockDeclaration, TBlockEnd> : CodeElement, IBlock where
     }
     public void RemoveChildElement<T>(params T[] elements) where T : ICodeElement
     {
-        if (elements == null)
+        if (elements is null)
         {
             return;
         }
@@ -53,7 +53,7 @@ public class CodeBlock<TBlockDeclaration, TBlockEnd> : CodeElement, IBlock where
     }
     public virtual void RemoveChildElementByName(params string[] names)
     {
-        if (names == null)
+        if (names is null)
         {
             return;
         }
@@ -68,7 +68,7 @@ public class CodeBlock<TBlockDeclaration, TBlockEnd> : CodeElement, IBlock where
     public IEnumerable<CodeUsing> Usings => StartBlock.Usings;
     protected IEnumerable<T> AddRange<T>(params T[] elements) where T : CodeElement
     {
-        if (elements == null)
+        if (elements is null)
         {
             return [];
         }
@@ -178,7 +178,7 @@ public class CodeBlock<TBlockDeclaration, TBlockEnd> : CodeElement, IBlock where
         {
             List<T> result = [];
             T? immediateResult = this.FindChildByName<T>(childName, false);
-            if (immediateResult != null)
+            if (immediateResult is not null)
             {
                 result.Add(immediateResult);
             }
@@ -216,7 +216,7 @@ public class CodeBlock<TBlockDeclaration, TBlockEnd> : CodeElement, IBlock where
             foreach (IBlock childElement in InnerChildElements.Values.OfType<IBlock>())
             {
                 T? childResult = childElement.FindChildByName<T>(childName, maxDepth);
-                if (childResult != null)
+                if (childResult is not null)
                 {
                     return childResult;
                 }
@@ -232,7 +232,7 @@ public class BlockDeclaration : CodeTerminal
     public IEnumerable<CodeUsing> Usings => usings.Keys;
     public void AddUsings(params CodeUsing[] codeUsings)
     {
-        if (codeUsings == null || codeUsings.Any(static x => x == null))
+        if (codeUsings is null || codeUsings.Any(static x => x is null))
         {
             throw new ArgumentNullException(nameof(codeUsings));
         }
@@ -245,7 +245,7 @@ public class BlockDeclaration : CodeTerminal
     }
     public void RemoveUsings(params CodeUsing[] codeUsings)
     {
-        if (codeUsings == null || codeUsings.Any(static x => x == null))
+        if (codeUsings is null || codeUsings.Any(static x => x is null))
         {
             throw new ArgumentNullException(nameof(codeUsings));
         }
@@ -257,7 +257,7 @@ public class BlockDeclaration : CodeTerminal
     }
     public void RemoveUsingsByDeclarationName(params string[] names)
     {
-        if (names == null || names.Any(string.IsNullOrEmpty))
+        if (names is null || names.Any(string.IsNullOrEmpty))
         {
             throw new ArgumentNullException(nameof(names));
         }

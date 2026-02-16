@@ -20,7 +20,7 @@ public class CodeUsingDeclarationNameComparer(StringComparer? stringComparer = n
     public int GetHashCode([DisallowNull] CodeUsing obj)
     {
         HashCode hash = new();
-        if (obj == null)
+        if (obj is null)
         {
             return hash.ToHashCode();
         }

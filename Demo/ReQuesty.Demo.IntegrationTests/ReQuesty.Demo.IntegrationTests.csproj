@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsPublishable>false</IsPublishable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <Target Name="GenerateApiClient" AfterTargets="BeforeBuild" Condition="$(Configuration) == 'Debug'">
+    <Message Text="Generating API Client" Importance="High" />
+    <Exec Command="dotnet run --project ../../ReQuesty/ReQuesty.csproj -- generate --openapi ../ReQuesty.Demo.Api/ReQuesty.Demo.Api_main.json --output ./ApiClient --class-name DemoApiClient --namespace-name ReQuesty.Demo.IntegrationTests.ApiClient --clean-output" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Testing" Version="13.1.0" />
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="ReQuesty.Runtime" Version="0.0.7" />
+    <PackageReference Include="Shouldly" Version="4.3.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Useful for debugging, but should not be needed in normally -->
+    <!--ProjectReference Include="../../../ReQuesty.Runtime/ReQuesty.Runtime/ReQuesty.Runtime.csproj" /-->
+    <ProjectReference Include="../ReQuesty.Demo.AppHost/ReQuesty.Demo.AppHost.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PrimativeReturn/" />
+  </ItemGroup>
+
+</Project>

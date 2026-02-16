@@ -25,11 +25,11 @@ internal static class OpenApiDeprecationExtensionExtensions
         {
             return deprecatedValue.ToDeprecationInformation();
         }
-        else if (parameter.Schema != null && !parameter.Schema.IsReferencedSchema() && parameter.Schema.Deprecated)
+        else if (parameter.Schema is not null && !parameter.Schema.IsReferencedSchema() && parameter.Schema.Deprecated)
         {
             return parameter.Schema.GetDeprecationInformation();
         }
-        else if (parameter.Content?.Values.Select(static x => x.Schema).Where(static x => x != null && !x.IsReferencedSchema() && x.Deprecated).Select(static x => x!.GetDeprecationInformation()).FirstOrDefault(static x => x.IsDeprecated) is DeprecationInformation contentDeprecationInformation)
+        else if (parameter.Content?.Values.Select(static x => x.Schema).Where(static x => x is not null && !x.IsReferencedSchema() && x.Deprecated).Select(static x => x!.GetDeprecationInformation()).FirstOrDefault(static x => x.IsDeprecated) is DeprecationInformation contentDeprecationInformation)
         {
             return contentDeprecationInformation;
         }

@@ -25,7 +25,7 @@ public class UrlFormEncodedComplex : ValidationRule<OpenApiOperation>
     }
     private static void ValidateSchema(IOpenApiSchema schema, IValidationContext context, string schemaName)
     {
-        if (schema == null)
+        if (schema is null)
         {
             return;
         }

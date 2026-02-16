@@ -1,20 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!-- Build info -->
-    <TargetFramework>net10.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
     <OutputType>Library</OutputType>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
-    <Deterministic>true</Deterministic>
-
-    <!-- Assembly/NuGet info -->
-    <Authors>Nickolas Gupton and kiota contributors up to commit 960db6b2c39ce815dcabf4d2dec8a084fd218c8c</Authors>
-    <RepositoryUrl>https://github.com/CorruptComputer/ReQuesty</RepositoryUrl>
-    <!--GenerateDocumentationFile>true</GenerateDocumentationFile-->
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
 

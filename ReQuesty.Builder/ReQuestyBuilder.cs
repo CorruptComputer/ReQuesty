@@ -194,7 +194,7 @@ public partial class ReQuestyBuilder
 
         OpenApiUrlTreeNode? openApiTree = null;
         bool shouldGenerate = !config.SkipGeneration;
-        if (openApiDocument != null)
+        if (openApiDocument is not null)
         {
             // filter paths
             sw.Start();
@@ -232,7 +232,7 @@ public partial class ReQuestyBuilder
     }
     private void UpdateConfigurationFromOpenApiDocument()
     {
-        if (openApiDocument == null ||
+        if (openApiDocument is null ||
             GetLanguagesInformationInternal() is not LanguagesInformation languagesInfo)
         {
             return;
@@ -598,7 +598,7 @@ public partial class ReQuestyBuilder
         modelsNamespace = rootNamespace.AddNamespace(config.ModelsNamespaceName);
         InitializeInheritanceIndex();
         StopLogAndReset(stopwatch, nameof(InitializeInheritanceIndex));
-        if (root != null)
+        if (root is not null)
         {
             CreateRequestBuilderClass(codeNamespace, root, root);
             StopLogAndReset(stopwatch, nameof(CreateRequestBuilderClass));
@@ -614,32 +614,6 @@ public partial class ReQuestyBuilder
         }
 
         return rootNamespace;
-    }
-
-    private void AddOperationSecurityRequirementToDOM(OpenApiOperation operation, CodeClass codeClass)
-    {
-        if (openApiDocument is null)
-        {
-            logger.LogWarning("OpenAPI document is null");
-            return;
-        }
-
-        if (operation.Security == null || operation.Security.Count == 0 || openApiDocument.Components?.SecuritySchemes is null)
-        {
-            return;
-        }
-
-        IDictionary<string, IOpenApiSecurityScheme> securitySchemes = openApiDocument.Components.SecuritySchemes;
-        foreach (OpenApiSecurityRequirement securityRequirement in operation.Security)
-        {
-            foreach (OpenApiSecuritySchemeReference scheme in securityRequirement.Keys)
-            {
-                if (!string.IsNullOrEmpty(scheme.Reference.Id) && securitySchemes.TryGetValue(scheme.Reference.Id, out IOpenApiSecurityScheme? securityScheme))
-                {
-                    AddSecurity(codeClass, securityScheme);
-                }
-            }
-        }
     }
 
     private void AddSecurity(CodeClass codeClass, IOpenApiSecurityScheme openApiSecurityScheme)
@@ -790,7 +764,7 @@ public partial class ReQuestyBuilder
             }
         }
 
-        if (rootNamespace != null)
+        if (rootNamespace is not null)
         {
             Parallel.ForEach(currentNode.Children.Values, parallelOptions, childNode =>
             {
@@ -1087,7 +1061,7 @@ public partial class ReQuestyBuilder
                 .Except(exceptions)// the property method should not reference itself as a return type.
                 .MinBy(shortestNamespaceOrder);
             // searching down first because most request builder properties on a request builder are just sub paths on the API
-            if (x.TypeDefinition == null)
+            if (x.TypeDefinition is null)
             {
                 parentNS = parentNS?.Parent as CodeNamespace;
                 x.TypeDefinition = (parentNS
@@ -1099,7 +1073,7 @@ public partial class ReQuestyBuilder
             }
         });
 
-        Parallel.ForEach(unmappedTypesWithName.Where(static x => x.TypeDefinition == null).GroupBy(static x => x.Name), parallelOptions, x =>
+        Parallel.ForEach(unmappedTypesWithName.Where(static x => x.TypeDefinition is null).GroupBy(static x => x.Name), parallelOptions, x =>
         {
             if (rootNamespace?.FindChildByName<ITypeDefinition>(x.First().Name) is CodeElement definition)
             {
@@ -1117,7 +1091,7 @@ public partial class ReQuestyBuilder
             .Union(source
                     .OfType<CodeComposedTypeBase>()
                     .SelectMany(x => x.Types))
-            .Where(static x => !x.IsExternal && x.TypeDefinition == null);
+            .Where(static x => !x.IsExternal && x.TypeDefinition is null);
     private IEnumerable<CodeType> GetUnmappedTypeDefinitions(CodeElement codeElement)
     {
         IEnumerable<CodeType> childElementsUnmappedTypes = codeElement.GetChildElements(true).SelectMany(GetUnmappedTypeDefinitions);
@@ -1214,7 +1188,7 @@ public partial class ReQuestyBuilder
             codeType.Name = childType;
         }
 
-        if (resultType == null)
+        if (resultType is null)
         {
             return null;
         }
@@ -1253,7 +1227,7 @@ public partial class ReQuestyBuilder
             prop.DefaultValue = $"\"{stringDefaultValue}\"";
         }
 
-        if (existingType == null)
+        if (existingType is null)
         {
             prop.Type.CollectionKind = propertySchema.IsArray() ? CodeTypeBase.CodeTypeCollectionKind.Complex : default;
             logger.LogTrace("Creating property {Name} of {Type}", prop.Name, prop.Type.Name);
@@ -1280,8 +1254,18 @@ public partial class ReQuestyBuilder
         }
         // first value that's not null, and not "object" for primitive collections, the items type matters
         JsonSchemaType? typeName = typeNames.Find(static x => x is not null && !typeNamesToSkip.Contains(x.Value));
-
         string? format = typeSchema?.Format ?? typeSchema?.Items?.Format;
+
+        // Some things are generated as "Integer | String", but the String is only there as a fallback.
+        // Will fuck up the lookup below so remove it.
+        if (typeName.HasValue
+            && typeName.Value.HasFlag(JsonSchemaType.String)
+            && (typeName.Value & ~JsonSchemaType.String) != 0
+            && (typeName.Value & ~JsonSchemaType.String) != JsonSchemaType.Null)
+        {
+            typeName &= ~JsonSchemaType.String;
+        }
+
         return (typeName & ~JsonSchemaType.Null, format?.ToLowerInvariant()) switch
         {
             (_, "byte") => new CodeType { Name = "base64", IsExternal = true },
@@ -1343,7 +1327,7 @@ public partial class ReQuestyBuilder
     }
     private void AddErrorMappingToExecutorMethod(OpenApiUrlTreeNode currentNode, OpenApiOperation operation, CodeMethod executorMethod, IOpenApiSchema errorSchema, IOpenApiResponse response, string errorCode)
     {
-        if (modelsNamespace != null)
+        if (modelsNamespace is not null)
         {
             CodeElement parentElement = response is not OpenApiResponseReference && errorSchema is not OpenApiSchemaReference
                 ? (CodeElement)executorMethod
@@ -1367,7 +1351,7 @@ public partial class ReQuestyBuilder
     }
     private (CodeTypeBase?, CodeTypeBase?) GetExecutorMethodReturnType(OpenApiUrlTreeNode currentNode, IOpenApiSchema? schema, OpenApiOperation operation, CodeClass parentClass, NetHttpMethod operationType)
     {
-        if (schema != null)
+        if (schema is not null)
         {
             string suffix = $"{operationType.Method.ToLowerInvariant().ToFirstCharacterUpperCase()}Response";
             CodeTypeBase? modelType = CreateModelDeclarations(currentNode, schema, operation, parentClass, suffix);
@@ -1525,7 +1509,7 @@ public partial class ReQuestyBuilder
 
     private static void AddRequestConfigurationProperties(CodeClass? parameterClass, CodeClass requestConfigClass)
     {
-        if (parameterClass != null)
+        if (parameterClass is not null)
         {
             requestConfigClass.AddProperty(new CodeProperty
             {
@@ -2032,7 +2016,7 @@ public partial class ReQuestyBuilder
                                     || schema.Items.IsComposedEnum() && string.IsNullOrEmpty(schema.Items?.Format);//the collection could be a composed type with an enum type so override with strong type instead of string type.
         if ((string.IsNullOrEmpty(type?.Name)
                || isEnumOrComposedCollectionType)
-               && schema.Items != null)
+               && schema.Items is not null)
         {
             CodeNamespace targetNamespace = GetShortestNamespace(codeNamespace, schema.Items);
             type = CreateModelDeclarations(currentNode, schema.Items, operation, targetNamespace, string.Empty, typeNameForInlineSchema: typeNameForInlineSchema, isRequestBody: isRequestBody);
@@ -2052,7 +2036,7 @@ public partial class ReQuestyBuilder
     }
     private CodeNamespace GetSearchNamespace(OpenApiUrlTreeNode currentNode, CodeNamespace currentNamespace)
     {
-        if (modelsNamespace != null && currentNode.DoesNodeBelongToItemSubnamespace() && !currentNamespace.Name.Contains(modelsNamespace.Name, StringComparison.Ordinal))
+        if (modelsNamespace is not null && currentNode.DoesNodeBelongToItemSubnamespace() && !currentNamespace.Name.Contains(modelsNamespace.Name, StringComparison.Ordinal))
         {
             return currentNamespace.EnsureItemNamespace();
         }
@@ -2158,7 +2142,7 @@ public partial class ReQuestyBuilder
     }
     private CodeNamespace GetShortestNamespace(CodeNamespace currentNamespace, IOpenApiSchema currentSchema)
     {
-        if (currentSchema.GetReferenceId() is string refId && !string.IsNullOrEmpty(refId) && rootNamespace != null)
+        if (currentSchema.GetReferenceId() is string refId && !string.IsNullOrEmpty(refId) && rootNamespace is not null)
         {
             string parentClassNamespaceName = GetModelsNamespaceNameFromReferenceId(refId);
             return rootNamespace.AddNamespace(parentClassNamespaceName);
@@ -2167,7 +2151,7 @@ public partial class ReQuestyBuilder
     }
     private CodeClass AddModelClass(OpenApiUrlTreeNode currentNode, IOpenApiSchema schema, string declarationName, CodeNamespace currentNamespace, OpenApiOperation? currentOperation, CodeClass? inheritsFrom = null)
     {
-        if (inheritsFrom == null && schema.AllOf?.OfType<OpenApiSchemaReference>().ToArray() is { Length: 1 } referencedSchemas)
+        if (inheritsFrom is null && schema.AllOf?.OfType<OpenApiSchemaReference>().ToArray() is { Length: 1 } referencedSchemas)
         {// any non-reference would be the current class in some description styles
             OpenApiSchemaReference parentSchema = referencedSchemas[0];
             CodeNamespace parentClassNamespace = GetShortestNamespace(currentNamespace, parentSchema);
@@ -2185,7 +2169,7 @@ public partial class ReQuestyBuilder
             },
             Deprecation = schema.GetDeprecationInformation(),
         };
-        if (inheritsFrom != null)
+        if (inheritsFrom is not null)
         {
             newClassStub.StartBlock.Inherits = new CodeType { TypeDefinition = inheritsFrom };
         }
@@ -2204,7 +2188,7 @@ public partial class ReQuestyBuilder
                 lifecycle.StartBuildingProperties();
                 if (!lifecycle.IsPropertiesBuilt())
                 {
-                    if (inheritsFrom != null)
+                    if (inheritsFrom is not null)
                     {
                         classLifecycles.TryGetValue(inheritsFrom.Parent!.Name + "." + inheritsFrom.Name, out ModelClassBuildLifecycle? superClassLifecycle);
                         superClassLifecycle!.WaitForPropertiesBuilt();
@@ -2252,7 +2236,7 @@ public partial class ReQuestyBuilder
                         componentSchema.GetDiscriminatorMappings(inheritanceIndex) :
                          [])
                 .Select(x => KeyValuePair.Create(x.Key, GetCodeTypeForMapping(currentNode, x.Value, currentNamespace, baseClass, currentOperation)))
-                .Where(static x => x.Value != null)
+                .Where(static x => x.Value is not null)
                 .Select(static x => KeyValuePair.Create(x.Key, x.Value!));
     }
     private static IEnumerable<ITypeDefinition> GetAllModels(CodeNamespace currentNamespace)
@@ -2421,6 +2405,7 @@ public partial class ReQuestyBuilder
                             .Where(static x => x.IsOfKind(CodeClassKind.RequestBuilder))
                             .SelectMany(static x => x.Methods)
                             .Where(static x => x.IsOfKind(CodeMethodKind.RequestExecutor));
+
         return requestExecutors.SelectMany(static x => x.ReturnType.AllTypes)
                         .Union(requestExecutors
                                 .SelectMany(static x => x.Parameters)
@@ -2433,7 +2418,7 @@ public partial class ReQuestyBuilder
                                 .Select(static x => x.Properties.FirstOrDefault(static y => y.Kind is CodePropertyKind.QueryParameters)?.Type)
                                 .OfType<CodeType>())
                         .Union(requestExecutors.SelectMany(static x => x.ErrorMappings.SelectMany(static y => y.Value.AllTypes)))
-                        .Where(static x => x.TypeDefinition != null)
+                        .Where(static x => x.TypeDefinition is not null)
                         .Select(static x => x.TypeDefinition!)
                         .Where(static x => x is CodeClass || x is CodeEnum);
     }
@@ -2476,7 +2461,7 @@ public partial class ReQuestyBuilder
     private CodeType? GetCodeTypeForMapping(OpenApiUrlTreeNode currentNode, string referenceId, CodeNamespace currentNamespace, CodeClass? baseClass, OpenApiOperation? currentOperation)
     {
         string? componentKey = referenceId?.Replace("#/components/schemas/", string.Empty, StringComparison.OrdinalIgnoreCase);
-        if (openApiDocument == null || string.IsNullOrEmpty(componentKey) || openApiDocument.Components?.Schemas is null || GetSchemaReferenceToComponentSchema(componentKey) is not { } discriminatorSchema)
+        if (openApiDocument is null || string.IsNullOrEmpty(componentKey) || openApiDocument.Components?.Schemas is null || GetSchemaReferenceToComponentSchema(componentKey) is not { } discriminatorSchema)
         {
             logger.LogWarning("Discriminator {ComponentKey} not found in the OpenAPI document.", componentKey);
             return null;
@@ -2510,14 +2495,14 @@ public partial class ReQuestyBuilder
                     CodeNamespace targetNamespace = string.IsNullOrEmpty(shortestNamespaceName) ? ns :
                                         rootNamespace?.FindOrAddNamespace(shortestNamespaceName) ?? ns;
                     CodeTypeBase definition = CreateModelDeclarations(currentNode, propertySchema, default, targetNamespace, string.Empty, typeNameForInlineSchema: className);
-                    if (definition == null)
+                    if (definition is null)
                     {
                         logger.LogWarning("Omitted property {PropertyName} for model {ModelName} in API path {ApiPath}, the schema is invalid.", x.Key, model.Name, currentNode.Path);
                         return null;
                     }
 
                     // If this is a collection, it'll make the individual items nullable, which likely is not what is wanted
-                    if (!definition.IsCollection)
+                    if (!definition.IsCollection && definition.Parent is not null)
                     {
                         definition.IsNullable = !schema.Required?.Contains(x.Key) ?? true;
                     }
@@ -2745,27 +2730,6 @@ public partial class ReQuestyBuilder
         {
             logger.LogWarning("Ignoring duplicate parameter {Name}", parameter.Name);
         }
-    }
-
-    private static CodeType GetDefaultQueryParameterType()
-    {
-        return new()
-        {
-            IsExternal = true,
-            Name = "string",
-            IsNullable = true
-        };
-    }
-    private static CodeType GetQueryParameterType(IOpenApiSchema schema)
-    {
-        CodeType paramType = GetPrimitiveType(schema) ?? new()
-        {
-            IsExternal = true,
-            Name = schema.Items is not null && (schema.Items.Type & ~JsonSchemaType.Null)?.ToIdentifiers().FirstOrDefault() is string name ? name : "null",
-        };
-
-        paramType.CollectionKind = schema.IsArray() ? CodeTypeBase.CodeTypeCollectionKind.Array : default;
-        return paramType;
     }
 
     private void CleanUpInternalState()

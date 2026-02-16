@@ -272,6 +272,7 @@ public static partial class StringExtensions
         {'+', "Plus"},
         {',', "Comma"},
         {'-', "Hyphen"},
+        {'_', "Underscore"},
         {'.', "Period"},
         {'/', "Slash"},
         {'\\', "BackSlash"},
@@ -282,6 +283,7 @@ public static partial class StringExtensions
         {'>', "GreaterThan"},
         {'?', "QuestionMark"},
         {'~', "Tilde" },
+        {'@', "At"}
     };
 
     /// <summary>

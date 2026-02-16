@@ -52,7 +52,7 @@ public class CodeProperty : CodeTerminalWithKind<CodePropertyKind>, IDocumentedE
 
     public AccessModifier Access { get; set; } = AccessModifier.Public;
 
-    public bool ExistsInBaseType => OriginalPropertyFromBaseType != null;
+    public bool ExistsInBaseType => OriginalPropertyFromBaseType is not null;
 
     public bool ExistsInExternalBaseType { get; set; }
 
@@ -64,7 +64,7 @@ public class CodeProperty : CodeTerminalWithKind<CodePropertyKind>, IDocumentedE
     {
         get
         {
-            if (Getter != null)
+            if (Getter is not null)
             {
                 return Getter;
             }
@@ -82,7 +82,7 @@ public class CodeProperty : CodeTerminalWithKind<CodePropertyKind>, IDocumentedE
     {
         get
         {
-            if (Setter != null)
+            if (Setter is not null)
             {
                 return Setter;
             }

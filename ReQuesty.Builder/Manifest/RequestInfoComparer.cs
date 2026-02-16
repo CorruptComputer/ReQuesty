@@ -26,7 +26,7 @@ public class RequestInfoComparer(StringComparer? stringComparer = null) : IEqual
     public int GetHashCode([DisallowNull] RequestInfo obj)
     {
         HashCode hash = new();
-        if (obj == null)
+        if (obj is null)
         {
             return hash.ToHashCode();
         }

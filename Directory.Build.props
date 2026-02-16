@@ -1,5 +1,23 @@
 <Project>
   <PropertyGroup>
+    <!-- Build info -->
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <Deterministic>true</Deterministic>
+    <Features>strict</Features>
+
+    <!-- Assembly/NuGet info -->
     <Version>0.0.3</Version>
+    <Authors>Nickolas Gupton and kiota contributors up to commit 960db6b2c39ce815dcabf4d2dec8a084fd218c8c</Authors>
+    <RepositoryUrl>https://github.com/CorruptComputer/ReQuesty</RepositoryUrl>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+    <SourceControlInformationFeatureSupported>true</SourceControlInformationFeatureSupported>
+    <SourceRevisionId>main</SourceRevisionId>
   </PropertyGroup>
 </Project>

@@ -89,13 +89,13 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
             && currentClass.StartBlock is ClassDeclaration currentDeclaration)
         {
             CodeType? backedModelImplements = currentDeclaration.Implements.FirstOrDefault(x => "IBackedModel".Equals(x.Name, StringComparison.OrdinalIgnoreCase));
-            if (backedModelImplements != null)
+            if (backedModelImplements is not null)
             {
                 backedModelImplements.Name = backedModelImplements.Name[1..]; //removing the "I"
             }
 
             CodeProperty? backingStoreProperty = currentClass.GetPropertyOfKind(CodePropertyKind.BackingStore);
-            if (backingStoreProperty != null)
+            if (backingStoreProperty is not null)
             {
                 backingStoreProperty.DefaultValue = defaultPropertyValue;
                 backingStoreProperty.NamePrefix = hasPrefix ? backingStoreProperty.NamePrefix : string.Empty;
@@ -264,7 +264,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
     {
         if (current is CodeClass currentClass &&
             !currentClass.IsOfKind(CodeClassKind.RequestBuilder, CodeClassKind.QueryParameters) &&
-            (classKindsToExclude == null || !currentClass.IsOfKind(classKindsToExclude)) &&
+            (classKindsToExclude is null || !currentClass.IsOfKind(classKindsToExclude)) &&
             (forceAdd ||
             currentClass.Properties.Any(static x => !string.IsNullOrEmpty(x.DefaultValue)) ||
             addIfInherited && DoesAnyParentHaveAPropertyWithDefaultValue(currentClass)) &&
@@ -470,7 +470,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
                 shouldInsertUsing = !string.IsNullOrWhiteSpace(ns);
             }
             CodeParameter? binaryParameter = currentMethod.Parameters.FirstOrDefault(static x => BinaryTypes.Contains(x.Type?.Name ?? string.Empty));
-            if (binaryParameter != null)
+            if (binaryParameter is not null)
             {
                 binaryParameter.Type.Name = symbol;
                 binaryParameter.Type.IsNullable = isNullable;
@@ -714,7 +714,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
                                                             .OfType<CodeNamespace>()
                                                             .FirstOrDefault(x => x.Name
                                                                                 .EndsWith(currentClass.Name, StringComparison.OrdinalIgnoreCase));
-            if (childNamespaceWithClassName != null)
+            if (childNamespaceWithClassName is not null)
             {
                 parentNamespace.RemoveChildElement(currentClass);
                 childNamespaceWithClassName.AddClass(currentClass);
@@ -792,12 +792,12 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
                     parentClass.RenameChildElement(nestedClass.Name, $"{currentClass.Name}{nestedClass.Name}");
                 }
 
-                if (addToParentNamespace && parentNamespace.FindChildByName<CodeClass>(nestedClass.Name, false) == null)
+                if (addToParentNamespace && parentNamespace.FindChildByName<CodeClass>(nestedClass.Name, false) is null)
                 { // the query parameters class is already a child of the request executor method parent class
                     parentNamespace.AddClass(nestedClass);
                     currentClass.RemoveChildElementByName(nestedClass.Name);
                 }
-                else if (!addToParentNamespace && currentClass.FindChildByName<CodeClass>(nestedClass.Name, false) == null) //failsafe
+                else if (!addToParentNamespace && currentClass.FindChildByName<CodeClass>(nestedClass.Name, false) is null) //failsafe
                 {
                     currentClass.AddInnerClass(nestedClass);
                 }
@@ -853,7 +853,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
                                 .Union(indexerTypes)
                                 .Union(inheritTypes)
                                 .Union(errorTypes)
-                                .Where(static x => x != null);
+                                .Where(static x => x is not null);
 
             if (codeTypeFilter != default)
             {
@@ -862,7 +862,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
 
             CodeUsing[] usingsToAdd = typesCollection
                             .SelectMany(static x => x.AllTypes.Select(static y => (type: y, ns: y.TypeDefinition?.GetImmediateParentOfType<CodeNamespace>())))
-                            .Where(x => x.ns != null && (includeCurrentNamespace || x.ns != currentClassNamespace))
+                            .Where(x => x.ns is not null && (includeCurrentNamespace || x.ns != currentClassNamespace))
                             .Where(x => includeParentNamespaces || !currentClassNamespace.IsChildOf(x.ns!))
                             .Select(static x => new CodeUsing { Name = x.ns!.Name, Declaration = x.type })
                             .Where(x => x.Declaration?.TypeDefinition != current)
@@ -960,12 +960,12 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
     protected static void CorrectCoreTypes(CodeClass? currentClass, Dictionary<string, (string, CodeUsing?)> coreTypesReplacements, bool languageSupportsNestedClasses = false, params CodeTypeBase[] types)
     {
         ArgumentNullException.ThrowIfNull(coreTypesReplacements);
-        if (currentClass == null)
+        if (currentClass is null)
         {
             return;
         }
 
-        foreach (CodeTypeBase? type in types.Where(x => x != null && !string.IsNullOrEmpty(x.Name) && coreTypesReplacements.ContainsKey(x.Name)))
+        foreach (CodeTypeBase? type in types.Where(x => x is not null && !string.IsNullOrEmpty(x.Name) && coreTypesReplacements.ContainsKey(x.Name)))
         {
             (string, CodeUsing?) replacement = coreTypesReplacements[type.Name];
             if (!string.IsNullOrEmpty(replacement.Item1))
@@ -973,7 +973,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
                 type.Name = replacement.Item1;
             }
 
-            if (replacement.Item2 != null)
+            if (replacement.Item2 is not null)
             {
                 switch (currentClass.Parent)
                 {
@@ -1010,12 +1010,12 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
                     CodeProperty newP = (CodeProperty)p.Clone();
                     newP.Parent = currentClass;
                     currentClass.AddProperty(newP);
-                    if (newP.Setter != null)
+                    if (newP.Setter is not null)
                     {
                         newP.Setter.AccessedProperty = newP;
                         currentClass.AddMethod(newP.Setter);
                     }
-                    if (newP.Getter != null)
+                    if (newP.Getter is not null)
                     {
                         newP.Getter.AccessedProperty = newP;
                         currentClass.AddMethod(newP.Getter);
@@ -1116,7 +1116,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
                     declaration.AddUsings(parentClass.DiscriminatorInformation.DiscriminatorMappings
                         .Select(static x => x.Value)
                         .OfType<CodeType>()
-                        .Where(static x => x.TypeDefinition != null)
+                        .Where(static x => x.TypeDefinition is not null)
                         .Select(x => new CodeUsing
                         {
                             Name = x.TypeDefinition!.GetImmediateParentOfType<CodeNamespace>().Name,
@@ -1132,7 +1132,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
                     declaration.AddUsings(parentClass.DiscriminatorInformation.DiscriminatorMappings
                         .Select(static x => x.Value)
                         .OfType<CodeType>()
-                        .Where(static x => x.TypeDefinition != null)
+                        .Where(static x => x.TypeDefinition is not null)
                         .Where(x => x.TypeDefinition!.GetImmediateParentOfType<CodeNamespace>() != parentClassNamespace)
                         .Select(x => new CodeUsing
                         {
@@ -1184,7 +1184,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
             {
                 Name = newName,
             };
-            if (usings != null)
+            if (usings is not null)
             {
                 globalFunction.AddUsing(usings);
             }
@@ -1203,7 +1203,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
         {
             foreach (CodeProperty property in parentClass.UnorderedProperties)
             {
-                if (property.Type is not CodeType propertyType || propertyType.TypeDefinition == null)
+                if (property.Type is not CodeType propertyType || propertyType.TypeDefinition is null)
                 {
                     continue;
                 }
@@ -1211,7 +1211,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
                 string staticMethodName = functionNameCallback.Invoke(propertyType);
                 CodeNamespace staticMethodNS = propertyType.TypeDefinition.GetImmediateParentOfType<CodeNamespace>();
                 CodeFunction? staticMethod = staticMethodNS.FindChildByName<CodeFunction>(staticMethodName, false);
-                if (staticMethod == null)
+                if (staticMethod is null)
                 {
                     continue;
                 }
@@ -1242,7 +1242,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
             }
 
             if (currentMethod.ReturnType is CodeType returnType &&
-                returnType.TypeDefinition != null)
+                returnType.TypeDefinition is not null)
             {
                 AddStaticMethodImportToClass(parentClass, returnType, functionNameCallback);
             }
@@ -1341,10 +1341,10 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
             OriginalClass = modelClass,
         };
         modelClass.AssociatedInterface = insertValue;
-        CodeInterface inter = parentClass != null ?
+        CodeInterface inter = parentClass is not null ?
                         parentClass.AddInnerInterface(insertValue).First() :
                         targetNS.AddInterface(insertValue).First();
-        ProprietableBlockDeclaration targetUsingBlock = parentClass != null ? (ProprietableBlockDeclaration)parentClass.StartBlock : inter.StartBlock;
+        ProprietableBlockDeclaration targetUsingBlock = parentClass is not null ? (ProprietableBlockDeclaration)parentClass.StartBlock : inter.StartBlock;
         List<string> usingsToRemove = [];
         List<CodeUsing> usingsToAdd = [];
         if (modelClass.StartBlock.Inherits?.TypeDefinition is CodeClass baseClass)
@@ -1473,7 +1473,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
                                     .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         usingsToAdd.AddRange(modelClass.Usings.Where(x => x.IsExternal && externalTypesOnInter.Contains(x.Name)));
-        if (parentClass != null)
+        if (parentClass is not null)
         {
             usingsToAdd.AddRange(parentClass.Usings.Where(x => x.IsExternal && externalTypesOnInter.Contains(x.Name)));
         }
@@ -1578,7 +1578,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
         ArgumentNullException.ThrowIfNull(baseTypeUsing);
         if (currentElement is CodeClass currentClass && currentClass.IsOfKind(CodeClassKind.RequestBuilder))
         {
-            if (currentClass.StartBlock.Inherits == null)
+            if (currentClass.StartBlock.Inherits is null)
             {
                 currentClass.StartBlock.Inherits = new CodeType
                 {
@@ -1613,7 +1613,7 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
         ArgumentNullException.ThrowIfNull(baseTypeUsing);
         if (currentElement is CodeClass currentClass && currentClass.IsOfKind(CodeClassKind.RequestConfiguration))
         {
-            if (currentClass.StartBlock.Inherits == null)
+            if (currentClass.StartBlock.Inherits is null)
             {
                 currentClass.StartBlock.Inherits = new CodeType
                 {
@@ -1664,10 +1664,10 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
                                                     .Where(x => x.IsOfKind(CodeParameterKind.RequestConfiguration) && x.Type is CodeType type && type.TypeDefinition == currentClass)
                                                     .ToArray();
             CodeType? genericTypeParamValue = currentClass.Properties.FirstOrDefaultOfKind(CodePropertyKind.QueryParameters)?.Type as CodeType ?? defaultValueForGenericTypeParam;
-            if (configurationParameterTypeUsing != null && genericTypeParamValue != null && configurationParameters.Length != 0)
+            if (configurationParameterTypeUsing is not null && genericTypeParamValue is not null && configurationParameters.Length != 0)
             {
                 parentClass.AddUsing(configurationParameterTypeUsing);
-                if (usingForDefaultGenericParameter != null)
+                if (usingForDefaultGenericParameter is not null)
                 {
                     parentClass.AddUsing(usingForDefaultGenericParameter);
                 }

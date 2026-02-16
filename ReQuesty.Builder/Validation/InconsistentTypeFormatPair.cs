@@ -52,6 +52,16 @@ public class InconsistentTypeFormatPair : ValidationRule<IOpenApiSchema>
         }
 
         JsonSchemaType sanitizedType = schema.Type.Value & ~JsonSchemaType.Null;
+
+        // Some things are generated as "Integer | String", but the String is only there as a fallback.
+        // Will fuck up the lookup below so remove it.
+        if (sanitizedType.HasFlag(JsonSchemaType.String)
+            && (sanitizedType & ~JsonSchemaType.String) != 0
+            && (sanitizedType & ~JsonSchemaType.String) != JsonSchemaType.Null)
+        {
+            sanitizedType &= ~JsonSchemaType.String;
+        }
+
         if (!validPairs.TryGetValue(sanitizedType, out HashSet<string>? validFormats) || !validFormats.Contains(schema.Format))
         {
             context.CreateWarning(nameof(InconsistentTypeFormatPair), $"The format {schema.Format} is not supported by ReQuesty for the type {sanitizedType} and the string type will be used.");

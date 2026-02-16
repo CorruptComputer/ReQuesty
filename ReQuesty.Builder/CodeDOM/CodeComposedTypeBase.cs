@@ -10,7 +10,7 @@ public abstract class CodeComposedTypeBase : CodeTypeBase, IDiscriminatorInforma
     public void AddType(params CodeType[] codeTypes)
     {
         ArgumentNullException.ThrowIfNull(codeTypes);
-        if (Array.Exists(codeTypes, static x => x == null))
+        if (Array.Exists(codeTypes, static x => x is null))
         {
             throw new ArgumentNullException(nameof(codeTypes), "One of the provided types was null");
         }
@@ -49,7 +49,7 @@ public abstract class CodeComposedTypeBase : CodeTypeBase, IDiscriminatorInforma
     {
         get
         {
-            if (_discriminatorInformation == null)
+            if (_discriminatorInformation is null)
             {
                 DiscriminatorInformation = new DiscriminatorInformation();
             }

@@ -26,14 +26,14 @@ public abstract class CodeElement : ICodeElement
     } = string.Empty;
     protected void EnsureElementsAreChildren(params ICodeElement?[] elements)
     {
-        foreach (ICodeElement? element in elements.Where(x => x != null && (x.Parent == null || x.Parent != this)))
+        foreach (ICodeElement? element in elements.Where(x => x is not null && (x.Parent is null || x.Parent != this)))
         {
             element!.Parent = this;
         }
     }
     public T GetImmediateParentOfType<T>(CodeElement? item = null)
     {
-        if (item == null)
+        if (item is null)
         {
             return GetImmediateParentOfType<T>(this);
         }
@@ -43,7 +43,7 @@ public abstract class CodeElement : ICodeElement
             return p;
         }
 
-        if (item.Parent == null)
+        if (item.Parent is null)
         {
             throw new InvalidOperationException($"item {item.Name} of type {item.GetType()} does not have a parent");
         }
@@ -63,7 +63,7 @@ public abstract class CodeElement : ICodeElement
             return true;
         }
 
-        if (immediateOnly || Parent == null)
+        if (immediateOnly || Parent is null)
         {
             return false;
         }

@@ -17,7 +17,7 @@ internal class OpenApiSchemaComparer(
     {
         // this workaround might result in collisions, however so far this has not been a problem
         // implemented this way to avoid stack overflow caused by schemas referencing themselves
-        return x == null && y == null || x != null && y != null && GetHashCode(x) == GetHashCode(y);
+        return x is null && y is null || x is not null && y is not null && GetHashCode(x) == GetHashCode(y);
     }
     /// <inheritdoc/>
     public int GetHashCode([DisallowNull] IOpenApiSchema obj)
@@ -169,7 +169,7 @@ internal class OpenApiDiscriminatorComparer : IEqualityComparer<OpenApiDiscrimin
     public int GetHashCode([DisallowNull] OpenApiDiscriminator obj)
     {
         HashCode hash = new();
-        if (obj == null)
+        if (obj is null)
         {
             return hash.ToHashCode();
         }
@@ -198,7 +198,7 @@ internal class JsonNodeComparer : IEqualityComparer<JsonNode>
     public int GetHashCode([DisallowNull] JsonNode obj)
     {
         HashCode hash = new();
-        if (obj == null)
+        if (obj is null)
         {
             return hash.ToHashCode();
         }

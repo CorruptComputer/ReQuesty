@@ -89,7 +89,7 @@ public class CodeRenderer
         }
         // if the module already has a class with the same name, it's going to be declared automatically
         string namespaceNameLastSegment = codeNamespace.Name.Split('.')[^1];
-        return Configuration.ShouldWriteBarrelsIfClassExists || codeNamespace.FindChildByName<CodeClass>(namespaceNameLastSegment, false) == null;
+        return Configuration.ShouldWriteBarrelsIfClassExists || codeNamespace.FindChildByName<CodeClass>(namespaceNameLastSegment, false) is null;
     }
 
     public static CodeRenderer GetCodeRender(GenerationConfiguration config)

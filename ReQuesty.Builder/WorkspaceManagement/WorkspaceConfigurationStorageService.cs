@@ -51,7 +51,7 @@ public class WorkspaceConfigurationStorageService
             }
             await using FileStream configStream = File.Open(targetConfigurationFilePath, FileMode.Create);
             await JsonSerializer.SerializeAsync(configStream, configuration, context.WorkspaceConfiguration, cancellationToken).ConfigureAwait(false);
-            if (manifestDocument != null)
+            if (manifestDocument is not null)
             {
                 using (await localFilesLock.LockAsync(targetManifestFilePath, cancellationToken).ConfigureAwait(false))
                 {

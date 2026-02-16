@@ -1,0 +1,33 @@
+{
+  "descriptionHash": "60F3068857AFDF869073A225FD65FB9A820602C918D7C81BF0DAE37B5E5FE9EE073519999D9038741EC17D4D69953D21EA0CA3591B0143C74A8F9CA8287B5000",
+  "descriptionLocation": "../../ReQuesty.Demo.Api/ReQuesty.Demo.Api_main.json",
+  "lockFileVersion": "1.0.0",
+  "reQuestyVersion": "0.0.3",
+  "clientClassName": "DemoApiClient",
+  "typeAccessModifier": "Public",
+  "clientNamespaceName": "ReQuesty.Demo.IntegrationTests.ApiClient",
+  "language": "CSharp",
+  "usesBackingStore": false,
+  "includeAdditionalData": true,
+  "disableSSLValidation": false,
+  "serializers": [
+    "ReQuesty.Runtime.Serialization.Json.JsonSerializationWriterFactory",
+    "ReQuesty.Runtime.Serialization.Text.TextSerializationWriterFactory",
+    "ReQuesty.Runtime.Serialization.Form.FormSerializationWriterFactory",
+    "ReQuesty.Runtime.Serialization.Multipart.MultipartSerializationWriterFactory"
+  ],
+  "deserializers": [
+    "ReQuesty.Runtime.Serialization.Json.JsonParseNodeFactory",
+    "ReQuesty.Runtime.Serialization.Text.TextParseNodeFactory",
+    "ReQuesty.Runtime.Serialization.Form.FormParseNodeFactory"
+  ],
+  "structuredMimeTypes": [
+    "application/json",
+    "text/plain;q=0.9",
+    "application/x-www-form-urlencoded;q=0.2",
+    "multipart/form-data;q=0.1"
+  ],
+  "includePatterns": [],
+  "excludePatterns": [],
+  "disabledValidationRules": []
+}

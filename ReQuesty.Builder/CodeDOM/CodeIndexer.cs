@@ -52,7 +52,7 @@ public class CodeIndexer : CodeTerminal, IDocumentedElement, IDeprecableElement,
             ReturnType = (CodeTypeBase)ReturnType.Clone(),
             Documentation = (CodeDocumentation)Documentation.Clone(),
             PathSegment = PathSegment,
-            Deprecation = Deprecation == null ? null : Deprecation with { },
+            Deprecation = Deprecation is null ? null : Deprecation with { },
             IndexParameter = (CodeParameter)IndexParameter.Clone(),
             IsLegacyIndexer = IsLegacyIndexer,
         };

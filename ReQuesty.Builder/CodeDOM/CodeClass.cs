@@ -59,7 +59,7 @@ public class CodeClass : ProprietableBlock<CodeClassKind, ClassDeclaration>, ITy
     public CodeIndexer? Indexer => InnerChildElements.Values.OfType<CodeIndexer>().FirstOrDefault(static x => !x.IsLegacyIndexer);
     public void AddIndexer(params CodeIndexer[] indexers)
     {
-        if (indexers == null || Array.Exists(indexers, static x => x == null))
+        if (indexers is null || Array.Exists(indexers, static x => x is null))
         {
             throw new ArgumentNullException(nameof(indexers));
         }
@@ -90,7 +90,7 @@ public class CodeClass : ProprietableBlock<CodeClassKind, ClassDeclaration>, ITy
     }
     public override IEnumerable<CodeProperty> AddProperty(params CodeProperty[] properties)
     {
-        if (properties == null || properties.Any(static x => x == null))
+        if (properties is null || properties.Any(static x => x is null))
         {
             throw new ArgumentNullException(nameof(properties));
         }
@@ -148,7 +148,7 @@ public class CodeClass : ProprietableBlock<CodeClassKind, ClassDeclaration>, ITy
     }
     public override void RemoveChildElementByName(params string[] names)
     {
-        if (names == null)
+        if (names is null)
         {
             return;
         }
@@ -174,19 +174,19 @@ public class CodeClass : ProprietableBlock<CodeClassKind, ClassDeclaration>, ITy
     }
     private string ResolveUniquePropertyName(string name)
     {
-        if (FindPropertyByNameInTypeHierarchy(name) == null)
+        if (FindPropertyByNameInTypeHierarchy(name) is null)
         {
             return name;
         }
         // the CodeClass.Name is not very useful as prefix for the property name, so keep the original name and add a number
         string nameWithTypeName = Kind == CodeClassKind.QueryParameters ? name : Name + name.ToFirstCharacterUpperCase();
-        if (Kind != CodeClassKind.QueryParameters && FindPropertyByNameInTypeHierarchy(nameWithTypeName) == null)
+        if (Kind != CodeClassKind.QueryParameters && FindPropertyByNameInTypeHierarchy(nameWithTypeName) is null)
         {
             return nameWithTypeName;
         }
 
         int i = 0;
-        while (FindPropertyByNameInTypeHierarchy(nameWithTypeName + i) != null)
+        while (FindPropertyByNameInTypeHierarchy(nameWithTypeName + i) is not null)
         {
             i++;
         }
@@ -235,7 +235,7 @@ public class CodeClass : ProprietableBlock<CodeClassKind, ClassDeclaration>, ITy
     }
     public IEnumerable<CodeClass> AddInnerClass(params CodeClass[] codeClasses)
     {
-        if (codeClasses == null || codeClasses.Any(static x => x == null))
+        if (codeClasses is null || codeClasses.Any(static x => x is null))
         {
             throw new ArgumentNullException(nameof(codeClasses));
         }
@@ -249,7 +249,7 @@ public class CodeClass : ProprietableBlock<CodeClassKind, ClassDeclaration>, ITy
     }
     public IEnumerable<CodeInterface> AddInnerInterface(params CodeInterface[] codeInterfaces)
     {
-        if (codeInterfaces == null || codeInterfaces.Any(static x => x == null))
+        if (codeInterfaces is null || codeInterfaces.Any(static x => x is null))
         {
             throw new ArgumentNullException(nameof(codeInterfaces));
         }
@@ -273,7 +273,7 @@ public class CodeClass : ProprietableBlock<CodeClassKind, ClassDeclaration>, ITy
     {
         ArgumentNullException.ThrowIfNull(codeClass);
         CodeClass? parent = BaseClass;
-        if (parent == null)
+        if (parent is null)
         {
             return false;
         }
@@ -288,7 +288,7 @@ public class CodeClass : ProprietableBlock<CodeClassKind, ClassDeclaration>, ITy
     public Collection<CodeClass> GetInheritanceTree(bool currentNamespaceOnly = false, bool includeCurrentClass = true)
     {
         CodeClass? parentClass = BaseClass;
-        if (parentClass == null || (currentNamespaceOnly && parentClass.GetImmediateParentOfType<CodeNamespace>() != GetImmediateParentOfType<CodeNamespace>()))
+        if (parentClass is null || (currentNamespaceOnly && parentClass.GetImmediateParentOfType<CodeNamespace>() != GetImmediateParentOfType<CodeNamespace>()))
         {
             if (includeCurrentClass)
             {
@@ -307,9 +307,9 @@ public class CodeClass : ProprietableBlock<CodeClassKind, ClassDeclaration>, ITy
     public CodeClass? GetGreatestGrandparent(CodeClass? startClassToSkip = default)
     {
         CodeClass? parentClass = BaseClass;
-        if (parentClass == null)
+        if (parentClass is null)
         {
-            return startClassToSkip != null && startClassToSkip == this ? null : this;
+            return startClassToSkip is not null && startClassToSkip == this ? null : this;
         }
         // we don't want to return the current class if this is the start node in the inheritance tree and doesn't have parent
         return parentClass.GetGreatestGrandparent(startClassToSkip);
@@ -320,7 +320,7 @@ public class CodeClass : ProprietableBlock<CodeClassKind, ClassDeclaration>, ITy
     {
         get
         {
-            if (_discriminatorInformation == null)
+            if (_discriminatorInformation is null)
             {
                 DiscriminatorInformation = new DiscriminatorInformation();
             }
@@ -346,7 +346,7 @@ public class ClassDeclaration : ProprietableBlockDeclaration
     {
         get => inherits; set
         {
-            if (value != null && !value.IsExternal && Parent is CodeClass codeClass && codeClass.Properties.Any())
+            if (value is not null && !value.IsExternal && Parent is CodeClass codeClass && codeClass.Properties.Any())
             {
                 throw new InvalidOperationException("Cannot change the inherits-property of an already populated type");
             }

@@ -6,7 +6,7 @@ public class AggregateLogger<T>(params ILogger<T>[] loggers) : ILogger<T>
 {
     public IDisposable? BeginScope<TState>(TState state) where TState : notnull
     {
-        return new AggregateScope(loggers.Select(l => l.BeginScope(state)).Where(static s => s != null).Select(static x => x!).ToArray());
+        return new AggregateScope(loggers.Select(l => l.BeginScope(state)).Where(static s => s is not null).Select(static x => x!).ToArray());
     }
 
     public bool IsEnabled(LogLevel logLevel)

@@ -112,7 +112,7 @@ public class CSharpRefiner(GenerationConfiguration configuration) : CommonLangua
         {
             CodeProperty? sameNameProperty = currentClass.Properties
                                             .FirstOrDefault(x => x.Name.Equals(currentClass.Name, StringComparison.OrdinalIgnoreCase));
-            if (sameNameProperty != null)
+            if (sameNameProperty is not null)
             {
                 currentClass.RemoveChildElement(sameNameProperty);
                 if (string.IsNullOrEmpty(sameNameProperty.SerializationName))

@@ -32,7 +32,7 @@ public class ApiPluginConfigurationComparer : BaseApiConsumerConfigurationCompar
     public override int GetHashCode([DisallowNull] ApiPluginConfiguration obj)
     {
         HashCode hash = new();
-        if (obj == null)
+        if (obj is null)
         {
             return hash.ToHashCode();
         }
