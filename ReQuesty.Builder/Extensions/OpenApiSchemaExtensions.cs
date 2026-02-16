@@ -323,10 +323,12 @@ public static class OpenApiSchemaExtensions
 
         return schema.Type.HasValue && !IsPowerOfTwo((uint)(schema.Type.Value & ~JsonSchemaType.Null));
     }
+
     private static bool IsPowerOfTwo(uint x)
     {
-        return (x & (x - 1)) == 0;
+        return x != 0 && (x & (x - 1)) == 0;
     }
+
     private static readonly HashSet<JsonSchemaType> oDataTypes = [
         JsonSchemaType.Number,
         JsonSchemaType.Integer,
