@@ -18,7 +18,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn
     /// <summary>
     /// Builds and executes requests for operations under \PrimativeReturn
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.3")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
     public partial class PrimativeReturnRequestBuilder : BaseRequestBuilder
     {
         /// <summary>The guid property</summary>

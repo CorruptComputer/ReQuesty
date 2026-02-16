@@ -15,7 +15,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableStrin
     /// <summary>
     /// Builds and executes requests for operations under \PrimativeReturn\nullable-string
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.3")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
     public partial class NullableStringRequestBuilder : BaseRequestBuilder
     {
         /// <summary>
@@ -74,7 +74,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableStrin
         /// <summary>
         /// Gets a nullable string based on the specified return type.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.3")]
+        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
         public partial class NullableStringRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591

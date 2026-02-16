@@ -15,7 +15,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableGuid
     /// <summary>
     /// Builds and executes requests for operations under \PrimativeReturn\nullable-guid
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.3")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
     public partial class NullableGuidRequestBuilder : BaseRequestBuilder
     {
         /// <summary>
@@ -74,7 +74,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableGuid
         /// <summary>
         /// Gets a nullable guid based on the specified return type.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.3")]
+        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
         public partial class NullableGuidRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591

@@ -17,7 +17,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient
     /// <summary>
     /// The main entry point of the SDK, exposes the configuration and the fluent API.
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.3")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
     public partial class DemoApiClient : BaseRequestBuilder
     {
         /// <summary>The PrimativeReturn property</summary>

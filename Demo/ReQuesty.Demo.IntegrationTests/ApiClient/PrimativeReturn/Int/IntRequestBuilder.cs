@@ -15,7 +15,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Int
     /// <summary>
     /// Builds and executes requests for operations under \PrimativeReturn\int
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.3")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
     public partial class IntRequestBuilder : BaseRequestBuilder
     {
         /// <summary>
@@ -74,7 +74,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Int
         /// <summary>
         /// Gets an int based on the specified return type.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.3")]
+        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
         public partial class IntRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591

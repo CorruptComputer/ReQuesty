@@ -2,7 +2,7 @@
   "descriptionHash": "60F3068857AFDF869073A225FD65FB9A820602C918D7C81BF0DAE37B5E5FE9EE073519999D9038741EC17D4D69953D21EA0CA3591B0143C74A8F9CA8287B5000",
   "descriptionLocation": "../../ReQuesty.Demo.Api/ReQuesty.Demo.Api_main.json",
   "lockFileVersion": "1.0.0",
-  "reQuestyVersion": "0.0.3",
+  "reQuestyVersion": "0.0.5",
   "clientClassName": "DemoApiClient",
   "typeAccessModifier": "Public",
   "clientNamespaceName": "ReQuesty.Demo.IntegrationTests.ApiClient",

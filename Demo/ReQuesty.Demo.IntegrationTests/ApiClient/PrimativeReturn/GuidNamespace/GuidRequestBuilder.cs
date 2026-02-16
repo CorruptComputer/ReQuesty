@@ -15,7 +15,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.GuidNamespace
     /// <summary>
     /// Builds and executes requests for operations under \PrimativeReturn\guid
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.3")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
     public partial class GuidRequestBuilder : BaseRequestBuilder
     {
         /// <summary>
@@ -74,7 +74,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.GuidNamespace
         /// <summary>
         /// Gets an Guid based on the specified return type.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.3")]
+        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
         public partial class GuidRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591

@@ -15,7 +15,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableInt
     /// <summary>
     /// Builds and executes requests for operations under \PrimativeReturn\nullable-int
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.3")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
     public partial class NullableIntRequestBuilder : BaseRequestBuilder
     {
         /// <summary>
@@ -74,7 +74,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableInt
         /// <summary>
         /// Gets a nullable int based on the specified return type.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.3")]
+        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
         public partial class NullableIntRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591
