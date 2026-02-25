@@ -12,7 +12,7 @@
     <Features>strict</Features>
 
     <!-- Assembly/NuGet info -->
-    <Version>0.0.5</Version>
+    <Version>0.0.6</Version>
     <Authors>Nickolas Gupton and kiota contributors up to commit 960db6b2c39ce815dcabf4d2dec8a084fd218c8c</Authors>
     <RepositoryUrl>https://github.com/CorruptComputer/ReQuesty</RepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
