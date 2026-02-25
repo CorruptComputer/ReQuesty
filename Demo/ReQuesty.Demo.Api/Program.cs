@@ -31,7 +31,6 @@ public static class Program
         {
             configure.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             configure.JsonSerializerOptions.WriteIndented = true;
-            configure.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
             configure.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             configure.JsonSerializerOptions.AllowTrailingCommas = true;
             configure.JsonSerializerOptions.RespectNullableAnnotations = true;

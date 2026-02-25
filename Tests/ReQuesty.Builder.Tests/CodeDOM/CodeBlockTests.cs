@@ -20,7 +20,7 @@ public class CodeBlockTests
     {
         public void AddRange()
         {
-            base.AddRange((CodeClass[])null!);
+            AddRange((CodeClass[])null!);
         }
 
         public override string Name

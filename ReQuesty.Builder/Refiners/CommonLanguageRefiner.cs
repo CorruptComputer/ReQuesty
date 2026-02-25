@@ -1,4 +1,5 @@
-﻿using ReQuesty.Builder.CodeDOM;
+﻿using System.Data;
+using ReQuesty.Builder.CodeDOM;
 using ReQuesty.Builder.Configuration;
 using ReQuesty.Builder.Extensions;
 
@@ -589,11 +590,10 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
             })
             .First();
 
-            newClass.AddUsing(codeComposedType.AllTypes
-                .SelectMany(static c => (c.TypeDefinition as CodeClass)?.Usings ?? [])
-                .Where(static x => x.IsExternal)
-                .Select(static u => (CodeUsing)u.Clone())
-                .ToArray());
+            newClass.AddUsing([.. codeComposedType.AllTypes
+                    .SelectMany(static c => (c.TypeDefinition as CodeClass)?.Usings ?? [])
+                    .Where(static x => x.IsExternal)
+                    .Select(static u => (CodeUsing)u.Clone())]);
         }
         else
         {
@@ -616,24 +616,36 @@ public abstract class CommonLanguageRefiner : ILanguageRefiner
                 {
                     DescriptionTemplate = description
                 },
-            })
-                                .First();
+            }).First();
         }
-        newClass.AddProperty(codeComposedType
-                                .Types
-                                .Select(static x => new CodeProperty
-                                {
-                                    Name = x.Name,
-                                    Type = x,
-                                    Documentation = new(new() {
-                                        { "TypeName", x }
-                                    })
-                                    {
-                                        DescriptionTemplate = "Composed type representation for type {TypeName}"
-                                    },
-                                }).ToArray());
-        if (codeComposedType.Types.All(static x => x.TypeDefinition is CodeClass targetClass && targetClass.IsOfKind(CodeClassKind.Model) ||
-                                x.TypeDefinition is CodeEnum || x.TypeDefinition is null))
+
+        newClass.AddProperty([.. codeComposedType.Types.Select(
+            static x => {
+                CodeType docType = x.Clone() as CodeType
+                    ?? throw new NullReferenceException($"The type {x.Name} should be a CodeType");
+
+                // We can't put nullable types in <see cref=*> doc comments
+                docType.IsNullable = false;
+                docType.Name = docType.Name.Replace("?", string.Empty, StringComparison.InvariantCulture);
+                docType.TypeDefinition?.Name = docType.TypeDefinition.Name.Replace("?", string.Empty, StringComparison.InvariantCulture);
+
+                return new CodeProperty()
+                {
+                    Name = x.Name,
+                    Type = x,
+                    Documentation = new(new() {
+                        { "TypeName", docType }
+                    })
+                    {
+                        DescriptionTemplate = "Composed type representation for type {TypeName}"
+                    },
+                };
+            })]);
+
+        if (codeComposedType.Types.All(static x => x.TypeDefinition is CodeClass targetClass
+            && targetClass.IsOfKind(CodeClassKind.Model)
+            || x.TypeDefinition is CodeEnum
+            || x.TypeDefinition is null))
         {
             ReQuestyBuilder.AddSerializationMembers(newClass, false, usesBackingStore, refineMethodName);
             newClass.Kind = CodeClassKind.Model;

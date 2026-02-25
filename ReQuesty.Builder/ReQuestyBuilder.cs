@@ -19,7 +19,6 @@ using ReQuesty.Builder.Logging;
 using ReQuesty.Builder.Manifest;
 using ReQuesty.Builder.OpenApiExtensions;
 using ReQuesty.Builder.Refiners;
-using ReQuesty.Builder.Settings;
 using ReQuesty.Builder.WorkspaceManagement;
 using ReQuesty.Builder.Writers;
 using Microsoft.Extensions.Logging;
@@ -36,36 +35,23 @@ using ReQuesty.Core;
 
 namespace ReQuesty.Builder;
 
-public partial class ReQuestyBuilder
+public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, GenerationConfiguration config, HttpClient httpClient, bool useReQuestyConfig = false)
 {
-    private readonly ILogger<ReQuestyBuilder> logger;
-    private readonly GenerationConfiguration config;
-    private readonly ParallelOptions parallelOptions;
-    private readonly HttpClient httpClient;
-    private OpenApiDocument? openApiDocument;
-    private readonly ISettingsManagementService settingsFileManagementService;
-    internal void SetOpenApiDocument(OpenApiDocument document) => openApiDocument = document ?? throw new ArgumentNullException(nameof(document));
-
-    public ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, GenerationConfiguration config, HttpClient client, bool useReQuestyConfig = false, ISettingsManagementService? settingsManagementService = null)
+    private readonly ParallelOptions parallelOptions = new()
     {
-        ArgumentNullException.ThrowIfNull(logger);
-        ArgumentNullException.ThrowIfNull(config);
-        ArgumentNullException.ThrowIfNull(client);
-        this.logger = logger;
-        this.config = config;
-        httpClient = client;
-        parallelOptions = new ParallelOptions
-        {
-            MaxDegreeOfParallelism = config.MaxDegreeOfParallelism,
-        };
-        string workingDirectory = Directory.GetCurrentDirectory();
-        workspaceManagementService = new WorkspaceManagementService(logger, client, useReQuestyConfig, workingDirectory);
-        this.useReQuestyConfig = useReQuestyConfig;
-        openApiDocumentDownloadService = new OpenApiDocumentDownloadService(client, logger);
-        settingsFileManagementService = settingsManagementService ?? new SettingsFileManagementService();
-    }
-    private readonly OpenApiDocumentDownloadService openApiDocumentDownloadService;
-    private readonly bool useReQuestyConfig;
+        MaxDegreeOfParallelism = config.MaxDegreeOfParallelism,
+    };
+
+    private OpenApiDocument? openApiDocument;
+
+    private readonly WorkspaceManagementService workspaceManagementService = new(logger, httpClient, useReQuestyConfig, Directory.GetCurrentDirectory());
+    private static readonly GlobComparer globComparer = new();
+
+    private readonly OpenApiDocumentDownloadService openApiDocumentDownloadService = new(httpClient, logger);
+
+    internal void SetOpenApiDocument(OpenApiDocument document)
+        => openApiDocument = document ?? throw new ArgumentNullException(nameof(document));
+
     private async Task CleanOutputDirectoryAsync(CancellationToken cancellationToken)
     {
         if (config.CleanOutput && Directory.Exists(config.OutputPath))
@@ -369,8 +355,7 @@ public partial class ReQuestyBuilder
 
         StopLogAndReset(sw, $"step {++stepId} - writing lock file - took");
     }
-    private readonly WorkspaceManagementService workspaceManagementService;
-    private static readonly GlobComparer globComparer = new();
+
     [GeneratedRegex(@"([\/\\])\{[\w\d-]+\}([\/\\])?", RegexOptions.IgnoreCase | RegexOptions.Singleline, 2000)]
     private static partial Regex MultiIndexSameLevelCleanupRegex();
     internal static string ReplaceAllIndexesWithWildcard(string path, uint depth = 10) => depth == 0 ? path : ReplaceAllIndexesWithWildcard(MultiIndexSameLevelCleanupRegex().Replace(path, "$1{*}$2"), depth - 1); // the bound needs to be greedy to avoid replacing anything else than single path parameters
@@ -2486,34 +2471,47 @@ public partial class ReQuestyBuilder
     }
     private void CreatePropertiesForModelClass(OpenApiUrlTreeNode currentNode, IOpenApiSchema schema, CodeNamespace ns, CodeClass model)
     {
-        CodeProperty[] propertiesToAdd = schema.Properties
-                ?.Select(x =>
-                {
-                    IOpenApiSchema propertySchema = x.Value;
-                    string className = $"{model.Name}_{x.Key.CleanupSymbolName()}";
-                    string shortestNamespaceName = GetModelsNamespaceNameFromReferenceId(propertySchema.GetReferenceId());
-                    CodeNamespace targetNamespace = string.IsNullOrEmpty(shortestNamespaceName) ? ns :
-                                        rootNamespace?.FindOrAddNamespace(shortestNamespaceName) ?? ns;
-                    CodeTypeBase definition = CreateModelDeclarations(currentNode, propertySchema, default, targetNamespace, string.Empty, typeNameForInlineSchema: className);
-                    if (definition is null)
-                    {
-                        logger.LogWarning("Omitted property {PropertyName} for model {ModelName} in API path {ApiPath}, the schema is invalid.", x.Key, model.Name, currentNode.Path);
-                        return null;
-                    }
+        ConcurrentBag<CodeProperty> propertiesToAdd = [];
 
-                    // If this is a collection, it'll make the individual items nullable, which likely is not what is wanted
-                    if (!definition.IsCollection && definition.Parent is not null)
-                    {
-                        definition.IsNullable = !schema.Required?.Contains(x.Key) ?? true;
-                    }
-
-                    return CreateProperty(x.Key, definition.Name, propertySchema: propertySchema, existingType: definition);
-                })
-                .OfType<CodeProperty>()
-                .ToArray() ?? [];
-        if (propertiesToAdd.Length != 0)
+        if (schema.Properties is not null)
         {
-            model.AddProperty(propertiesToAdd);
+            Parallel.ForEach(schema.Properties, parallelOptions, property =>
+            {
+                IOpenApiSchema propertySchema = property.Value;
+                string className = $"{model.Name}_{property.Key.CleanupSymbolName()}";
+                string shortestNamespaceName = GetModelsNamespaceNameFromReferenceId(propertySchema.GetReferenceId());
+
+                CodeNamespace targetNamespace = string.IsNullOrEmpty(shortestNamespaceName)
+                                                    ? ns
+                                                    : rootNamespace?.FindOrAddNamespace(shortestNamespaceName) ?? ns;
+
+                CodeTypeBase propertyDefinition = CreateModelDeclarations(currentNode, propertySchema, default, targetNamespace, string.Empty, typeNameForInlineSchema: className);
+                if (propertyDefinition is null)
+                {
+                    logger.LogWarning("Omitted property {PropertyName} for model {ModelName} in API path {ApiPath}, the schema is invalid.", property.Key, model.Name, currentNode.Path);
+                    return;
+                }
+
+                // If this is a collection, it'll make the individual items nullable, which likely is not what is wanted
+                if (!propertyDefinition.IsCollection)
+                {
+                    bool hasNullableType = propertySchema.Type?.HasFlag(JsonSchemaType.Null) ?? false;
+                    bool isRequired = schema.Required?.Contains(property.Key) ?? false;
+
+                    propertyDefinition.IsNullable = !isRequired || hasNullableType;
+                }
+
+                CodeProperty? result = CreateProperty(property.Key, propertyDefinition.Name, propertySchema: propertySchema, existingType: propertyDefinition);
+                if (result is not null)
+                {
+                    propertiesToAdd.Add(result);
+                }
+            });
+        }
+
+        if (propertiesToAdd.Count != 0)
+        {
+            model.AddProperty([.. propertiesToAdd]);
         }
     }
     private const string FieldDeserializersMethodName = "GetFieldDeserializers";

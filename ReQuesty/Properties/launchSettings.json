@@ -2,7 +2,7 @@
   "profiles": {
     "requesty": {
       "commandName": "Project",
-      "commandLineArgs": "generate --openapi ../../../../../Bones/Services/Bones.Api/OpenApi/swagger.json --output ./AutoGenBonesApiClient --class-name BonesApiClient --namespace-name Bones.Api.Client.ReQuesty"
+      "commandLineArgs": "generate --openapi ../../../../../Bones/Services/Bones.Api/OpenApi/Bones.Api_develop.json --output ../../../../../Bones/Core/Bones.Api.Client/AutoGen --class-name AutoGenBonesApiClient --namespace-name Bones.Api.Client.AutoGen --clean-output"
     }
   }
 }

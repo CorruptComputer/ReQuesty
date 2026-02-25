@@ -1,7 +1,3 @@
-using System;
-using ReQuesty.Runtime.Abstractions;
-using Shouldly;
-
 namespace ReQuesty.Demo.IntegrationTests.PrimativeReturn;
 
 /// <summary>
@@ -75,7 +71,7 @@ public class StringTests : TestBase
     {
         await SetupApiClientAsync();
 
-        Task<string?> task = ApiClient!.PrimativeReturn.NullableString.GetAsync(options =>
+        Task<string?> task = ApiClient!.PrimativeReturn.String.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
         });
@@ -94,7 +90,7 @@ public class StringTests : TestBase
     {
         await SetupApiClientAsync();
 
-        Task<string?> task = ApiClient!.PrimativeReturn.NullableString.GetAsync(options =>
+        Task<string?> task = ApiClient!.PrimativeReturn.String.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
         });
@@ -113,7 +109,7 @@ public class StringTests : TestBase
     {
         await SetupApiClientAsync();
 
-        Task<string?> task = ApiClient!.PrimativeReturn.NullableString.GetAsync(options =>
+        Task<string?> task = ApiClient!.PrimativeReturn.String.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
         });

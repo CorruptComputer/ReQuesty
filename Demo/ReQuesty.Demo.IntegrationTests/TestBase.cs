@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using ReQuesty.Demo.IntegrationTests.ApiClient;
 
 namespace ReQuesty.Demo.IntegrationTests;

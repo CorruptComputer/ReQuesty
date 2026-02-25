@@ -5,6 +5,156 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/EnumReturn/integer": {
+      "get": {
+        "tags": [
+          "EnumReturn"
+        ],
+        "summary": "Gets a IntegerValues enum based on the specified return type.",
+        "operationId": "GetIntegerValuesEnum",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegerValues"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/EnumReturn/integer/nullable": {
+      "get": {
+        "tags": [
+          "EnumReturn"
+        ],
+        "summary": "Gets a nullable IntegerValues enum based on the specified return type.",
+        "operationId": "GetNullableIntegerValuesEnum",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegerValues"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/EnumReturn/string": {
+      "get": {
+        "tags": [
+          "EnumReturn"
+        ],
+        "summary": "Gets a StringValues enum based on the specified return type.",
+        "operationId": "GetStringValuesEnum",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringValues"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/EnumReturn/string/nullable": {
+      "get": {
+        "tags": [
+          "EnumReturn"
+        ],
+        "summary": "Gets a nullable StringValues enum based on the specified return type.",
+        "operationId": "GetNullableStringValuesEnum",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringValues"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ObjectReturn/some-object": {
+      "get": {
+        "tags": [
+          "ObjectReturn"
+        ],
+        "summary": "Gets a SomeObject based on the specified return type.",
+        "operationId": "GetSomeObject",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SomeObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/PrimativeReturn/string": {
       "get": {
         "tags": [
@@ -22,18 +172,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
           "200": {
-            "description": "OK",
+            "description": "",
             "content": {
               "application/json": {
                 "schema": {
@@ -45,7 +185,7 @@
         }
       }
     },
-    "/PrimativeReturn/nullable-string": {
+    "/PrimativeReturn/string/nullable": {
       "get": {
         "tags": [
           "PrimativeReturn"
@@ -62,18 +202,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
           "200": {
-            "description": "OK",
+            "description": "",
             "content": {
               "application/json": {
                 "schema": {
@@ -85,7 +215,7 @@
         }
       }
     },
-    "/PrimativeReturn/int": {
+    "/PrimativeReturn/integer": {
       "get": {
         "tags": [
           "PrimativeReturn"
@@ -102,18 +232,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
           "200": {
-            "description": "OK",
+            "description": "",
             "content": {
               "application/json": {
                 "schema": {
@@ -130,7 +250,7 @@
         }
       }
     },
-    "/PrimativeReturn/nullable-int": {
+    "/PrimativeReturn/integer/nullable": {
       "get": {
         "tags": [
           "PrimativeReturn"
@@ -147,18 +267,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
           "200": {
-            "description": "OK",
+            "description": "",
             "content": {
               "application/json": {
                 "schema": {
@@ -169,6 +279,148 @@
                     "string"
                   ],
                   "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/double": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets an int based on the specified return type.",
+        "operationId": "GetDouble",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+                  "type": [
+                    "number",
+                    "string"
+                  ],
+                  "format": "double"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/double/nullable": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a nullable double based on the specified return type.",
+        "operationId": "GetNullableDouble",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+                  "type": [
+                    "null",
+                    "number",
+                    "string"
+                  ],
+                  "format": "double"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/float": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a float based on the specified return type.",
+        "operationId": "GetFloat",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+                  "type": [
+                    "number",
+                    "string"
+                  ],
+                  "format": "float"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/float/nullable": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a nullable float based on the specified return type.",
+        "operationId": "GetNullableFloat",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+                  "type": [
+                    "null",
+                    "number",
+                    "string"
+                  ],
+                  "format": "float"
                 }
               }
             }
@@ -193,18 +445,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
           "200": {
-            "description": "OK",
+            "description": "",
             "content": {
               "application/json": {
                 "schema": {
@@ -217,7 +459,7 @@
         }
       }
     },
-    "/PrimativeReturn/nullable-guid": {
+    "/PrimativeReturn/guid/nullable": {
       "get": {
         "tags": [
           "PrimativeReturn"
@@ -234,18 +476,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
           "200": {
-            "description": "OK",
+            "description": "",
             "content": {
               "application/json": {
                 "schema": {
@@ -264,43 +496,9 @@
   },
   "components": {
     "schemas": {
-      "ProblemDetails": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "title": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "status": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "null",
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "detail": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "instance": {
-            "type": [
-              "null",
-              "string"
-            ]
-          }
-        }
+      "IntegerValues": {
+        "type": "integer",
+        "description": "Example enum with its values as integers"
       },
       "ReturnType": {
         "enum": [
@@ -309,10 +507,70 @@
           "Invalid"
         ],
         "description": "The type of data to return"
+      },
+      "SomeObject": {
+        "required": [
+          "id",
+          "name",
+          "age",
+          "requestedAt",
+          "cost"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the object",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the object"
+          },
+          "age": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "The age of the object",
+            "format": "int32"
+          },
+          "requestedAt": {
+            "type": "string",
+            "description": "The timestamp of when the object was requested",
+            "format": "date-time"
+          },
+          "cost": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "description": "The cost of the object",
+            "format": "double"
+          }
+        },
+        "description": "A sample object model to be used in the demo API"
+      },
+      "StringValues": {
+        "enum": [
+          "North",
+          "East",
+          "South",
+          "West"
+        ],
+        "description": "Example enum with its values as strings"
       }
     }
   },
   "tags": [
+    {
+      "name": "EnumReturn"
+    },
+    {
+      "name": "ObjectReturn"
+    },
     {
       "name": "PrimativeReturn"
     }

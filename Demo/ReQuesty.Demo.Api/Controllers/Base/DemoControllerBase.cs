@@ -12,7 +12,6 @@ namespace ReQuesty.Demo.Api.Controllers.Base;
 [Route("[controller]")]
 [Consumes(MediaTypeNames.Application.Json)]
 [Produces(MediaTypeNames.Application.Json)]
-[ProducesResponseType<ProblemDetails>(StatusCodes.Status500InternalServerError)]
 public abstract class DemoControllerBase : ControllerBase
 {
     /// <summary>

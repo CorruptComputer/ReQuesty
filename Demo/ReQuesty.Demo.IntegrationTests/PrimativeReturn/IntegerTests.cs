@@ -1,119 +1,117 @@
-using System.Text.Json;
-
 namespace ReQuesty.Demo.IntegrationTests.PrimativeReturn;
 
 /// <summary>
-///   Tests for the Guid endpoints
+///   Tests for the int endpoints
 /// </summary>
-public class GuidTests : TestBase
+public class IntegerTests : TestBase
 {
     /// <summary>
-    ///   Null guid should not throw
+    ///   Null int should not throw
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task Guid_Null()
+    public async Task Integer_Null()
     {
         await SetupApiClientAsync();
 
-        Task<Guid?> task = ApiClient!.PrimativeReturn.Guid.GetAsync(options =>
+        Task<int?> task = ApiClient!.PrimativeReturn.Integer.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
         });
 
         task.ShouldNotThrow();
-        Guid? result = await task;
-        result.ShouldBe(Guid.Empty);
+        int? result = await task;
+        result.ShouldBe(0);
     }
 
     /// <summary>
-    ///   Valid guid should not throw
+    ///   Valid int should not throw
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task Guid_Random()
+    public async Task Integer_Random()
     {
         await SetupApiClientAsync();
 
-        Task<Guid?> task = ApiClient!.PrimativeReturn.Guid.GetAsync(options =>
+        Task<int?> task = ApiClient!.PrimativeReturn.Integer.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
         });
 
         task.ShouldNotThrow();
-        Guid? result = await task;
+        int? result = await task;
         result.ShouldNotBeNull();
     }
 
     /// <summary>
-    ///   An invalid guid should return null instead of throwing
+    ///   An invalid int should return null instead of throwing
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task Guid_Invalid()
+    public async Task Integer_Invalid()
     {
         await SetupApiClientAsync();
 
-        Task<Guid?> task = ApiClient!.PrimativeReturn.Guid.GetAsync(options =>
+        Task<int?> task = ApiClient!.PrimativeReturn.Integer.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
         });
 
-        task.ShouldThrow<JsonException>();
+        task.ShouldThrow<NullReferenceException>();
     }
 
     /// <summary>
-    ///   Null nullable guid should not throw
+    ///   Null nullable int should not throw
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task NullableGuid_Null()
+    public async Task NullableInteger_Null()
     {
         await SetupApiClientAsync();
 
-        Task<Guid?> task = ApiClient!.PrimativeReturn.Guid.Nullable.GetAsync(options =>
+        Task<int?> task = ApiClient!.PrimativeReturn.Integer.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
         });
 
         task.ShouldNotThrow();
-        Guid? result = await task;
-        result.ShouldBe(Guid.Empty);
+        int? result = await task;
+        result.ShouldBe(0);
     }
 
     /// <summary>
-    ///   Valid nullable guid should not throw
+    ///   Valid nullable int should not throw
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task NullableGuid_Random()
+    public async Task NullableInteger_Random()
     {
         await SetupApiClientAsync();
 
-        Task<Guid?> task = ApiClient!.PrimativeReturn.Guid.Nullable.GetAsync(options =>
+        Task<int?> task = ApiClient!.PrimativeReturn.Integer.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
         });
 
         task.ShouldNotThrow();
-        Guid? result = await task;
+        int? result = await task;
         result.ShouldNotBeNull();
     }
 
     /// <summary>
-    ///   An invalid nullable guid should return null instead of throwing
+    ///   An invalid nullable int should return null instead of throwing
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task NullableGuid_Invalid()
+    public async Task NullableInteger_Invalid()
     {
         await SetupApiClientAsync();
 
-        Task<Guid?> task = ApiClient!.PrimativeReturn.Guid.Nullable.GetAsync(options =>
+        Task<int?> task = ApiClient!.PrimativeReturn.Integer.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
         });
 
-        task.ShouldThrow<JsonException>();
+        task.ShouldThrow<NullReferenceException>();
     }
 }

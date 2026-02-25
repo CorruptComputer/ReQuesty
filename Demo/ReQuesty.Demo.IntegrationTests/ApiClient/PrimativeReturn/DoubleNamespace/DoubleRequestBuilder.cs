@@ -2,6 +2,7 @@
 #pragma warning disable CS0618
 #nullable enable
 using ReQuesty.Demo.IntegrationTests.ApiClient.Models;
+using ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespace.NullableNamespace;
 using ReQuesty.Runtime.Abstractions.Serialization;
 using ReQuesty.Runtime.Abstractions;
 using ReQuesty.Runtime.Extensions;
@@ -10,52 +11,52 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
-namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Int
+namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespace
 {
     /// <summary>
-    /// Builds and executes requests for operations under \PrimativeReturn\int
+    /// Builds and executes requests for operations under \PrimativeReturn\double
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
-    public partial class IntRequestBuilder : BaseRequestBuilder
+    public partial class DoubleRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>The nullable property</summary>
+        public global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespace.NullableNamespace.NullableRequestBuilder Nullable
+        {
+            get => new global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespace.NullableNamespace.NullableRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>
-        /// Instantiates a new <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Int.IntRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespace.DoubleRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public IntRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/PrimativeReturn/int{?returnType*}", pathParameters)
+        public DoubleRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/PrimativeReturn/double{?returnType*}", pathParameters)
         {
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Int.IntRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespace.DoubleRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public IntRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/PrimativeReturn/int{?returnType*}", rawUrl)
+        public DoubleRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/PrimativeReturn/double{?returnType*}", rawUrl)
         {
         }
         /// <summary>
         /// Gets an int based on the specified return type.
         /// </summary>
-        /// <returns>A <see cref="int"/></returns>
+        /// <returns>A <see cref="double"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
-        /// <exception cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.Models.ProblemDetails">When receiving a 500 status code</exception>
-        public async Task<int?> GetAsync(Action<RequestConfiguration<global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Int.IntRequestBuilder.IntRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<double?> GetAsync(Action<RequestConfiguration<global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespace.DoubleRequestBuilder.DoubleRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
             var requestInfo = ToGetRequestInformation(requestConfiguration);
-            var errorMapping = new Dictionary<string, ParsableFactory<IParsable>>
-            {
-                { "500", global::ReQuesty.Demo.IntegrationTests.ApiClient.Models.ProblemDetails.CreateFromDiscriminatorValue },
-            };
-            return await RequestAdapter.SendPrimitiveAsync<int>(requestInfo, errorMapping, cancellationToken).ConfigureAwait(false);
+            return await RequestAdapter.SendPrimitiveAsync<double>(requestInfo, default, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// Gets an int based on the specified return type.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
-        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Int.IntRequestBuilder.IntRequestBuilderGetQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespace.DoubleRequestBuilder.DoubleRequestBuilderGetQueryParameters>>? requestConfiguration = default)
         {
             var requestInfo = new RequestInformation(Method.GET, UrlTemplate, PathParameters);
             requestInfo.Configure(requestConfiguration);
@@ -65,17 +66,17 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Int
         /// <summary>
         /// Returns a request builder with the provided arbitrary URL. Using this method means any other path or query parameters are ignored.
         /// </summary>
-        /// <returns>A <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Int.IntRequestBuilder"/></returns>
+        /// <returns>A <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespace.DoubleRequestBuilder"/></returns>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
-        public global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Int.IntRequestBuilder WithUrl(string rawUrl)
+        public global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespace.DoubleRequestBuilder WithUrl(string rawUrl)
         {
-            return new global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Int.IntRequestBuilder(rawUrl, RequestAdapter);
+            return new global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespace.DoubleRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
         /// Gets an int based on the specified return type.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
-        public partial class IntRequestBuilderGetQueryParameters 
+        public partial class DoubleRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591
             [QueryParameter("returnType")]

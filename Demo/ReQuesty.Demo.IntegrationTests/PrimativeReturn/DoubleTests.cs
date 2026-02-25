@@ -1,62 +1,58 @@
-using System;
-using System.Text.Json;
-using Shouldly;
-
 namespace ReQuesty.Demo.IntegrationTests.PrimativeReturn;
 
 /// <summary>
-///   Tests for the int endpoints
+///   Tests for the double endpoints
 /// </summary>
-public class IntTests : TestBase
+public class DoubleTests : TestBase
 {
     /// <summary>
-    ///   Null int should not throw
+    ///   Null double should not throw
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task Int_Null()
+    public async Task Double_Null()
     {
         await SetupApiClientAsync();
 
-        Task<int?> task = ApiClient!.PrimativeReturn.Int.GetAsync(options =>
+        Task<double?> task = ApiClient!.PrimativeReturn.Double.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
         });
 
         task.ShouldNotThrow();
-        int? result = await task;
+        double? result = await task;
         result.ShouldBe(0);
     }
 
     /// <summary>
-    ///   Valid int should not throw
+    ///   Valid double should not throw
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task Int_Random()
+    public async Task Double_Random()
     {
         await SetupApiClientAsync();
 
-        Task<int?> task = ApiClient!.PrimativeReturn.Int.GetAsync(options =>
+        Task<double?> task = ApiClient!.PrimativeReturn.Double.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
         });
 
         task.ShouldNotThrow();
-        int? result = await task;
+        double? result = await task;
         result.ShouldNotBeNull();
     }
 
     /// <summary>
-    ///   An invalid int should return null instead of throwing
+    ///   An invalid double should return null instead of throwing
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task Int_Invalid()
+    public async Task Double_Invalid()
     {
         await SetupApiClientAsync();
 
-        Task<int?> task = ApiClient!.PrimativeReturn.Int.GetAsync(options =>
+        Task<double?> task = ApiClient!.PrimativeReturn.Double.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
         });
@@ -65,53 +61,53 @@ public class IntTests : TestBase
     }
 
     /// <summary>
-    ///   Null nullable int should not throw
+    ///   Null nullable double should not throw
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task NullableInt_Null()
+    public async Task NullableDouble_Null()
     {
         await SetupApiClientAsync();
 
-        Task<int?> task = ApiClient!.PrimativeReturn.NullableInt.GetAsync(options =>
+        Task<double?> task = ApiClient!.PrimativeReturn.Double.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
         });
 
         task.ShouldNotThrow();
-        int? result = await task;
+        double? result = await task;
         result.ShouldBe(0);
     }
 
     /// <summary>
-    ///   Valid nullable int should not throw
+    ///   Valid nullable double should not throw
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task NullableInt_Random()
+    public async Task NullableDouble_Random()
     {
         await SetupApiClientAsync();
 
-        Task<int?> task = ApiClient!.PrimativeReturn.NullableInt.GetAsync(options =>
+        Task<double?> task = ApiClient!.PrimativeReturn.Double.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
         });
 
         task.ShouldNotThrow();
-        int? result = await task;
+        double? result = await task;
         result.ShouldNotBeNull();
     }
 
     /// <summary>
-    ///   An invalid nullable int should return null instead of throwing
+    ///   An invalid nullable double should return null instead of throwing
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task NullableInt_Invalid()
+    public async Task NullableDouble_Invalid()
     {
         await SetupApiClientAsync();
 
-        Task<int?> task = ApiClient!.PrimativeReturn.Int.GetAsync(options =>
+        Task<double?> task = ApiClient!.PrimativeReturn.Double.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
         });

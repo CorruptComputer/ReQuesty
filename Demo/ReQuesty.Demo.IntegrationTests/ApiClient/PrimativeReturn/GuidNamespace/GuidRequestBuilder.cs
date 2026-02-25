@@ -2,6 +2,7 @@
 #pragma warning disable CS0618
 #nullable enable
 using ReQuesty.Demo.IntegrationTests.ApiClient.Models;
+using ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.GuidNamespace.NullableNamespace;
 using ReQuesty.Runtime.Abstractions.Serialization;
 using ReQuesty.Runtime.Abstractions;
 using ReQuesty.Runtime.Extensions;
@@ -18,6 +19,11 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.GuidNamespace
     [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
     public partial class GuidRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>The nullable property</summary>
+        public global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.GuidNamespace.NullableNamespace.NullableRequestBuilder Nullable
+        {
+            get => new global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.GuidNamespace.NullableNamespace.NullableRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>
         /// Instantiates a new <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.GuidNamespace.GuidRequestBuilder"/> and sets the default values.
         /// </summary>
@@ -40,15 +46,10 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.GuidNamespace
         /// <returns>A <see cref="Guid"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
-        /// <exception cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.Models.ProblemDetails">When receiving a 500 status code</exception>
         public async Task<Guid?> GetAsync(Action<RequestConfiguration<global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.GuidNamespace.GuidRequestBuilder.GuidRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
             var requestInfo = ToGetRequestInformation(requestConfiguration);
-            var errorMapping = new Dictionary<string, ParsableFactory<IParsable>>
-            {
-                { "500", global::ReQuesty.Demo.IntegrationTests.ApiClient.Models.ProblemDetails.CreateFromDiscriminatorValue },
-            };
-            return await RequestAdapter.SendPrimitiveAsync<Guid>(requestInfo, errorMapping, cancellationToken).ConfigureAwait(false);
+            return await RequestAdapter.SendPrimitiveAsync<Guid>(requestInfo, default, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// Gets an Guid based on the specified return type.

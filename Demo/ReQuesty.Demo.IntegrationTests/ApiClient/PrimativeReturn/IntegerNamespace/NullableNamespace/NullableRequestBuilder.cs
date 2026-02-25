@@ -10,28 +10,28 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
-namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableInt
+namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.IntegerNamespace.NullableNamespace
 {
     /// <summary>
-    /// Builds and executes requests for operations under \PrimativeReturn\nullable-int
+    /// Builds and executes requests for operations under \PrimativeReturn\integer\nullable
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
-    public partial class NullableIntRequestBuilder : BaseRequestBuilder
+    public partial class NullableRequestBuilder : BaseRequestBuilder
     {
         /// <summary>
-        /// Instantiates a new <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableInt.NullableIntRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.IntegerNamespace.NullableNamespace.NullableRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public NullableIntRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/PrimativeReturn/nullable-int{?returnType*}", pathParameters)
+        public NullableRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/PrimativeReturn/integer/nullable{?returnType*}", pathParameters)
         {
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableInt.NullableIntRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.IntegerNamespace.NullableNamespace.NullableRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public NullableIntRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/PrimativeReturn/nullable-int{?returnType*}", rawUrl)
+        public NullableRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/PrimativeReturn/integer/nullable{?returnType*}", rawUrl)
         {
         }
         /// <summary>
@@ -40,22 +40,17 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableInt
         /// <returns>A <see cref="int"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
-        /// <exception cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.Models.ProblemDetails">When receiving a 500 status code</exception>
-        public async Task<int?> GetAsync(Action<RequestConfiguration<global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableInt.NullableIntRequestBuilder.NullableIntRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<int?> GetAsync(Action<RequestConfiguration<global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.IntegerNamespace.NullableNamespace.NullableRequestBuilder.NullableRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
             var requestInfo = ToGetRequestInformation(requestConfiguration);
-            var errorMapping = new Dictionary<string, ParsableFactory<IParsable>>
-            {
-                { "500", global::ReQuesty.Demo.IntegrationTests.ApiClient.Models.ProblemDetails.CreateFromDiscriminatorValue },
-            };
-            return await RequestAdapter.SendPrimitiveAsync<int>(requestInfo, errorMapping, cancellationToken).ConfigureAwait(false);
+            return await RequestAdapter.SendPrimitiveAsync<int>(requestInfo, default, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// Gets a nullable int based on the specified return type.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
-        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableInt.NullableIntRequestBuilder.NullableIntRequestBuilderGetQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.IntegerNamespace.NullableNamespace.NullableRequestBuilder.NullableRequestBuilderGetQueryParameters>>? requestConfiguration = default)
         {
             var requestInfo = new RequestInformation(Method.GET, UrlTemplate, PathParameters);
             requestInfo.Configure(requestConfiguration);
@@ -65,17 +60,17 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableInt
         /// <summary>
         /// Returns a request builder with the provided arbitrary URL. Using this method means any other path or query parameters are ignored.
         /// </summary>
-        /// <returns>A <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableInt.NullableIntRequestBuilder"/></returns>
+        /// <returns>A <see cref="global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.IntegerNamespace.NullableNamespace.NullableRequestBuilder"/></returns>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
-        public global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableInt.NullableIntRequestBuilder WithUrl(string rawUrl)
+        public global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.IntegerNamespace.NullableNamespace.NullableRequestBuilder WithUrl(string rawUrl)
         {
-            return new global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.NullableInt.NullableIntRequestBuilder(rawUrl, RequestAdapter);
+            return new global::ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.IntegerNamespace.NullableNamespace.NullableRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
         /// Gets a nullable int based on the specified return type.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
-        public partial class NullableIntRequestBuilderGetQueryParameters 
+        public partial class NullableRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591
             [QueryParameter("returnType")]
