@@ -14,7 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.Testing" Version="13.1.1" />
     <PackageReference Include="coverlet.collector" Version="8.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
     <PackageReference Include="ReQuesty.Runtime" Version="0.0.7" />
     <PackageReference Include="Shouldly" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
