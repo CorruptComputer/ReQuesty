@@ -213,7 +213,10 @@ public class CodeClass : ProprietableBlock<CodeClassKind, ClassDeclaration>, ITy
 
         if (BaseClass is CodeClass currentParentClass)
         {
-            if (currentParentClass.FindPropertyByWireName(serializationName) is CodeProperty currentProperty && !currentProperty.ExistsInBaseType && currentProperty.Kind is not CodePropertyKind.AdditionalData or CodePropertyKind.BackingStore)
+            CodeProperty? currentProperty = currentParentClass.FindPropertyByWireName(serializationName);
+            if (currentProperty is not null
+                && !currentProperty.ExistsInBaseType
+                && currentProperty.Kind is not (CodePropertyKind.AdditionalData or CodePropertyKind.BackingStore))
             {
                 return currentProperty;
             }

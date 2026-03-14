@@ -682,14 +682,13 @@ public class CodeMethodWriter(CSharpConventionService conventionService) : BaseE
     {
         conventions.WriteLongDescription(code, writer);
         if (!"void".Equals(code.ReturnType.Name, StringComparison.OrdinalIgnoreCase)
-            && code.Kind is not CodeMethodKind.ClientConstructor or CodeMethodKind.Constructor)
+            && code.Kind is not (CodeMethodKind.ClientConstructor or CodeMethodKind.Constructor))
         {
             conventions.WriteAdditionalDescriptionItem($"<returns>A {conventions.GetTypeStringForDocumentation(code.ReturnType, code)}</returns>", writer);
         }
 
-        foreach (CodeParameter? paramWithDescription in code.Parameters
-                                                .Where(static x => x.Documentation.DescriptionAvailable)
-                                                .OrderBy(static x => x.Name, StringComparer.OrdinalIgnoreCase))
+        foreach (CodeParameter? paramWithDescription in code.Parameters.Where(static x => x.Documentation.DescriptionAvailable)
+                                                                       .OrderBy(static x => x.Name, StringComparer.OrdinalIgnoreCase))
         {
             conventions.WriteShortDescription(paramWithDescription, writer, $"<param name=\"{paramWithDescription.Name.ToFirstCharacterLowerCase()}\">", "</param>");
         }
