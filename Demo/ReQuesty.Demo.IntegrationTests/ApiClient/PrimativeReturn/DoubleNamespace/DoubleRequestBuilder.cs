@@ -16,7 +16,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespa
     /// <summary>
     /// Builds and executes requests for operations under \PrimativeReturn\double
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
     public partial class DoubleRequestBuilder : BaseRequestBuilder
     {
         /// <summary>The nullable property</summary>
@@ -75,7 +75,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.DoubleNamespa
         /// <summary>
         /// Gets an int based on the specified return type.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
         public partial class DoubleRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591

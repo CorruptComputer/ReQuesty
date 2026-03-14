@@ -19,7 +19,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient
     /// <summary>
     /// The main entry point of the SDK, exposes the configuration and the fluent API.
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
     public partial class DemoApiClient : BaseRequestBuilder
     {
         /// <summary>The EnumReturn property</summary>

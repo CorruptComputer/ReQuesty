@@ -11,7 +11,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.Models
     /// <summary>
     /// A sample object model to be used in the demo API
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
     public partial class SomeObject : IAdditionalDataHolder, IParsable
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>

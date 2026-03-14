@@ -13,7 +13,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.ObjectReturn
     /// <summary>
     /// Builds and executes requests for operations under \ObjectReturn
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
     public partial class ObjectReturnRequestBuilder : BaseRequestBuilder
     {
         /// <summary>The someObject property</summary>

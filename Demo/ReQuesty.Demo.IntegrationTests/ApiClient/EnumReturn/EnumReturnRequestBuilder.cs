@@ -14,7 +14,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.EnumReturn
     /// <summary>
     /// Builds and executes requests for operations under \EnumReturn
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
     public partial class EnumReturnRequestBuilder : BaseRequestBuilder
     {
         /// <summary>The integer property</summary>

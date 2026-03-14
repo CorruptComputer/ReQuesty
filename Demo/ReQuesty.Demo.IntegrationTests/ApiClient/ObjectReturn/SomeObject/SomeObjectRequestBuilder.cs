@@ -15,7 +15,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.ObjectReturn.SomeObject
     /// <summary>
     /// Builds and executes requests for operations under \ObjectReturn\some-object
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
     public partial class SomeObjectRequestBuilder : BaseRequestBuilder
     {
         /// <summary>
@@ -69,7 +69,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.ObjectReturn.SomeObject
         /// <summary>
         /// Gets a SomeObject based on the specified return type.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
         public partial class SomeObjectRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591

@@ -16,7 +16,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.IntegerNamesp
     /// <summary>
     /// Builds and executes requests for operations under \PrimativeReturn\integer
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
     public partial class IntegerRequestBuilder : BaseRequestBuilder
     {
         /// <summary>The nullable property</summary>
@@ -75,7 +75,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.IntegerNamesp
         /// <summary>
         /// Gets an int based on the specified return type.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
         public partial class IntegerRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591

@@ -16,7 +16,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Float
     /// <summary>
     /// Builds and executes requests for operations under \PrimativeReturn\float
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
     public partial class FloatRequestBuilder : BaseRequestBuilder
     {
         /// <summary>The nullable property</summary>
@@ -75,7 +75,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.Float
         /// <summary>
         /// Gets a float based on the specified return type.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
         public partial class FloatRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591

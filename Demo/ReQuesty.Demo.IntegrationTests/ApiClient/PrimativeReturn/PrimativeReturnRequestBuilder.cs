@@ -17,7 +17,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn
     /// <summary>
     /// Builds and executes requests for operations under \PrimativeReturn
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
     public partial class PrimativeReturnRequestBuilder : BaseRequestBuilder
     {
         /// <summary>The double property</summary>

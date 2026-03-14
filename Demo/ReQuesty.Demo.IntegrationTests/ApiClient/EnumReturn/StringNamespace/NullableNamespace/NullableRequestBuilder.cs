@@ -15,7 +15,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.EnumReturn.StringNamespace.Nu
     /// <summary>
     /// Builds and executes requests for operations under \EnumReturn\string\nullable
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
     public partial class NullableRequestBuilder : BaseRequestBuilder
     {
         /// <summary>
@@ -69,7 +69,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.EnumReturn.StringNamespace.Nu
         /// <summary>
         /// Gets a nullable StringValues enum based on the specified return type.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
         public partial class NullableRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591

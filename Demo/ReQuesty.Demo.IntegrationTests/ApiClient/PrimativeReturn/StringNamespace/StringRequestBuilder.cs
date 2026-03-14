@@ -16,7 +16,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.StringNamespa
     /// <summary>
     /// Builds and executes requests for operations under \PrimativeReturn\string
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+    [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
     public partial class StringRequestBuilder : BaseRequestBuilder
     {
         /// <summary>The nullable property</summary>
@@ -75,7 +75,7 @@ namespace ReQuesty.Demo.IntegrationTests.ApiClient.PrimativeReturn.StringNamespa
         /// <summary>
         /// Gets a string based on the specified return type.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.5")]
+        [global::System.CodeDom.Compiler.GeneratedCode("ReQuesty", "0.0.6")]
         public partial class StringRequestBuilderGetQueryParameters 
         {
             #pragma warning disable CS1591
