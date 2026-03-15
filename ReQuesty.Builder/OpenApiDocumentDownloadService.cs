@@ -29,7 +29,7 @@ internal class OpenApiDocumentDownloadService
         o.PoolSize = 20;
         o.PoolInitialFill = 1;
     });
-    internal async Task<(Stream, bool)> LoadStreamAsync(string inputPath, GenerationConfiguration config, WorkspaceManagementService? workspaceManagementService = default, bool useReQuestyConfig = false, CancellationToken cancellationToken = default)
+    internal async Task<Stream> LoadStreamAsync(string inputPath, GenerationConfiguration config, CancellationToken cancellationToken = default)
     {
         Stopwatch stopwatch = new();
         stopwatch.Start();
@@ -37,17 +37,7 @@ internal class OpenApiDocumentDownloadService
         inputPath = inputPath.Trim();
 
         Stream input;
-        bool isDescriptionFromWorkspaceCopy = false;
-        if (useReQuestyConfig &&
-            config.Operation is ConsumerOperation.Edit or ConsumerOperation.Add &&
-            workspaceManagementService is not null &&
-            await workspaceManagementService.GetDescriptionCopyAsync(config.ClientClassName, inputPath, config.CleanOutput, cancellationToken).ConfigureAwait(false) is { } descriptionStream)
-        {
-            Logger.LogInformation("loaded description from the workspace copy");
-            input = descriptionStream;
-            isDescriptionFromWorkspaceCopy = true;
-        }
-        else if (inputPath.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+        if (inputPath.StartsWith("http", StringComparison.OrdinalIgnoreCase))
         {
             try
             {
@@ -93,7 +83,7 @@ internal class OpenApiDocumentDownloadService
 
         stopwatch.Stop();
         Logger.LogTrace("{Timestamp}ms: Read OpenAPI file {File}", stopwatch.ElapsedMilliseconds, inputPath);
-        return (input, isDescriptionFromWorkspaceCopy);
+        return input;
     }
 
     internal async Task<ReadResult?> GetDocumentWithResultFromStreamAsync(Stream input, GenerationConfiguration config, bool generating = false, CancellationToken cancellationToken = default)
@@ -120,13 +110,6 @@ internal class OpenApiDocumentDownloadService
         // Add all extensions for generation
         settings.AddGenerationExtensions();
         settings.AddYamlReader();
-        // Add plugins extensions to parse from the OpenAPI file
-        bool addPluginsExtensions = config.IsPluginConfiguration || config.IncludePluginExtensions == true;
-        if (addPluginsExtensions)
-        {
-            settings.AddPluginsExtensions();// Add all extensions for plugins
-        }
-
         try
         {
             string rawUri = config.OpenAPIFilePath.TrimEnd(ReQuestyBuilder.ForwardSlash);

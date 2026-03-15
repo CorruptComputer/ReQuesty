@@ -17,7 +17,6 @@ internal class ReQuestyGenerateCommandHandler : BaseReQuestyCommandHandler
         // Get options
         string? output = context.GetValue<string?>(CommandLineOptions.OutputOption);
         string? openapi = context.GetValue<string?>(CommandLineOptions.DescriptionOption);
-        string? manifest = context.GetValue<string?>(CommandLineOptions.ManifestOption);
         bool backingStore = context.GetValue<bool>(CommandLineOptions.BackingStoreOption);
         bool clearCache = context.GetValue<bool>(CommandLineOptions.ClearCacheOption);
         bool disableSSLValidation = context.GetValue<bool>(CommandLineOptions.DisableSSLValidationOption);
@@ -40,7 +39,6 @@ internal class ReQuestyGenerateCommandHandler : BaseReQuestyCommandHandler
         List<string> structuredMimeTypes = structuredMimeTypes0.OrEmpty();
         AssignIfNotNullOrEmpty(output, (c, s) => c.OutputPath = s);
         AssignIfNotNullOrEmpty(openapi, (c, s) => c.OpenAPIFilePath = s);
-        AssignIfNotNullOrEmpty(manifest, (c, s) => c.ApiManifestPath = s);
         AssignIfNotNullOrEmpty(className, (c, s) => c.ClientClassName = s);
         AssignIfNotNullOrEmpty(namespaceName, (c, s) => c.ClientNamespaceName = s);
         Configuration.Generation.TypeAccessModifier = typeAccessModifier;
@@ -84,7 +82,6 @@ internal class ReQuestyGenerateCommandHandler : BaseReQuestyCommandHandler
 
         Configuration.Generation.OpenAPIFilePath = GetAbsolutePath(Configuration.Generation.OpenAPIFilePath);
         Configuration.Generation.OutputPath = NormalizeSlashesInPath(GetAbsolutePath(Configuration.Generation.OutputPath));
-        Configuration.Generation.ApiManifestPath = NormalizeSlashesInPath(GetAbsolutePath(Configuration.Generation.ApiManifestPath));
         Configuration.Generation.CleanOutput = cleanOutput;
         Configuration.Generation.ClearCache = clearCache;
         Configuration.Generation.DisableSSLValidation = disableSSLValidation;
@@ -107,8 +104,6 @@ internal class ReQuestyGenerateCommandHandler : BaseReQuestyCommandHandler
                 {
                     DisplaySuccess("Generation skipped as no changes were detected");
                 }
-                Tuple<string, IEnumerable<string>>? manifestResult = await builder.GetApiManifestDetailsAsync(true, cancellationToken).ConfigureAwait(false);
-                string manifestPath = manifestResult is null ? string.Empty : Configuration.Generation.ApiManifestPath;
                 return 0;
             }
             catch (Exception ex)

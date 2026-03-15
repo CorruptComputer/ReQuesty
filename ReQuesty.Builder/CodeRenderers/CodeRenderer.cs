@@ -1,5 +1,4 @@
-﻿using ReQuesty.Builder.CodeDOM;
-using ReQuesty.Builder.Configuration;
+using ReQuesty.Builder.CodeDOM;
 using ReQuesty.Builder.OrderComparers;
 using ReQuesty.Builder.Writers;
 
@@ -10,10 +9,8 @@ namespace ReQuesty.Builder.CodeRenderers;
 /// </summary>
 public class CodeRenderer
 {
-    public CodeRenderer(GenerationConfiguration configuration, CodeElementOrderComparer? elementComparer = null)
+    public CodeRenderer(CodeElementOrderComparer? elementComparer = null)
     {
-        ArgumentNullException.ThrowIfNull(configuration);
-        Configuration = configuration;
         _rendererElementComparer = elementComparer ?? new CodeElementOrderComparer();
     }
 
@@ -64,10 +61,6 @@ public class CodeRenderer
         }
     }
     private readonly CodeElementOrderComparer _rendererElementComparer;
-    protected GenerationConfiguration Configuration
-    {
-        get; private set;
-    }
     private void RenderCode(LanguageWriter writer, CodeElement element)
     {
         writer.Write(element);
@@ -89,13 +82,11 @@ public class CodeRenderer
         }
         // if the module already has a class with the same name, it's going to be declared automatically
         string namespaceNameLastSegment = codeNamespace.Name.Split('.')[^1];
-        return Configuration.ShouldWriteBarrelsIfClassExists || codeNamespace.FindChildByName<CodeClass>(namespaceNameLastSegment, false) is null;
+        return codeNamespace.FindChildByName<CodeClass>(namespaceNameLastSegment, false) is null;
     }
 
-    public static CodeRenderer GetCodeRender(GenerationConfiguration config)
+    public static CodeRenderer GetCodeRender()
     {
-        ArgumentNullException.ThrowIfNull(config);
-        return new CodeRenderer(config);
+        return new CodeRenderer();
     }
-
 }

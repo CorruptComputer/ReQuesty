@@ -16,14 +16,12 @@ using ReQuesty.Builder.EqualityComparers;
 using ReQuesty.Builder.Export;
 using ReQuesty.Builder.Extensions;
 using ReQuesty.Builder.Logging;
-using ReQuesty.Builder.Manifest;
 using ReQuesty.Builder.OpenApiExtensions;
 using ReQuesty.Builder.Refiners;
 using ReQuesty.Builder.WorkspaceManagement;
 using ReQuesty.Builder.Writers;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi;
-using Microsoft.OpenApi.ApiManifest;
 using Microsoft.OpenApi.MicrosoftExtensions;
 using Microsoft.OpenApi.Reader;
 using DomHttpMethod = ReQuesty.Builder.CodeDOM.HttpMethod;
@@ -35,7 +33,7 @@ using ReQuesty.Core;
 
 namespace ReQuesty.Builder;
 
-public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, GenerationConfiguration config, HttpClient httpClient, bool useReQuestyConfig = false)
+public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, GenerationConfiguration config, HttpClient httpClient)
 {
     private readonly ParallelOptions parallelOptions = new()
     {
@@ -44,7 +42,7 @@ public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, Generation
 
     private OpenApiDocument? openApiDocument;
 
-    private readonly WorkspaceManagementService workspaceManagementService = new(logger, httpClient, useReQuestyConfig, Directory.GetCurrentDirectory());
+    private readonly WorkspaceManagementService workspaceManagementService = new(logger, Directory.GetCurrentDirectory());
     private static readonly GlobComparer globComparer = new();
 
     private readonly OpenApiDocumentDownloadService openApiDocumentDownloadService = new(httpClient, logger);
@@ -82,83 +80,10 @@ public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, Generation
         return (openApiTree, openApiDiagnostic);
     }
     public OpenApiDocument? OpenApiDocument => openApiDocument;
-    private static string NormalizeApiManifestPath(RequestInfo request, string? baseUrl)
-    {
-        string rawValue = $"{request.UriTemplate}{(request.Method is null ? string.Empty : "#")}{request.Method?.ToUpperInvariant()}";
-        if (!string.IsNullOrEmpty(baseUrl) && rawValue.StartsWith(baseUrl, StringComparison.OrdinalIgnoreCase))
-        {
-            rawValue = rawValue[baseUrl.Length..];
-        }
-
-        if (!rawValue.StartsWith('/'))
-        {
-            rawValue = '/' + rawValue;
-        }
-
-        return rawValue.Split('?', StringSplitOptions.RemoveEmptyEntries)[0];
-    }
-    public async Task<Tuple<string, IEnumerable<string>>?> GetApiManifestDetailsAsync(bool skipErrorLog = false, CancellationToken cancellationToken = default)
-    {
-        try
-        {
-            logger.LogDebug("Api manifest path: {ApiManifestPath}", config.ApiManifestPath);
-            string[] pathParts = config.ApiManifestPath.Split(manifestPathSeparator, StringSplitOptions.RemoveEmptyEntries);
-            string manifestPath = pathParts[0];
-            string apiIdentifier = pathParts.Length > 1 ? pathParts[1] : string.Empty;
-            ManifestManagementService manifestManagementService = new();
-            DocumentCachingProvider documentCachingProvider = new(httpClient, logger);
-            using Stream manifestFileContent = manifestPath.StartsWith("http", StringComparison.OrdinalIgnoreCase) switch
-            {
-                false => File.OpenRead(manifestPath),
-                true => await documentCachingProvider.GetDocumentAsync(new Uri(manifestPath), "manifests", "manifest.json", cancellationToken: cancellationToken).ConfigureAwait(false)
-            };
-            ApiManifestDocument manifest = await manifestManagementService.DeserializeManifestDocumentAsync(manifestFileContent).ConfigureAwait(false)
-                            ?? throw new InvalidOperationException("The manifest could not be decoded");
-
-            ApiDependency apiDependency = (manifest.ApiDependencies.Count, string.IsNullOrEmpty(apiIdentifier)) switch
-            {
-                (0, _) => throw new InvalidOperationException("The manifest contains no APIs"),
-                (1, _) => manifest.ApiDependencies.First().Value,
-                (_, true) => throw new InvalidOperationException("The manifest contains multiple APIs, please specify the API identifier"),
-                (_, false) => manifest.ApiDependencies.TryGetValue(apiIdentifier, out ApiDependency? apiDep) ? apiDep : throw new InvalidOperationException($"The manifest does not contain the API {apiIdentifier}")
-            };
-
-            if (apiDependency.ApiDescriptionUrl is null)
-            {
-                throw new InvalidOperationException("The manifest does not contain an API description URL");
-            }
-
-            return new Tuple<string, IEnumerable<string>>(apiDependency.ApiDescriptionUrl,
-                                apiDependency.Requests.Select(x => NormalizeApiManifestPath(x, apiDependency.ApiDeploymentBaseUrl)).ToArray());
-        }
-        catch (Exception ex)
-        {
-            if (!skipErrorLog)
-            {
-                logger.FailedToLoadOpenApiDocument(ex);
-            }
-
-            return null;
-        }
-    }
     private async Task<(int, OpenApiUrlTreeNode?, bool, OpenApiDiagnostic?)> GetTreeNodeInternalAsync(string inputPath, bool generating, Stopwatch sw, CancellationToken cancellationToken)
     {
         logger.LogDebug("ReQuesty version {Version}", ReQuestyVersion.Current());
         int stepId = 0;
-        if (config.ShouldGetApiManifest)
-        {
-            sw.Start();
-            Tuple<string, IEnumerable<string>>? manifestDetails = await GetApiManifestDetailsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            if (manifestDetails is not null)
-            {
-                inputPath = manifestDetails.Item1;
-                if (config.IncludePatterns.Count == 0)
-                {
-                    config.IncludePatterns = manifestDetails.Item2.ToHashSet(StringComparer.OrdinalIgnoreCase);
-                }
-            }
-            StopLogAndReset(sw, $"step {++stepId} - getting the manifest - took");
-        }
         sw.Start();
         await using Stream input = await LoadStreamAsync(inputPath, cancellationToken).ConfigureAwait(false);
         if (input.Length == 0)
@@ -200,12 +125,6 @@ public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, Generation
             if (shouldGenerate && generating)
             {
                 modelNamespacePrefixToTrim = GetDeeperMostCommonNamespaceNameForModels(openApiDocument);
-            }
-
-            // OperationId cleanup in the event that we are generating plugins
-            if (config.IsPluginConfiguration)
-            {
-                CleanupOperationIdForPlugins(openApiDocument);
             }
 
             // Create Uri Space of API
@@ -293,11 +212,6 @@ public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, Generation
         // Read input stream
         string inputPath = config.OpenAPIFilePath;
 
-        if (!config.NoWorkspace && config.Operation is ConsumerOperation.Add && await workspaceManagementService.IsConsumerPresentAsync(config.ClientClassName, cancellationToken).ConfigureAwait(false))
-        {
-            throw new InvalidOperationException($"The client {config.ClientClassName} already exists in the workspace");
-        }
-
         try
         {
             await CleanOutputDirectoryAsync(cancellationToken).ConfigureAwait(false);
@@ -316,14 +230,14 @@ public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, Generation
             {
                 stepId = await innerGenerationSteps(sw, stepId, openApiTree, cancellationToken).ConfigureAwait(false);
 
-                await FinalizeWorkspaceAsync(sw, stepId, openApiTree, inputPath, cancellationToken).ConfigureAwait(false);
+                await FinalizeWorkspaceAsync(sw, stepId, cancellationToken).ConfigureAwait(false);
             }
             else
             {
                 logger.LogInformation("No changes detected, skipping generation");
                 if (config.Operation is ConsumerOperation.Add or ConsumerOperation.Edit && config.SkipGeneration)
                 {
-                    await FinalizeWorkspaceAsync(sw, stepId, openApiTree, inputPath, cancellationToken).ConfigureAwait(false);
+                    await FinalizeWorkspaceAsync(sw, stepId, cancellationToken).ConfigureAwait(false);
                 }
                 return false;
             }
@@ -338,11 +252,10 @@ public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, Generation
         }
         return true;
     }
-    private async Task FinalizeWorkspaceAsync(Stopwatch sw, int stepId, OpenApiUrlTreeNode? openApiTree, string inputPath, CancellationToken cancellationToken)
+    private async Task FinalizeWorkspaceAsync(Stopwatch sw, int stepId, CancellationToken cancellationToken)
     {
         // Write lock file
         sw.Start();
-        using Stream descriptionStream = !isDescriptionFromWorkspaceCopy ? await LoadStreamAsync(inputPath, cancellationToken).ConfigureAwait(false) : Stream.Null;
         string hashCode = openApiDocument switch
         {
             null => string.Empty,
@@ -350,7 +263,7 @@ public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, Generation
         };
         if (!config.NoWorkspace)
         {
-            await workspaceManagementService.UpdateStateFromConfigurationAsync(config, hashCode, openApiTree?.GetRequestInfo().ToDictionary(static x => x.Key, static x => x.Value) ?? [], descriptionStream, cancellationToken).ConfigureAwait(false);
+            await workspaceManagementService.UpdateStateFromConfigurationAsync(config, hashCode, cancellationToken).ConfigureAwait(false);
         }
 
         StopLogAndReset(sw, $"step {++stepId} - writing lock file - took");
@@ -377,51 +290,10 @@ public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, Generation
                     globComparer);
     }
 
-    [GeneratedRegex(@"[^a-zA-Z0-9_]+", RegexOptions.IgnoreCase | RegexOptions.Singleline, 2000)]
-    private static partial Regex PluginOperationIdCleanupRegex();
-    internal static void CleanupOperationIdForPlugins(OpenApiDocument document)
-    {
-        if (document.Paths is null)
-        {
-            return;
-        }
-
-        foreach ((string pathItem, KeyValuePair<NetHttpMethod, OpenApiOperation> operation) in document.Paths.SelectMany(static path => path.Value.Operations?.Select(value => new Tuple<string, KeyValuePair<NetHttpMethod, OpenApiOperation>>(path.Key, value)) ?? []))
-        {
-            if (string.IsNullOrEmpty(operation.Value.OperationId))
-            {
-                StringBuilder stringBuilder = new();
-                foreach (string segment in pathItem.TrimStart('/').Split('/', StringSplitOptions.RemoveEmptyEntries))
-                {
-                    if (segment.IsPathSegmentWithSingleSimpleParameter())
-                    {
-                        stringBuilder.Append("item");
-                    }
-                    else if (!string.IsNullOrEmpty(segment.Trim()))
-                    {
-                        stringBuilder.Append(segment.ToLowerInvariant());
-                    }
-
-                    stringBuilder.Append('_');
-                }
-                stringBuilder.Append(operation.Key.ToString().ToLowerInvariant());
-                operation.Value.OperationId = stringBuilder.ToString();
-            }
-            else
-            {
-                operation.Value.OperationId = PluginOperationIdCleanupRegex().Replace(operation.Value.OperationId, "_");//replace non-alphanumeric characters with _
-            }
-        }
-    }
     internal void FilterPathsByPatterns(OpenApiDocument doc)
     {
         Dictionary<Glob, HashSet<NetHttpMethod>> includePatterns = GetFilterPatternsFromConfiguration(config.IncludePatterns);
         Dictionary<Glob, HashSet<NetHttpMethod>> excludePatterns = GetFilterPatternsFromConfiguration(config.ExcludePatterns);
-        if (config.PatternsOverride.Count != 0)
-        { // loading the patterns from the manifest as we don't want to take the user input one and have new operation creep in from the description being updated since last generation
-            includePatterns = GetFilterPatternsFromConfiguration(config.PatternsOverride);
-            excludePatterns = [];
-        }
         if (includePatterns.Count == 0 && excludePatterns.Count == 0)
         {
             return;
@@ -474,10 +346,7 @@ public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, Generation
         if (openApiDocument is not null && openApiDocument.GetAPIRootUrl(config.OpenAPIFilePath) is string candidateUrl)
         {
             config.ApiRootUrl = candidateUrl;
-            if (!config.IsPluginConfiguration)
-            {
-                logger.LogInformation("Client root URL set to {ApiRootUrl}", candidateUrl);
-            }
+            logger.LogInformation("Client root URL set to {ApiRootUrl}", candidateUrl);
         }
         else
         {
@@ -490,12 +359,9 @@ public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, Generation
         logger.LogDebug("{Prefix} {SwElapsed}", prefix, sw.Elapsed);
         sw.Reset();
     }
-    private bool isDescriptionFromWorkspaceCopy;
-    private async Task<Stream> LoadStreamAsync(string inputPath, CancellationToken cancellationToken)
+    private Task<Stream> LoadStreamAsync(string inputPath, CancellationToken cancellationToken)
     {
-        (Stream input, bool isCopy) = await openApiDocumentDownloadService.LoadStreamAsync(inputPath, config, workspaceManagementService, useReQuestyConfig, cancellationToken).ConfigureAwait(false);
-        isDescriptionFromWorkspaceCopy = isCopy;
-        return input;
+        return openApiDocumentDownloadService.LoadStreamAsync(inputPath, config, cancellationToken);
     }
 
     internal const char ForwardSlash = '/';
@@ -643,7 +509,7 @@ public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, Generation
         LanguageWriter languageWriter = LanguageWriter.GetLanguageWriter(language, config.OutputPath, config.ClientNamespaceName, config.UsesBackingStore);
         Stopwatch stopwatch = new();
         stopwatch.Start();
-        CodeRenderer codeRenderer = CodeRenderer.GetCodeRender(config);
+        CodeRenderer codeRenderer = CodeRenderer.GetCodeRender();
         await codeRenderer.RenderCodeNamespaceToFilePerClassAsync(languageWriter, generatedCode, cancellationToken).ConfigureAwait(false);
         stopwatch.Stop();
         logger.LogTrace("{Timestamp}ms: Files written to {Path}", stopwatch.ElapsedMilliseconds, config.OutputPath);
@@ -2522,7 +2388,6 @@ public partial class ReQuestyBuilder(ILogger<ReQuestyBuilder> logger, Generation
     internal const string BackedModelInterface = "IBackedModel";
     private const string ParseNodeInterface = "IParseNode";
     internal const string AdditionalHolderInterface = "IAdditionalDataHolder";
-    private static readonly char[] manifestPathSeparator = ['#'];
     internal static void AddSerializationMembers(CodeClass model, bool includeAdditionalProperties, bool usesBackingStore, Func<string, string> refineMethodName)
     {
         string serializationPropsType = $"IDictionary<string, Action<{ParseNodeInterface}>>";

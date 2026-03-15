@@ -42,9 +42,6 @@ public static class CommandLineOptions
     public const string LogLevelOption = "--log-level";
     public const string LogLevelShortOption = "--ll";
 
-    public const string ManifestOption = "--manifest";
-    public const string ManifestShortOption = "-a";
-
     public const string NamespaceNameOption = "--namespace-name";
     public const string NamespaceNameShortOption = "-n";
 

@@ -24,8 +24,6 @@ public static partial class ReQuestyHost
     {
         GenerationConfiguration defaultConfiguration = new();
         Option<string> descriptionOption = GetDescriptionOption();
-        Option<string> manifestOption = GetManifestOption();
-
         Option<string> outputOption = GetOutputPathOption(defaultConfiguration.OutputPath);
 
         Option<string> classOption = new(CommandLineOptions.ClassNameOption, CommandLineOptions.ClassNameShortOption)
@@ -75,7 +73,6 @@ public static partial class ReQuestyHost
         Command command = new("generate", "Generates a REST HTTP API client from an OpenAPI description file.")
         {
             descriptionOption,
-            manifestOption,
             outputOption,
             classOption,
             typeAccessModifierOption,
@@ -162,16 +159,6 @@ public static partial class ReQuestyHost
         };
 
         return descriptionOption;
-    }
-
-    private static Option<string> GetManifestOption()
-    {
-        Option<string> manifestOption = new(CommandLineOptions.ManifestOption, CommandLineOptions.ManifestShortOption)
-        {
-            Description = "The path or URI to the API manifest file used to generate the code files. Append #apikey if the target manifest contains multiple API dependencies entries."
-        };
-
-        return manifestOption;
     }
 
     [GeneratedRegex(@"^[a-zA-Z_][\w]*", RegexOptions.Singleline, 500)]

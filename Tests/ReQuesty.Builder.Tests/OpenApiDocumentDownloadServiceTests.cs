@@ -1,5 +1,5 @@
-﻿using ReQuesty.Rpc;
-using ReQuesty.Builder.Configuration;
+﻿using ReQuesty.Builder.Configuration;
+using ReQuesty.Rpc;
 using Xunit;
 
 namespace ReQuesty.Builder.Tests.OpenApiExtensions;
@@ -35,7 +35,7 @@ paths:
     {
         GenerationConfiguration generationConfig = new()
         {
-            PluginTypes = [PluginType.APIPlugin],
+
             IncludeReQuestyValidationRules = true
         };
         FakeLogger<OpenApiDocumentDownloadService> fakeLogger = new();
@@ -56,7 +56,7 @@ paths:
     {
         GenerationConfiguration generationConfig = new()
         {
-            PluginTypes = [PluginType.APIPlugin],
+
             IncludeReQuestyValidationRules = false
         };
         FakeLogger<OpenApiDocumentDownloadService> fakeLogger = new();
@@ -77,7 +77,7 @@ paths:
     {
         GenerationConfiguration generationConfig = new()
         {
-            PluginTypes = [PluginType.APIPlugin],
+
         };
         FakeLogger<OpenApiDocumentDownloadService> fakeLogger = new();
 

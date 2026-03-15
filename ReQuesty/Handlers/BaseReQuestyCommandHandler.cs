@@ -166,9 +166,9 @@ internal abstract class BaseReQuestyCommandHandler : AsynchronousCommandLineActi
         DisplayMessages(ConsoleColor.White, messages);
     }
 
-    protected void DisplayUrlInformation(string? apiRootUrl, bool isPlugin = false)
+    protected void DisplayUrlInformation(string? apiRootUrl)
     {
-        if (!string.IsNullOrEmpty(apiRootUrl) && !isPlugin)
+        if (!string.IsNullOrEmpty(apiRootUrl))
         {
             DisplayInfo($"Client base url set to {apiRootUrl}");
         }
