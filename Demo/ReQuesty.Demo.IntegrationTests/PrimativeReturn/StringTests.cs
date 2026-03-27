@@ -3,7 +3,7 @@ namespace ReQuesty.Demo.IntegrationTests.PrimativeReturn;
 /// <summary>
 ///   Tests for the string endpoints
 /// </summary>
-public class StringTests : TestBase
+public class StringTests(ApiClientFixture fixture) : TestBase(fixture)
 {
     /// <summary>
     ///   Null string should not throw
@@ -12,11 +12,9 @@ public class StringTests : TestBase
     [Fact]
     public async Task String_Null()
     {
-        await SetupApiClientAsync();
-
-        Task<string?> task = ApiClient!.PrimativeReturn.String.GetAsync(options =>
+        Task<string?> task = ApiClient.PrimativeReturn.String.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
+            options.QueryParameters.ReturnType = ReturnType.Null;
         });
 
         task.ShouldNotThrow();
@@ -31,11 +29,9 @@ public class StringTests : TestBase
     [Fact]
     public async Task String_Random()
     {
-        await SetupApiClientAsync();
-
-        Task<string?> task = ApiClient!.PrimativeReturn.String.GetAsync(options =>
+        Task<string?> task = ApiClient.PrimativeReturn.String.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
+            options.QueryParameters.ReturnType = ReturnType.Random;
         });
 
         task.ShouldNotThrow();
@@ -50,11 +46,9 @@ public class StringTests : TestBase
     [Fact]
     public async Task String_Invalid()
     {
-        await SetupApiClientAsync();
-
-        Task<string?> task = ApiClient!.PrimativeReturn.String.GetAsync(options =>
+        Task<string?> task = ApiClient.PrimativeReturn.String.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
+            options.QueryParameters.ReturnType = ReturnType.Invalid;
         });
 
         task.ShouldNotThrow();
@@ -69,11 +63,9 @@ public class StringTests : TestBase
     [Fact]
     public async Task NullableString_Null()
     {
-        await SetupApiClientAsync();
-
-        Task<string?> task = ApiClient!.PrimativeReturn.String.Nullable.GetAsync(options =>
+        Task<string?> task = ApiClient.PrimativeReturn.String.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
+            options.QueryParameters.ReturnType = ReturnType.Null;
         });
 
         task.ShouldNotThrow();
@@ -88,11 +80,9 @@ public class StringTests : TestBase
     [Fact]
     public async Task NullableString_Random()
     {
-        await SetupApiClientAsync();
-
-        Task<string?> task = ApiClient!.PrimativeReturn.String.Nullable.GetAsync(options =>
+        Task<string?> task = ApiClient.PrimativeReturn.String.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
+            options.QueryParameters.ReturnType = ReturnType.Random;
         });
 
         task.ShouldNotThrow();
@@ -107,11 +97,9 @@ public class StringTests : TestBase
     [Fact]
     public async Task NullableString_Invalid()
     {
-        await SetupApiClientAsync();
-
-        Task<string?> task = ApiClient!.PrimativeReturn.String.Nullable.GetAsync(options =>
+        Task<string?> task = ApiClient.PrimativeReturn.String.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
+            options.QueryParameters.ReturnType = ReturnType.Invalid;
         });
 
         task.ShouldNotThrow();

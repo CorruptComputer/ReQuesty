@@ -3,7 +3,7 @@ namespace ReQuesty.Demo.IntegrationTests.EnumReturn;
 /// <summary>
 ///   Tests for the SomeObject endpoints
 /// </summary>
-public class SomeObjectTests : TestBase
+public class SomeObjectTests(ApiClientFixture fixture) : TestBase(fixture)
 {
     /// <summary>
     ///   Null string value should not throw
@@ -12,9 +12,7 @@ public class SomeObjectTests : TestBase
     [Fact]
     public async Task SomeObject_Null()
     {
-        await SetupApiClientAsync();
-
-        SomeObject? result = await ApiClient!.ObjectReturn.SomeObject.GetAsync(options =>
+        SomeObject? result = await ApiClient.ObjectReturn.SomeObject.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Null;
         });
@@ -29,9 +27,7 @@ public class SomeObjectTests : TestBase
     [Fact]
     public async Task SomeObject_Random()
     {
-        await SetupApiClientAsync();
-
-        SomeObject? result = await ApiClient!.ObjectReturn.SomeObject.GetAsync(options =>
+        SomeObject? result = await ApiClient.ObjectReturn.SomeObject.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Random;
         });
@@ -46,9 +42,7 @@ public class SomeObjectTests : TestBase
     [Fact]
     public async Task SomeObject_Invalid()
     {
-        await SetupApiClientAsync();
-
-        SomeObject? result = await ApiClient!.ObjectReturn.SomeObject.GetAsync(options =>
+        SomeObject? result = await ApiClient.ObjectReturn.SomeObject.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Invalid;
         });

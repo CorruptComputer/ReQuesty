@@ -3,7 +3,7 @@ namespace ReQuesty.Demo.IntegrationTests.PrimativeReturn;
 /// <summary>
 ///   Tests for the double endpoints
 /// </summary>
-public class DoubleTests : TestBase
+public class DoubleTests(ApiClientFixture fixture) : TestBase(fixture)
 {
     /// <summary>
     ///   Null double should not throw
@@ -12,11 +12,9 @@ public class DoubleTests : TestBase
     [Fact]
     public async Task Double_Null()
     {
-        await SetupApiClientAsync();
-
-        Task<double?> task = ApiClient!.PrimativeReturn.Double.GetAsync(options =>
+        Task<double?> task = ApiClient.PrimativeReturn.Double.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
+            options.QueryParameters.ReturnType = ReturnType.Null;
         });
 
         task.ShouldNotThrow();
@@ -31,11 +29,9 @@ public class DoubleTests : TestBase
     [Fact]
     public async Task Double_Random()
     {
-        await SetupApiClientAsync();
-
-        Task<double?> task = ApiClient!.PrimativeReturn.Double.GetAsync(options =>
+        Task<double?> task = ApiClient.PrimativeReturn.Double.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
+            options.QueryParameters.ReturnType = ReturnType.Random;
         });
 
         task.ShouldNotThrow();
@@ -50,11 +46,9 @@ public class DoubleTests : TestBase
     [Fact]
     public async Task Double_Invalid()
     {
-        await SetupApiClientAsync();
-
-        Task<double?> task = ApiClient!.PrimativeReturn.Double.GetAsync(options =>
+        Task<double?> task = ApiClient.PrimativeReturn.Double.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
+            options.QueryParameters.ReturnType = ReturnType.Invalid;
         });
 
         task.ShouldThrow<NullReferenceException>();
@@ -67,11 +61,9 @@ public class DoubleTests : TestBase
     [Fact]
     public async Task NullableDouble_Null()
     {
-        await SetupApiClientAsync();
-
-        Task<double?> task = ApiClient!.PrimativeReturn.Double.Nullable.GetAsync(options =>
+        Task<double?> task = ApiClient.PrimativeReturn.Double.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
+            options.QueryParameters.ReturnType = ReturnType.Null;
         });
 
         task.ShouldNotThrow();
@@ -86,11 +78,9 @@ public class DoubleTests : TestBase
     [Fact]
     public async Task NullableDouble_Random()
     {
-        await SetupApiClientAsync();
-
-        Task<double?> task = ApiClient!.PrimativeReturn.Double.Nullable.GetAsync(options =>
+        Task<double?> task = ApiClient.PrimativeReturn.Double.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
+            options.QueryParameters.ReturnType = ReturnType.Random;
         });
 
         task.ShouldNotThrow();
@@ -105,11 +95,9 @@ public class DoubleTests : TestBase
     [Fact]
     public async Task NullableDouble_Invalid()
     {
-        await SetupApiClientAsync();
-
-        Task<double?> task = ApiClient!.PrimativeReturn.Double.Nullable.GetAsync(options =>
+        Task<double?> task = ApiClient.PrimativeReturn.Double.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
+            options.QueryParameters.ReturnType = ReturnType.Invalid;
         });
 
         task.ShouldThrow<NullReferenceException>();

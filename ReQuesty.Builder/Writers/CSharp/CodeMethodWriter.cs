@@ -771,7 +771,7 @@ public class CodeMethodWriter(CSharpConventionService conventionService) : BaseE
         }
 
         string nullableReturnTypeSuffix = string.Empty;
-        if (code.IsOfKind(CodeMethodKind.RequestExecutor))
+        if (code.IsOfKind(CodeMethodKind.RequestExecutor) && !isVoid)
         {
             nullableReturnTypeSuffix = CSharpConventionService.NullableMarkerAsString;
         }

@@ -3,7 +3,7 @@ namespace ReQuesty.Demo.IntegrationTests.EnumReturn;
 /// <summary>
 ///   Tests for the enum integer values endpoints
 /// </summary>
-public class IntegerValuesTests : TestBase
+public class IntegerValuesTests(ApiClientFixture fixture) : TestBase(fixture)
 {
     /// <summary>
     ///   Null integer value should not throw
@@ -12,9 +12,7 @@ public class IntegerValuesTests : TestBase
     [Fact]
     public async Task IntegerValues_Null()
     {
-        await SetupApiClientAsync();
-
-        int? result = await ApiClient!.EnumReturn.Integer.GetAsync(options =>
+        int? result = await ApiClient.EnumReturn.Integer.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Null;
         });
@@ -30,9 +28,7 @@ public class IntegerValuesTests : TestBase
     [Fact]
     public async Task IntegerValues_Random()
     {
-        await SetupApiClientAsync();
-
-        int? result = await ApiClient!.EnumReturn.Integer.GetAsync(options =>
+        int? result = await ApiClient.EnumReturn.Integer.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Random;
         });
@@ -47,9 +43,7 @@ public class IntegerValuesTests : TestBase
     [Fact]
     public async Task IntegerValues_Invalid()
     {
-        await SetupApiClientAsync();
-
-        int? result = await ApiClient!.EnumReturn.Integer.GetAsync(options =>
+        int? result = await ApiClient.EnumReturn.Integer.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Invalid;
         });
@@ -64,9 +58,7 @@ public class IntegerValuesTests : TestBase
     [Fact]
     public async Task NullableInteger_Null()
     {
-        await SetupApiClientAsync();
-
-        int? result = await ApiClient!.EnumReturn.Integer.Nullable.GetAsync(options =>
+        int? result = await ApiClient.EnumReturn.Integer.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Null;
         });
@@ -82,9 +74,7 @@ public class IntegerValuesTests : TestBase
     [Fact]
     public async Task NullableInteger_Random()
     {
-        await SetupApiClientAsync();
-
-        int? result = await ApiClient!.EnumReturn.Integer.Nullable.GetAsync(options =>
+        int? result = await ApiClient.EnumReturn.Integer.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Random;
         });
@@ -99,9 +89,7 @@ public class IntegerValuesTests : TestBase
     [Fact]
     public async Task NullableInteger_Invalid()
     {
-        await SetupApiClientAsync();
-
-        int? result = await ApiClient!.EnumReturn.Integer.Nullable.GetAsync(options =>
+        int? result = await ApiClient.EnumReturn.Integer.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Invalid;
         });

@@ -5,7 +5,7 @@ namespace ReQuesty.Demo.IntegrationTests.PrimativeReturn;
 /// <summary>
 ///   Tests for the Guid endpoints
 /// </summary>
-public class GuidTests : TestBase
+public class GuidTests(ApiClientFixture fixture) : TestBase(fixture)
 {
     /// <summary>
     ///   Null guid should not throw
@@ -14,11 +14,9 @@ public class GuidTests : TestBase
     [Fact]
     public async Task Guid_Null()
     {
-        await SetupApiClientAsync();
-
-        Task<Guid?> task = ApiClient!.PrimativeReturn.Guid.GetAsync(options =>
+        Task<Guid?> task = ApiClient.PrimativeReturn.Guid.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
+            options.QueryParameters.ReturnType = ReturnType.Null;
         });
 
         task.ShouldNotThrow();
@@ -33,11 +31,9 @@ public class GuidTests : TestBase
     [Fact]
     public async Task Guid_Random()
     {
-        await SetupApiClientAsync();
-
-        Task<Guid?> task = ApiClient!.PrimativeReturn.Guid.GetAsync(options =>
+        Task<Guid?> task = ApiClient.PrimativeReturn.Guid.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
+            options.QueryParameters.ReturnType = ReturnType.Random;
         });
 
         task.ShouldNotThrow();
@@ -52,11 +48,9 @@ public class GuidTests : TestBase
     [Fact]
     public async Task Guid_Invalid()
     {
-        await SetupApiClientAsync();
-
-        Task<Guid?> task = ApiClient!.PrimativeReturn.Guid.GetAsync(options =>
+        Task<Guid?> task = ApiClient.PrimativeReturn.Guid.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
+            options.QueryParameters.ReturnType = ReturnType.Invalid;
         });
 
         task.ShouldThrow<JsonException>();
@@ -69,11 +63,9 @@ public class GuidTests : TestBase
     [Fact]
     public async Task NullableGuid_Null()
     {
-        await SetupApiClientAsync();
-
-        Task<Guid?> task = ApiClient!.PrimativeReturn.Guid.Nullable.GetAsync(options =>
+        Task<Guid?> task = ApiClient.PrimativeReturn.Guid.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
+            options.QueryParameters.ReturnType = ReturnType.Null;
         });
 
         task.ShouldNotThrow();
@@ -88,11 +80,9 @@ public class GuidTests : TestBase
     [Fact]
     public async Task NullableGuid_Random()
     {
-        await SetupApiClientAsync();
-
-        Task<Guid?> task = ApiClient!.PrimativeReturn.Guid.Nullable.GetAsync(options =>
+        Task<Guid?> task = ApiClient.PrimativeReturn.Guid.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
+            options.QueryParameters.ReturnType = ReturnType.Random;
         });
 
         task.ShouldNotThrow();
@@ -107,11 +97,9 @@ public class GuidTests : TestBase
     [Fact]
     public async Task NullableGuid_Invalid()
     {
-        await SetupApiClientAsync();
-
-        Task<Guid?> task = ApiClient!.PrimativeReturn.Guid.Nullable.GetAsync(options =>
+        Task<Guid?> task = ApiClient.PrimativeReturn.Guid.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
+            options.QueryParameters.ReturnType = ReturnType.Invalid;
         });
 
         task.ShouldThrow<JsonException>();

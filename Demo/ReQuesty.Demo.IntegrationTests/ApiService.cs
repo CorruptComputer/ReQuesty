@@ -1,4 +1,3 @@
-using ReQuesty.Demo.IntegrationTests.ApiClient;
 using ReQuesty.Runtime.Abstractions.Authentication;
 using ReQuesty.Runtime.Http;
 

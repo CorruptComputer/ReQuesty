@@ -5,6 +5,374 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/BodyParameter/object": {
+      "post": {
+        "tags": [
+          "BodyParameter"
+        ],
+        "summary": "Accepts a SomeObject body and returns it with 201 Created.",
+        "operationId": "PostObject",
+        "requestBody": {
+          "description": "The object to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SomeObject"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SomeObject"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SomeObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/BodyParameter/object/{id}": {
+      "put": {
+        "tags": [
+          "BodyParameter"
+        ],
+        "summary": "Accepts a SomeObject body and returns it with 200 OK.",
+        "operationId": "PutObject",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the object to replace.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The replacement object.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SomeObject"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SomeObject"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SomeObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "BodyParameter"
+        ],
+        "summary": "Accepts a SomeObject body and returns the merged result with 200 OK.",
+        "operationId": "PatchObject",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the object to patch.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The partial object to merge.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SomeObject"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SomeObject"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SomeObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "BodyParameter"
+        ],
+        "summary": "Deletes an object by ID and returns 204 No Content.",
+        "operationId": "DeleteObject",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the object to delete.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "",
+            "content": {
+              "application/json": { }
+            }
+          }
+        }
+      }
+    },
+    "/CollectionReturn/integers": {
+      "get": {
+        "tags": [
+          "CollectionReturn"
+        ],
+        "summary": "Gets an int array based on the specified return type.",
+        "operationId": "GetIntArray",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "pattern": "^-?(?:0|[1-9]\\d*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CollectionReturn/integers/nullable": {
+      "get": {
+        "tags": [
+          "CollectionReturn"
+        ],
+        "summary": "Gets a nullable int array based on the specified return type.",
+        "operationId": "GetNullableIntArray",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "pattern": "^-?(?:0|[1-9]\\d*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CollectionReturn/strings": {
+      "get": {
+        "tags": [
+          "CollectionReturn"
+        ],
+        "summary": "Gets a list of strings based on the specified return type.",
+        "operationId": "GetStringList",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CollectionReturn/strings/nullable": {
+      "get": {
+        "tags": [
+          "CollectionReturn"
+        ],
+        "summary": "Gets a nullable list of strings based on the specified return type.",
+        "operationId": "GetNullableStringList",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CollectionReturn/objects": {
+      "get": {
+        "tags": [
+          "CollectionReturn"
+        ],
+        "summary": "Gets a list of SomeObject based on the specified return type.",
+        "operationId": "GetObjectList",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SomeObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CollectionReturn/objects/nullable": {
+      "get": {
+        "tags": [
+          "CollectionReturn"
+        ],
+        "summary": "Gets a nullable list of SomeObject based on the specified return type.",
+        "operationId": "GetNullableObjectList",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SomeObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/EnumReturn/integer": {
       "get": {
         "tags": [
@@ -148,6 +516,388 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SomeObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PathParameter/integerId/{integerId}": {
+      "get": {
+        "tags": [
+          "PathParameter"
+        ],
+        "summary": "Gets a SomeObject based on the specified return type.",
+        "operationId": "GetSomeObjectByIntegerId",
+        "parameters": [
+          {
+            "name": "integerId",
+            "in": "path",
+            "description": "The integer ID to determine the return type.",
+            "required": true,
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SomeObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PathParameter/guidId/{guidId}": {
+      "get": {
+        "tags": [
+          "PathParameter"
+        ],
+        "summary": "Gets a SomeObject based on the specified return type.",
+        "operationId": "GetSomeObjectByGuidId",
+        "parameters": [
+          {
+            "name": "guidId",
+            "in": "path",
+            "description": "The GUID ID to determine the return type.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SomeObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PathParameter/stringId/{stringId}": {
+      "get": {
+        "tags": [
+          "PathParameter"
+        ],
+        "summary": "Gets a SomeObject based on a string ID path parameter.",
+        "operationId": "GetSomeObjectByStringId",
+        "parameters": [
+          {
+            "name": "stringId",
+            "in": "path",
+            "description": "The string ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SomeObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PathParameter/longId/{longId}": {
+      "get": {
+        "tags": [
+          "PathParameter"
+        ],
+        "summary": "Gets a SomeObject based on a long ID path parameter.",
+        "operationId": "GetSomeObjectByLongId",
+        "parameters": [
+          {
+            "name": "longId",
+            "in": "path",
+            "description": "The long ID.",
+            "required": true,
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SomeObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Polymorphic/animal": {
+      "post": {
+        "tags": [
+          "Polymorphic"
+        ],
+        "summary": "Accepts an AnimalBase body and echoes it back, verifying polymorphic round-trip.",
+        "operationId": "PostAnimal",
+        "requestBody": {
+          "description": "The animal to echo.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnimalBase"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnimalBase"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnimalBase"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Polymorphic/animal/bulk": {
+      "post": {
+        "tags": [
+          "Polymorphic"
+        ],
+        "summary": "Accepts a List&lt;AnimalBase&gt; and echoes it back, verifying polymorphic round-trip.",
+        "operationId": "PostAnimalList",
+        "requestBody": {
+          "description": "The animal to echo.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AnimalBase"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AnimalBase"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AnimalBase"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Polymorphic/dog": {
+      "post": {
+        "tags": [
+          "Polymorphic"
+        ],
+        "summary": "Accepts a Dog body and echoes it back.",
+        "operationId": "PostDog",
+        "requestBody": {
+          "description": "The dog to echo.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dog"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dog"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Dog"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Polymorphic/dog/bulk": {
+      "post": {
+        "tags": [
+          "Polymorphic"
+        ],
+        "summary": "Accepts a Dog body and echoes it back.",
+        "operationId": "PostDogList",
+        "requestBody": {
+          "description": "The dog to echo.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Dog"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Dog"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Dog"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Polymorphic/dog-animal": {
+      "post": {
+        "tags": [
+          "Polymorphic"
+        ],
+        "summary": "Accepts a Dog body and echoes it back, as an AnimalBase.",
+        "operationId": "PostDogGetAnimal",
+        "requestBody": {
+          "description": "The dog to echo.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dog"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dog"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnimalBase"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Polymorphic/dog-animal/bulk": {
+      "post": {
+        "tags": [
+          "Polymorphic"
+        ],
+        "summary": "Accepts a Dog body and echoes it back, as an AnimalBase.",
+        "operationId": "PostDogListGetAnimalList",
+        "requestBody": {
+          "description": "The dog to echo.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Dog"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Dog"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AnimalBase"
+                  }
                 }
               }
             }
@@ -492,13 +1242,852 @@
           }
         }
       }
+    },
+    "/PrimativeReturn/bool": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a bool based on the specified return type.",
+        "operationId": "GetBool",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/bool/nullable": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a nullable bool based on the specified return type.",
+        "operationId": "GetNullableBool",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/long": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a long based on the specified return type.",
+        "operationId": "GetLong",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)$",
+                  "type": [
+                    "integer",
+                    "string"
+                  ],
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/long/nullable": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a nullable long based on the specified return type.",
+        "operationId": "GetNullableLong",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)$",
+                  "type": [
+                    "null",
+                    "integer",
+                    "string"
+                  ],
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/decimal": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a decimal based on the specified return type.",
+        "operationId": "GetDecimal",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+                  "type": [
+                    "number",
+                    "string"
+                  ],
+                  "format": "double"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/decimal/nullable": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a nullable decimal based on the specified return type.",
+        "operationId": "GetNullableDecimal",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+                  "type": [
+                    "null",
+                    "number",
+                    "string"
+                  ],
+                  "format": "double"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/datetimeoffset": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a DateTimeOffset based on the specified return type.",
+        "operationId": "GetDateTimeOffset",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PrimativeReturn/datetimeoffset/nullable": {
+      "get": {
+        "tags": [
+          "PrimativeReturn"
+        ],
+        "summary": "Gets a nullable DateTimeOffset based on the specified return type.",
+        "operationId": "GetNullableDateTimeOffset",
+        "parameters": [
+          {
+            "name": "returnType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ReturnType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/QueryParameter/string": {
+      "get": {
+        "tags": [
+          "QueryParameter"
+        ],
+        "summary": "Echoes back a string query parameter.",
+        "operationId": "GetQueryString",
+        "parameters": [
+          {
+            "name": "value",
+            "in": "query",
+            "description": "The string value to echo.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/QueryParameter/integer": {
+      "get": {
+        "tags": [
+          "QueryParameter"
+        ],
+        "summary": "Echoes back an integer query parameter.",
+        "operationId": "GetQueryInteger",
+        "parameters": [
+          {
+            "name": "value",
+            "in": "query",
+            "description": "The integer value to echo.",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)$",
+                  "type": [
+                    "integer",
+                    "string"
+                  ],
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/QueryParameter/guid": {
+      "get": {
+        "tags": [
+          "QueryParameter"
+        ],
+        "summary": "Echoes back a Guid query parameter.",
+        "operationId": "GetQueryGuid",
+        "parameters": [
+          {
+            "name": "value",
+            "in": "query",
+            "description": "The Guid value to echo.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/QueryParameter/bool": {
+      "get": {
+        "tags": [
+          "QueryParameter"
+        ],
+        "summary": "Echoes back a bool query parameter.",
+        "operationId": "GetQueryBool",
+        "parameters": [
+          {
+            "name": "value",
+            "in": "query",
+            "description": "The bool value to echo.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/QueryParameter/filter": {
+      "get": {
+        "tags": [
+          "QueryParameter"
+        ],
+        "summary": "Returns a filtered list of SomeObject based on age range query parameters.",
+        "operationId": "GetFilteredObjects",
+        "parameters": [
+          {
+            "name": "minAge",
+            "in": "query",
+            "description": "The minimum age (inclusive).",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          },
+          {
+            "name": "maxAge",
+            "in": "query",
+            "description": "The maximum age (inclusive).",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SomeObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/StatusCode/ok": {
+      "get": {
+        "tags": [
+          "StatusCode"
+        ],
+        "summary": "Returns 200 OK.",
+        "operationId": "GetOk",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { }
+            }
+          }
+        }
+      }
+    },
+    "/StatusCode/created": {
+      "get": {
+        "tags": [
+          "StatusCode"
+        ],
+        "summary": "Returns 201 Created.",
+        "operationId": "GetCreated",
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { }
+            }
+          }
+        }
+      }
+    },
+    "/StatusCode/nocontent": {
+      "get": {
+        "tags": [
+          "StatusCode"
+        ],
+        "summary": "Returns 204 No Content.",
+        "operationId": "GetNoContent",
+        "responses": {
+          "204": {
+            "description": "",
+            "content": {
+              "application/json": { }
+            }
+          }
+        }
+      }
+    },
+    "/StatusCode/badrequest": {
+      "get": {
+        "tags": [
+          "StatusCode"
+        ],
+        "summary": "Returns 400 Bad Request.",
+        "operationId": "GetBadRequest",
+        "responses": {
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/StatusCode/notfound": {
+      "get": {
+        "tags": [
+          "StatusCode"
+        ],
+        "summary": "Returns 404 Not Found.",
+        "operationId": "GetNotFound",
+        "responses": {
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/StatusCode/internalerror": {
+      "get": {
+        "tags": [
+          "StatusCode"
+        ],
+        "summary": "Returns 500 Internal Server Error.",
+        "operationId": "GetInternalError",
+        "responses": {
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": { }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AnimalBase": {
+        "required": [
+          "$type"
+        ],
+        "type": "object",
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/AnimalBaseGoldenRetriever"
+          },
+          {
+            "$ref": "#/components/schemas/AnimalBaseBoxer"
+          },
+          {
+            "$ref": "#/components/schemas/AnimalBaseCat"
+          }
+        ],
+        "description": "The base record for all animal types",
+        "discriminator": {
+          "propertyName": "$type",
+          "mapping": {
+            "GoldenRetriever": "#/components/schemas/AnimalBaseGoldenRetriever",
+            "Boxer": "#/components/schemas/AnimalBaseBoxer",
+            "Cat": "#/components/schemas/AnimalBaseCat"
+          }
+        }
+      },
+      "AnimalBaseBoxer": {
+        "required": [
+          "isBrindle",
+          "isTrained",
+          "name",
+          "ageYears"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "Boxer"
+            ],
+            "type": "string"
+          },
+          "isBrindle": {
+            "type": "boolean",
+            "description": "Whether the Boxer has a brindle coat"
+          },
+          "isTrained": {
+            "type": "boolean",
+            "description": "Whether the dog has been trained"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the animal"
+          },
+          "ageYears": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "The age of the animal in years",
+            "format": "int32"
+          }
+        },
+        "description": "A Boxer dog"
+      },
+      "AnimalBaseCat": {
+        "required": [
+          "isIndoor",
+          "name",
+          "ageYears"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "Cat"
+            ],
+            "type": "string"
+          },
+          "isIndoor": {
+            "type": "boolean",
+            "description": "Whether the cat lives indoors"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the animal"
+          },
+          "ageYears": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "The age of the animal in years",
+            "format": "int32"
+          }
+        },
+        "description": "A cat"
+      },
+      "AnimalBaseGoldenRetriever": {
+        "required": [
+          "furColour",
+          "isTrained",
+          "name",
+          "ageYears"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "GoldenRetriever"
+            ],
+            "type": "string"
+          },
+          "furColour": {
+            "type": "string",
+            "description": "The fur colour of the Golden Retriever"
+          },
+          "isTrained": {
+            "type": "boolean",
+            "description": "Whether the dog has been trained"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the animal"
+          },
+          "ageYears": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "The age of the animal in years",
+            "format": "int32"
+          }
+        },
+        "description": "A Golden Retriever dog"
+      },
+      "Dog": {
+        "required": [
+          "$type"
+        ],
+        "type": "object",
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/DogGoldenRetriever"
+          },
+          {
+            "$ref": "#/components/schemas/DogBoxer"
+          }
+        ],
+        "description": "The base record for all dog types",
+        "discriminator": {
+          "propertyName": "$type",
+          "mapping": {
+            "GoldenRetriever": "#/components/schemas/DogGoldenRetriever",
+            "Boxer": "#/components/schemas/DogBoxer"
+          }
+        }
+      },
+      "DogBoxer": {
+        "required": [
+          "isBrindle",
+          "isTrained",
+          "name",
+          "ageYears"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "Boxer"
+            ],
+            "type": "string"
+          },
+          "isBrindle": {
+            "type": "boolean",
+            "description": "Whether the Boxer has a brindle coat"
+          },
+          "isTrained": {
+            "type": "boolean",
+            "description": "Whether the dog has been trained"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the animal"
+          },
+          "ageYears": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "The age of the animal in years",
+            "format": "int32"
+          }
+        },
+        "description": "A Boxer dog"
+      },
+      "DogGoldenRetriever": {
+        "required": [
+          "furColour",
+          "isTrained",
+          "name",
+          "ageYears"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "GoldenRetriever"
+            ],
+            "type": "string"
+          },
+          "furColour": {
+            "type": "string",
+            "description": "The fur colour of the Golden Retriever"
+          },
+          "isTrained": {
+            "type": "boolean",
+            "description": "Whether the dog has been trained"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the animal"
+          },
+          "ageYears": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "The age of the animal in years",
+            "format": "int32"
+          }
+        },
+        "description": "A Golden Retriever dog"
+      },
       "IntegerValues": {
         "type": "integer",
         "description": "Example enum with its values as integers"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "instance": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
       },
       "ReturnType": {
         "enum": [
@@ -566,13 +2155,31 @@
   },
   "tags": [
     {
+      "name": "BodyParameter"
+    },
+    {
+      "name": "CollectionReturn"
+    },
+    {
       "name": "EnumReturn"
     },
     {
       "name": "ObjectReturn"
     },
     {
+      "name": "PathParameter"
+    },
+    {
+      "name": "Polymorphic"
+    },
+    {
       "name": "PrimativeReturn"
+    },
+    {
+      "name": "QueryParameter"
+    },
+    {
+      "name": "StatusCode"
     }
   ]
 }

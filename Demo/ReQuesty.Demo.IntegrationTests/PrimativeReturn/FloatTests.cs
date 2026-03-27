@@ -3,7 +3,7 @@ namespace ReQuesty.Demo.IntegrationTests.PrimativeReturn;
 /// <summary>
 ///   Tests for the float endpoints
 /// </summary>
-public class FloatTests : TestBase
+public class FloatTests(ApiClientFixture fixture) : TestBase(fixture)
 {
     /// <summary>
     ///   Null float should not throw
@@ -12,11 +12,9 @@ public class FloatTests : TestBase
     [Fact]
     public async Task Float_Null()
     {
-        await SetupApiClientAsync();
-
-        Task<float?> task = ApiClient!.PrimativeReturn.Float.GetAsync(options =>
+        Task<float?> task = ApiClient.PrimativeReturn.Float.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
+            options.QueryParameters.ReturnType = ReturnType.Null;
         });
 
         task.ShouldNotThrow();
@@ -31,11 +29,9 @@ public class FloatTests : TestBase
     [Fact]
     public async Task Float_Random()
     {
-        await SetupApiClientAsync();
-
-        Task<float?> task = ApiClient!.PrimativeReturn.Float.GetAsync(options =>
+        Task<float?> task = ApiClient.PrimativeReturn.Float.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
+            options.QueryParameters.ReturnType = ReturnType.Random;
         });
 
         task.ShouldNotThrow();
@@ -50,11 +46,9 @@ public class FloatTests : TestBase
     [Fact]
     public async Task Float_Invalid()
     {
-        await SetupApiClientAsync();
-
-        Task<float?> task = ApiClient!.PrimativeReturn.Float.GetAsync(options =>
+        Task<float?> task = ApiClient.PrimativeReturn.Float.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
+            options.QueryParameters.ReturnType = ReturnType.Invalid;
         });
 
         task.ShouldThrow<NullReferenceException>();
@@ -67,11 +61,9 @@ public class FloatTests : TestBase
     [Fact]
     public async Task NullableFloat_Null()
     {
-        await SetupApiClientAsync();
-
-        Task<float?> task = ApiClient!.PrimativeReturn.Float.Nullable.GetAsync(options =>
+        Task<float?> task = ApiClient.PrimativeReturn.Float.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
+            options.QueryParameters.ReturnType = ReturnType.Null;
         });
 
         task.ShouldNotThrow();
@@ -86,11 +78,9 @@ public class FloatTests : TestBase
     [Fact]
     public async Task NullableFloat_Random()
     {
-        await SetupApiClientAsync();
-
-        Task<float?> task = ApiClient!.PrimativeReturn.Float.Nullable.GetAsync(options =>
+        Task<float?> task = ApiClient.PrimativeReturn.Float.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
+            options.QueryParameters.ReturnType = ReturnType.Random;
         });
 
         task.ShouldNotThrow();
@@ -105,11 +95,9 @@ public class FloatTests : TestBase
     [Fact]
     public async Task NullableFloat_Invalid()
     {
-        await SetupApiClientAsync();
-
-        Task<float?> task = ApiClient!.PrimativeReturn.Float.Nullable.GetAsync(options =>
+        Task<float?> task = ApiClient.PrimativeReturn.Float.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
+            options.QueryParameters.ReturnType = ReturnType.Invalid;
         });
 
         task.ShouldThrow<NullReferenceException>();

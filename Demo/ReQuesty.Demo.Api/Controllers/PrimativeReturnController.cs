@@ -187,4 +187,148 @@ public class PrimativeReturnController : DemoControllerBase
         });
     }
     #endregion
+
+    #region Bools
+    /// <summary>
+    ///   Gets a bool based on the specified return type.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("bool", Name = "GetBool")]
+    [ProducesResponseType<bool>(StatusCodes.Status200OK)]
+    public async ValueTask<ActionResult<bool>> GetBoolAsync([FromQuery] ReturnType returnType)
+    {
+        return Ok(returnType switch
+        {
+            ReturnType.Null => null,
+            ReturnType.Random => Random.Shared.Next(0, 2) == 1,
+            ReturnType.Invalid => "not a bool",
+            _ => throw new()
+        });
+    }
+
+    /// <summary>
+    ///   Gets a nullable bool based on the specified return type.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("bool/nullable", Name = "GetNullableBool")]
+    [ProducesResponseType<bool?>(StatusCodes.Status200OK)]
+    public async ValueTask<ActionResult<bool?>> GetNullableBoolAsync([FromQuery] ReturnType returnType)
+    {
+        return Ok(returnType switch
+        {
+            ReturnType.Null => null,
+            ReturnType.Random => Random.Shared.Next(0, 2) == 1,
+            ReturnType.Invalid => "not a bool",
+            _ => throw new()
+        });
+    }
+    #endregion
+
+    #region Longs
+    /// <summary>
+    ///   Gets a long based on the specified return type.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("long", Name = "GetLong")]
+    [ProducesResponseType<long>(StatusCodes.Status200OK)]
+    public async ValueTask<ActionResult<long>> GetLongAsync([FromQuery] ReturnType returnType)
+    {
+        return Ok(returnType switch
+        {
+            ReturnType.Null => null,
+            ReturnType.Random => Random.Shared.NextInt64(),
+            ReturnType.Invalid => "not a long",
+            _ => throw new()
+        });
+    }
+
+    /// <summary>
+    ///   Gets a nullable long based on the specified return type.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("long/nullable", Name = "GetNullableLong")]
+    [ProducesResponseType<long?>(StatusCodes.Status200OK)]
+    public async ValueTask<ActionResult<long?>> GetNullableLongAsync([FromQuery] ReturnType returnType)
+    {
+        return Ok(returnType switch
+        {
+            ReturnType.Null => null,
+            ReturnType.Random => Random.Shared.NextInt64(),
+            ReturnType.Invalid => "not a long",
+            _ => throw new()
+        });
+    }
+    #endregion
+
+    #region Decimals
+    /// <summary>
+    ///   Gets a decimal based on the specified return type.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("decimal", Name = "GetDecimal")]
+    [ProducesResponseType<decimal>(StatusCodes.Status200OK)]
+    public async ValueTask<ActionResult<decimal>> GetDecimalAsync([FromQuery] ReturnType returnType)
+    {
+        return Ok(returnType switch
+        {
+            ReturnType.Null => null,
+            ReturnType.Random => (decimal)Random.Shared.NextDouble(),
+            ReturnType.Invalid => "not a decimal",
+            _ => throw new()
+        });
+    }
+
+    /// <summary>
+    ///   Gets a nullable decimal based on the specified return type.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("decimal/nullable", Name = "GetNullableDecimal")]
+    [ProducesResponseType<decimal?>(StatusCodes.Status200OK)]
+    public async ValueTask<ActionResult<decimal?>> GetNullableDecimalAsync([FromQuery] ReturnType returnType)
+    {
+        return Ok(returnType switch
+        {
+            ReturnType.Null => null,
+            ReturnType.Random => (decimal)Random.Shared.NextDouble(),
+            ReturnType.Invalid => "not a decimal",
+            _ => throw new()
+        });
+    }
+    #endregion
+
+    #region DateTimeOffsets
+    /// <summary>
+    ///   Gets a DateTimeOffset based on the specified return type.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("datetimeoffset", Name = "GetDateTimeOffset")]
+    [ProducesResponseType<DateTimeOffset>(StatusCodes.Status200OK)]
+    public async ValueTask<ActionResult<DateTimeOffset>> GetDateTimeOffsetAsync([FromQuery] ReturnType returnType)
+    {
+        return Ok(returnType switch
+        {
+            ReturnType.Null => null,
+            ReturnType.Random => DateTimeOffset.UtcNow,
+            ReturnType.Invalid => "not a datetimeoffset",
+            _ => throw new()
+        });
+    }
+
+    /// <summary>
+    ///   Gets a nullable DateTimeOffset based on the specified return type.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("datetimeoffset/nullable", Name = "GetNullableDateTimeOffset")]
+    [ProducesResponseType<DateTimeOffset?>(StatusCodes.Status200OK)]
+    public async ValueTask<ActionResult<DateTimeOffset?>> GetNullableDateTimeOffsetAsync([FromQuery] ReturnType returnType)
+    {
+        return Ok(returnType switch
+        {
+            ReturnType.Null => null,
+            ReturnType.Random => DateTimeOffset.UtcNow,
+            ReturnType.Invalid => "not a datetimeoffset",
+            _ => throw new()
+        });
+    }
+    #endregion
 }

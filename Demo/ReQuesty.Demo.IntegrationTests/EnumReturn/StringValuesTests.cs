@@ -3,7 +3,7 @@ namespace ReQuesty.Demo.IntegrationTests.EnumReturn;
 /// <summary>
 ///   Tests for the enum string values endpoints
 /// </summary>
-public class StringValuesTests : TestBase
+public class StringValuesTests(ApiClientFixture fixture) : TestBase(fixture)
 {
     /// <summary>
     ///   Null string value should not throw
@@ -12,9 +12,7 @@ public class StringValuesTests : TestBase
     [Fact]
     public async Task StringValues_Null()
     {
-        await SetupApiClientAsync();
-
-        StringValues? result = await ApiClient!.EnumReturn.String.GetAsync(options =>
+        StringValues? result = await ApiClient.EnumReturn.String.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Null;
         });
@@ -29,9 +27,7 @@ public class StringValuesTests : TestBase
     [Fact]
     public async Task StringValues_Random()
     {
-        await SetupApiClientAsync();
-
-        StringValues? result = await ApiClient!.EnumReturn.String.GetAsync(options =>
+        StringValues? result = await ApiClient.EnumReturn.String.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Random;
         });
@@ -46,9 +42,7 @@ public class StringValuesTests : TestBase
     [Fact]
     public async Task StringValues_Invalid()
     {
-        await SetupApiClientAsync();
-
-        Task<StringValues?> result = ApiClient!.EnumReturn.String.GetAsync(options =>
+        Task<StringValues?> result = ApiClient.EnumReturn.String.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Invalid;
         });
@@ -63,9 +57,7 @@ public class StringValuesTests : TestBase
     [Fact]
     public async Task NullableString_Null()
     {
-        await SetupApiClientAsync();
-
-        StringValues? result = await ApiClient!.EnumReturn.String.Nullable.GetAsync(options =>
+        StringValues? result = await ApiClient.EnumReturn.String.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Null;
         });
@@ -80,9 +72,7 @@ public class StringValuesTests : TestBase
     [Fact]
     public async Task NullableString_Random()
     {
-        await SetupApiClientAsync();
-
-        StringValues? result = await ApiClient!.EnumReturn.String.Nullable.GetAsync(options =>
+        StringValues? result = await ApiClient.EnumReturn.String.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Random;
         });
@@ -97,9 +87,7 @@ public class StringValuesTests : TestBase
     [Fact]
     public async Task NullableString_Invalid()
     {
-        await SetupApiClientAsync();
-
-        Task<StringValues?> result = ApiClient!.EnumReturn.String.Nullable.GetAsync(options =>
+        Task<StringValues?> result = ApiClient.EnumReturn.String.Nullable.GetAsync(options =>
         {
             options.QueryParameters.ReturnType = ReturnType.Invalid;
         });

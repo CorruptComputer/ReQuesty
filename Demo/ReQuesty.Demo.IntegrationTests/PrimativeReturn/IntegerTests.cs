@@ -3,7 +3,7 @@ namespace ReQuesty.Demo.IntegrationTests.PrimativeReturn;
 /// <summary>
 ///   Tests for the int endpoints
 /// </summary>
-public class IntegerTests : TestBase
+public class IntegerTests(ApiClientFixture fixture) : TestBase(fixture)
 {
     /// <summary>
     ///   Null int should not throw
@@ -12,11 +12,9 @@ public class IntegerTests : TestBase
     [Fact]
     public async Task Integer_Null()
     {
-        await SetupApiClientAsync();
-
-        Task<int?> task = ApiClient!.PrimativeReturn.Integer.GetAsync(options =>
+        Task<int?> task = ApiClient.PrimativeReturn.Integer.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
+            options.QueryParameters.ReturnType = ReturnType.Null;
         });
 
         task.ShouldNotThrow();
@@ -31,11 +29,9 @@ public class IntegerTests : TestBase
     [Fact]
     public async Task Integer_Random()
     {
-        await SetupApiClientAsync();
-
-        Task<int?> task = ApiClient!.PrimativeReturn.Integer.GetAsync(options =>
+        Task<int?> task = ApiClient.PrimativeReturn.Integer.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
+            options.QueryParameters.ReturnType = ReturnType.Random;
         });
 
         task.ShouldNotThrow();
@@ -50,11 +46,9 @@ public class IntegerTests : TestBase
     [Fact]
     public async Task Integer_Invalid()
     {
-        await SetupApiClientAsync();
-
-        Task<int?> task = ApiClient!.PrimativeReturn.Integer.GetAsync(options =>
+        Task<int?> task = ApiClient.PrimativeReturn.Integer.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
+            options.QueryParameters.ReturnType = ReturnType.Invalid;
         });
 
         task.ShouldThrow<NullReferenceException>();
@@ -67,11 +61,9 @@ public class IntegerTests : TestBase
     [Fact]
     public async Task NullableInteger_Null()
     {
-        await SetupApiClientAsync();
-
-        Task<int?> task = ApiClient!.PrimativeReturn.Integer.Nullable.GetAsync(options =>
+        Task<int?> task = ApiClient.PrimativeReturn.Integer.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Null;
+            options.QueryParameters.ReturnType = ReturnType.Null;
         });
 
         task.ShouldNotThrow();
@@ -86,11 +78,9 @@ public class IntegerTests : TestBase
     [Fact]
     public async Task NullableInteger_Random()
     {
-        await SetupApiClientAsync();
-
-        Task<int?> task = ApiClient!.PrimativeReturn.Integer.Nullable.GetAsync(options =>
+        Task<int?> task = ApiClient.PrimativeReturn.Integer.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Random;
+            options.QueryParameters.ReturnType = ReturnType.Random;
         });
 
         task.ShouldNotThrow();
@@ -105,11 +95,9 @@ public class IntegerTests : TestBase
     [Fact]
     public async Task NullableInteger_Invalid()
     {
-        await SetupApiClientAsync();
-
-        Task<int?> task = ApiClient!.PrimativeReturn.Integer.Nullable.GetAsync(options =>
+        Task<int?> task = ApiClient.PrimativeReturn.Integer.Nullable.GetAsync(options =>
         {
-            options.QueryParameters.ReturnType = IntegrationTests.ApiClient.Models.ReturnType.Invalid;
+            options.QueryParameters.ReturnType = ReturnType.Invalid;
         });
 
         task.ShouldThrow<NullReferenceException>();
