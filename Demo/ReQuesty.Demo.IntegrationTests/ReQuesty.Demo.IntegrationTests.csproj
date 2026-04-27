@@ -15,7 +15,7 @@
     <!-- Comment this if uncommenting the ProjectReference below -->
     <PackageReference Include="ReQuesty.Runtime" Version="0.0.7" />
 
-    <PackageReference Include="Aspire.Hosting.Testing" Version="13.2.3" />
+    <PackageReference Include="Aspire.Hosting.Testing" Version="13.2.4" />
     <PackageReference Include="coverlet.collector" Version="10.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.4.0" />
     <PackageReference Include="Shouldly" Version="4.3.0" />
